@@ -138,7 +138,7 @@ class URLify {
     ),
     'urlThings' => array(
       '&quot;' => '-', '&amp;' => '-', '&lt;' => '-', '&gt;' => '-',
-      '⁻' => '-', '_' => '-'
+      '⁻' => '-', '_' => '-', '`' => '-', '\'' => '-'
     )
 	);
 
@@ -278,6 +278,9 @@ class URLify {
 		$text = preg_replace ('/[-\s]+/', '-', $text);      // convert spaces to hyphens
     $text = preg_replace("/<br\W*?\/>/", "-", $text);   // replace <br /> with "-"
     $text = preg_replace("/<br\W*?>/", "-", $text);     // replace <br> with "-"
+    $text = strip_tags($text);                          // remove all html-tags
+    $text = preg_replace("/[^A-Za-z0-9-]/", "", $text); // remove all other characters
+    $text = preg_replace(array("[^A-Za-z0-9]","`[-]+`") , "-", $text); // remove double "line" (-)
 		return trim (substr ($text, 0, $length), '-');      // trim to first $length chars
 	}
 
