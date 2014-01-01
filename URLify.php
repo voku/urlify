@@ -101,7 +101,45 @@ class URLify {
 			'ú' => 'u', 'ù' => 'u', 'ủ' => 'u', 'ũ' => 'u', 'ụ' => 'u', 'ư' => 'u', 'ứ' => 'u', 'ừ' => 'u', 'ử' => 'u', 'ữ' => 'u', 'ự' => 'u',
 			'Ý' => 'Y', 'Ỳ' => 'Y', 'Ỷ' => 'Y', 'Ỹ' => 'Y', 'Ỵ' => 'Y', 'ý' => 'y', 'ỳ' => 'y', 'ỷ' => 'y', 'ỹ' => 'y', 'ỵ' => 'y',
 			'Đ' => 'D', 'đ' => 'd'
-		)
+		),
+    'other' => array (
+      'ǽ' => 'ae', 'ª' => 'a', 'ǎ' => 'a', 'ǻ' => 'a',
+      'Ǽ' => 'AE', 'Ǎ' => 'A', 'Ǻ' => 'A',
+      'ĉ' => 'c', 'ċ' => 'c',
+      'Ĉ' => 'C', 'Ċ' => 'C',
+      'ĕ' => 'e',
+      'Ĕ' => 'E',
+      'ſ' => 'f', 'ƒ' => 'f',
+      'ĝ' => 'g', 'ġ' => 'g',
+      'Ĝ' => 'G', 'Ġ' => 'G',
+      'ĥ' => 'h', 'ħ' => 'h',
+      'Ĥ' => 'H', 'Ħ' => 'H',
+      'ĭ' => 'i', 'ĳ' => 'ij', 'ǐ' => 'i',
+      'Ĭ' => 'I', 'Ĳ' => 'IJ', 'Ǐ' => 'I',
+      'ĵ' => 'j',
+      'Ĵ' => 'J',
+      'ĺ' => 'l', 'ľ' => 'l', 'ŀ' => 'l',
+      'Ĺ' => 'L', 'Ľ' => 'L', 'Ŀ' => 'L',
+      'ŉ' => 'n',
+      'ō' => 'o', 'ŏ' => 'o', 'œ' => 'oe', 'ǒ' => 'o', 'ǿ' => 'o',
+      'Ō' => 'O', 'Ŏ' => 'O', 'Œ' => 'OE', 'Ǒ' => 'O', 'Ǿ' => 'O',
+      'ŕ' => 'r', 'ŗ' => 'r', 
+      'Ŕ' => 'R', 'Ŗ' => 'R',
+      'ŝ' => 's', 
+      'Ŝ' => 'S',
+      'ţ' => 't', 'ŧ' => 't',
+      'Ţ' => 'T', 'Ŧ' => 'T',
+      'ŭ' => 'u', 'ǔ' => 'u', 'ǖ' => 'u', 'ǘ' => 'u', 'ǚ' => 'u', 'ǜ' => 'u',
+      'Ŭ' => 'U', 'Ǔ' => 'U', 'Ǖ' => 'U', 'Ǘ' => 'U', 'Ǚ' => 'U', 'Ǜ' => 'U',
+      'ŵ' => 'w',
+      'Ŵ' => 'W',
+      'ŷ' => 'y',
+      'Ŷ' => 'Y', 'Ÿ' => 'Y'
+    ),
+    'urlThings' => array(
+      '&quot;' => '-', '&amp;' => '-', '&lt;' => '-', '&gt;' => '-',
+      '⁻' => '-', '_' => '-'
+    )
 	);
 
 	/**
@@ -137,19 +175,23 @@ class URLify {
 	/**
 	 * Initializes the character map.
 	 */
-	private static function init ($language = "") {
-		if (count (self::$map) > 0 && (($language == "") || ($language == self::$language))) {
+	private static function init ($language = 'de') {
+		if (
+      count(self::$map) > 0 && 
+      ($language == '' || $language == self::$language)
+    ) {
 			return;
 		}
 
-		/* Is a specific map associated with $language ? */
+		/* is a specific map associated with $language ? */
 		if (isset(self::$maps[$language]) && is_array(self::$maps[$language])) {
-			/* Move this map to end. This means it will have priority over others */
+			/* move this map to end. This means it will have priority over others */
 			$m = self::$maps[$language];
 			unset(self::$maps[$language]);
 			self::$maps[$language] = $m;
 		}
-		/* Reset static vars */
+    
+		/* reset static vars */
 		self::$language = $language;
 		self::$map = array();
 		self::$chars = '';
@@ -208,7 +250,7 @@ class URLify {
 	 * Filters a string, e.g., "Petty theft" to "petty-theft"
 	 */
 	public static function filter ($text, $length = 60, $language = "", $file_name = false) {
-		$text = self::downcode ($text,$language);
+		$text = self::downcode ($text, $language);
 
 		// remove all these words from the string before urlifying
 		$text = preg_replace ('/\b(' . join ('|', self::$remove_list) . ')\b/i', '', $text);
@@ -221,6 +263,22 @@ class URLify {
 		$text = preg_replace ('/[-\s]+/', '-', $text);     // convert spaces to hyphens
 		$text = strtolower ($text);                        // convert to lowercase
 		return trim (substr ($text, 0, $length), '-');     // trim to first $length chars
+	}
+  
+	/**
+	 * Filters a string, e.g., "Petty<br>theft" to "Petty-theft"
+	 */
+	public static function url ($text, $length = 200, $language = '') {
+		$text = self::downcode ($text, $language);
+
+		// remove all these words from the string before urlifying
+		$text = preg_replace ('/\b(' . join ('|', self::$remove_list) . ')\b/i', '', $text);
+    
+		$text = preg_replace ('/^\s+|\s+$/', '', $text);    // trim leading/trailing spaces
+		$text = preg_replace ('/[-\s]+/', '-', $text);      // convert spaces to hyphens
+    $text = preg_replace("/<br\W*?\/>/", "-", $text);   // replace <br /> with "-"
+    $text = preg_replace("/<br\W*?>/", "-", $text);     // replace <br> with "-"
+		return trim (substr ($text, 0, $length), '-');      // trim to first $length chars
 	}
 
 	/**
