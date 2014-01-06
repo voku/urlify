@@ -233,7 +233,7 @@ class URLify {
    * $language specifies a priority for a specific language.
    * The latter is useful if languages have different rules for the same character.
    */
-  public static function downcode($text, $language = "") {
+  public static function downcode($text, $language = "de") {
     self::init($language);
 
     if (preg_match_all(self::$regex, $text, $matches)) {
@@ -250,7 +250,7 @@ class URLify {
   /**
    * Filters a string, e.g., "Petty theft" to "petty-theft"
    */
-  public static function filter($text, $length = 60, $language = "", $file_name = false) {
+  public static function filter($text, $length = 60, $language = "de", $file_name = false) {
     $text = self::downcode($text, $language);
 
     // remove all these words from the string before urlifying
@@ -269,11 +269,13 @@ class URLify {
   /**
    * Filters a string, e.g., "Petty<br>theft" to "Petty-theft"
    */
-  public static function url($text, $length = 200, $language = '') {
+  public static function url($text, $length = 200, $language = 'de', $removeWords = false) {
     $text = self::downcode($text, $language);
 
     // remove all these words from the string before urlifying
-    $text = preg_replace('/\b(' . join('|', self::$remove_list) . ')\b/i', '', $text);
+    if ($removeWords === true) {
+      $text = preg_replace('/\b(' . join('|', self::$remove_list) . ')\b/i', '', $text);
+    }
 
     $text = preg_replace('/^\s+|\s+$/', '', $text);    // trim leading/trailing spaces
     $text = preg_replace('/[-\s]+/', '-', $text);      // convert spaces to hyphens
