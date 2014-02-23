@@ -18,7 +18,8 @@
 class URLify {
 
   public static $maps = array(
-      'de' => array(/* German */
+      /* German */
+      'de' => array(
           'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'ß' => 'ss',
           'ẞ' => 'SS'
       ),
@@ -34,9 +35,10 @@ class URLify {
           'û' => 'u', 'ü' => 'u', 'ű' => 'u', 'ý' => 'y', 'þ' => 'th', 'ÿ' => 'y'
       ),
       'latin_symbols' => array(
-          '©' => '(c)'
+          '©' => '(c)', '@' => '(at)'
       ),
-      'el' => array(/* Greek */
+      /* Greek */
+      'el' => array(
           'α' => 'a', 'β' => 'b', 'γ' => 'g', 'δ' => 'd', 'ε' => 'e', 'ζ' => 'z', 'η' => 'h', 'θ' => '8',
           'ι' => 'i', 'κ' => 'k', 'λ' => 'l', 'μ' => 'm', 'ν' => 'n', 'ξ' => '3', 'ο' => 'o', 'π' => 'p',
           'ρ' => 'r', 'σ' => 's', 'τ' => 't', 'υ' => 'y', 'φ' => 'f', 'χ' => 'x', 'ψ' => 'ps', 'ω' => 'w',
@@ -48,11 +50,13 @@ class URLify {
           'Ά' => 'A', 'Έ' => 'E', 'Ί' => 'I', 'Ό' => 'O', 'Ύ' => 'Y', 'Ή' => 'H', 'Ώ' => 'W', 'Ϊ' => 'I',
           'Ϋ' => 'Y'
       ),
-      'tr' => array(/* Turkish */
+      /* Turkish */
+      'tr' => array(
           'ş' => 's', 'Ş' => 'S', 'ı' => 'i', 'İ' => 'I', 'ç' => 'c', 'Ç' => 'C', 'ü' => 'u', 'Ü' => 'U',
           'ö' => 'o', 'Ö' => 'O', 'ğ' => 'g', 'Ğ' => 'G'
       ),
-      'ru' => array(/* Russian */
+      /* Russian */
+      'ru' => array(
           'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'yo', 'ж' => 'zh',
           'з' => 'z', 'и' => 'i', 'й' => 'j', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o',
           'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'c',
@@ -65,32 +69,39 @@ class URLify {
           'Я' => 'Ya',
           '№' => ''
       ),
-      'uk' => array(/* Ukrainian */
+      /* Ukrainian */
+      'uk' => array(
           'Є' => 'Ye', 'І' => 'I', 'Ї' => 'Yi', 'Ґ' => 'G', 'є' => 'ye', 'і' => 'i', 'ї' => 'yi', 'ґ' => 'g'
       ),
-      'cs' => array(/* Czech */
+      /* Czech */
+      'cs' => array(
           'č' => 'c', 'ď' => 'd', 'ě' => 'e', 'ň' => 'n', 'ř' => 'r', 'š' => 's', 'ť' => 't', 'ů' => 'u',
           'ž' => 'z', 'Č' => 'C', 'Ď' => 'D', 'Ě' => 'E', 'Ň' => 'N', 'Ř' => 'R', 'Š' => 'S', 'Ť' => 'T',
           'Ů' => 'U', 'Ž' => 'Z'
       ),
-      'pl' => array(/* Polish */
+      /* Polish */
+      'pl' => array(
           'ą' => 'a', 'ć' => 'c', 'ę' => 'e', 'ł' => 'l', 'ń' => 'n', 'ó' => 'o', 'ś' => 's', 'ź' => 'z',
           'ż' => 'z', 'Ą' => 'A', 'Ć' => 'C', 'Ę' => 'e', 'Ł' => 'L', 'Ń' => 'N', 'Ó' => 'O', 'Ś' => 'S',
           'Ź' => 'Z', 'Ż' => 'Z'
       ),
-      'ro' => array(/* Romanian */
+      /* Romanian */
+      'ro' => array(
           'ă' => 'a', 'â' => 'a', 'î' => 'i', 'ș' => 's', 'ț' => 't', 'Ţ' => 'T', 'ţ' => 't'
       ),
-      'lv' => array(/* Latvian */
+      /* Latvian */
+      'lv' => array(
           'ā' => 'a', 'č' => 'c', 'ē' => 'e', 'ģ' => 'g', 'ī' => 'i', 'ķ' => 'k', 'ļ' => 'l', 'ņ' => 'n',
           'š' => 's', 'ū' => 'u', 'ž' => 'z', 'Ā' => 'A', 'Č' => 'C', 'Ē' => 'E', 'Ģ' => 'G', 'Ī' => 'i',
           'Ķ' => 'k', 'Ļ' => 'L', 'Ņ' => 'N', 'Š' => 'S', 'Ū' => 'u', 'Ž' => 'Z'
       ),
-      'lt' => array(/* Lithuanian */
+      /* Lithuanian */
+      'lt' => array(
           'ą' => 'a', 'č' => 'c', 'ę' => 'e', 'ė' => 'e', 'į' => 'i', 'š' => 's', 'ų' => 'u', 'ū' => 'u', 'ž' => 'z',
           'Ą' => 'A', 'Č' => 'C', 'Ę' => 'E', 'Ė' => 'E', 'Į' => 'I', 'Š' => 'S', 'Ų' => 'U', 'Ū' => 'U', 'Ž' => 'Z'
       ),
-      'vn' => array(/* Vietnamese */
+      /* Vietnamese */
+      'vn' => array(
           'Á' => 'A', 'À' => 'A', 'Ả' => 'A', 'Ã' => 'A', 'Ạ' => 'A', 'Ă' => 'A', 'Ắ' => 'A', 'Ằ' => 'A', 'Ẳ' => 'A', 'Ẵ' => 'A', 'Ặ' => 'A', 'Â' => 'A', 'Ấ' => 'A', 'Ầ' => 'A', 'Ẩ' => 'A', 'Ẫ' => 'A', 'Ậ' => 'A',
           'á' => 'a', 'à' => 'a', 'ả' => 'a', 'ã' => 'a', 'ạ' => 'a', 'ă' => 'a', 'ắ' => 'a', 'ằ' => 'a', 'ẳ' => 'a', 'ẵ' => 'a', 'ặ' => 'a', 'â' => 'a', 'ấ' => 'a', 'ầ' => 'a', 'ẩ' => 'a', 'ẫ' => 'a', 'ậ' => 'a',
           'É' => 'E', 'È' => 'E', 'Ẻ' => 'E', 'Ẽ' => 'E', 'Ẹ' => 'E', 'Ê' => 'E', 'Ế' => 'E', 'Ề' => 'E', 'Ể' => 'E', 'Ễ' => 'E', 'Ệ' => 'E',
@@ -138,8 +149,8 @@ class URLify {
           'Ŷ' => 'Y', 'Ÿ' => 'Y'
       ),
       'urlThings' => array(
-          '&quot;' => '-', '&amp;' => '-', '&lt;' => '-', '&gt;' => '-',
-          '⁻' => '-', '_' => '-', '`' => '-', '\'' => '-'
+          '&quot;' => '-', '&amp;' => '-', '&lt;' => '-', '&gt;' => '-', '&ndash;' => '-',
+          '⁻' => '-', '—' => '-', '_' => '-', '`' => '-', '´' => '-', '\'' => '-'
       )
   );
 
@@ -147,10 +158,48 @@ class URLify {
    * List of words to remove from URLs.
    */
   public static $remove_list = array(
-      'a', 'an', 'as', 'at', 'before', 'but', 'by', 'for', 'from',
-      'is', 'in', 'into', 'like', 'of', 'off', 'on', 'onto', 'per',
-      'since', 'than', 'the', 'this', 'that', 'to', 'up', 'via',
-      'with'
+      'en' => array(
+          'a', 'an', 'as', 'at', 'before', 'but', 'by', 'for', 'from',
+          'is', 'in', 'into', 'like', 'of', 'off', 'on', 'onto', 'per',
+          'since', 'than', 'the', 'this', 'that', 'to', 'up', 'via',
+          'with'
+      ),
+      /* German */
+      'de' => array(
+          'ein', 'eine', 'wie', 'an', 'vor', 'aber', 'von', 'für',
+          'ist', 'in', 'von', 'auf', 'pro', 'da', 'als',
+          'der', 'die', 'das', 'dass', 'zu', 'mit'
+      ),
+      /* Greek */
+      'el' => array(
+      ),
+      /* Turkish */
+      'tr' => array(
+      ),
+      /* Russian */
+      'ru' => array(
+      ),
+      /* Ukrainian */
+      'uk' => array(
+      ),
+      /* Czech */
+      'cs' => array(
+      ),
+      /* Polish */
+      'pl' => array(
+      ),
+      /* Romanian */
+      'ro' => array(
+      ),
+      /* Latvian */
+      'lv' => array(
+      ),
+      /* Lithuanian */
+      'lt' => array(
+      ),
+      /* Vietnamese */
+      'vn' => array(
+      )
   );
 
   /**
@@ -175,13 +224,16 @@ class URLify {
 
   /**
    * Initializes the character map.
+   * 
+   * @param String $language
+   * @return type
    */
   private static function init($language = 'de') {
     if (
-            count(self::$map) > 0 &&
-            ($language == '' || $language == self::$language)
+      count(self::$map) > 0 &&
+      ($language == '' || $language == self::$language)
     ) {
-      return;
+      return false;
     }
 
     /* is a specific map associated with $language ? */
@@ -205,10 +257,15 @@ class URLify {
     }
 
     self::$regex = '/[' . self::$chars . ']/u';
+
+    return true;
   }
 
   /**
    * Add new characters to the list. `$map` should be a hash.
+   * 
+   * @param Array $map
+   * @throws LogicException
    */
   public static function add_chars($map) {
     if (!is_array($map)) {
@@ -222,18 +279,25 @@ class URLify {
   /**
    * Append words to the remove list. Accepts either single words
    * or an array of words.
+   * 
+   * @param mixed $words
+   * @param String $language
    */
-  public static function remove_words($words) {
+  public static function remove_words($words, $language = 'de') {
     $words = is_array($words) ? $words : array($words);
-    self::$remove_list = array_merge(self::$remove_list, $words);
+    self::$remove_list[$language] = array_merge(self::$remove_list[$language], $words);
   }
 
   /**
    * Transliterates characters to their ASCII equivalents.
    * $language specifies a priority for a specific language.
    * The latter is useful if languages have different rules for the same character.
+   * 
+   * @param String $text
+   * @param String $language
+   * @return String
    */
-  public static function downcode($text, $language = "de") {
+  public static function downcode($text, $language = 'de') {
     self::init($language);
 
     if (preg_match_all(self::$regex, $text, $matches)) {
@@ -249,42 +313,56 @@ class URLify {
 
   /**
    * Filters a string, e.g., "Petty theft" to "petty-theft"
+   * 
+   * @param String $text
+   * @param Int $length
+   * @param String $language
+   * @param Boolean $file_name
+   * @return String
    */
-  public static function filter($text, $length = 60, $language = "de", $file_name = false) {
+  public static function filter($text, $length = 60, $language = 'de', $file_name = false) {
     $text = self::downcode($text, $language);
 
     // remove all these words from the string before urlifying
-    $text = preg_replace('/\b(' . join('|', self::$remove_list) . ')\b/i', '', $text);
+    $text = preg_replace('/\b(' . join('|', self::$remove_list[$language]) . ')\b/i', '', $text);
 
     // if downcode doesn't hit, the char will be stripped here
     $remove_pattern = ($file_name) ? '/[^-.\w\s]/u' : '/[^-\w\s]/u';
+
     $text = preg_replace($remove_pattern, '', $text); // remove unneeded chars
     $text = str_replace('_', ' ', $text);             // treat underscores as spaces
     $text = preg_replace('/^\s+|\s+$/', '', $text);   // trim leading/trailing spaces
     $text = preg_replace('/[-\s]+/', '-', $text);     // convert spaces to hyphens
     $text = strtolower($text);                        // convert to lowercase
-    return trim(substr($text, 0, $length), '-');     // trim to first $length chars
+
+    return trim(substr($text, 0, $length), '-');      // substr to first $length chars && trim "-"
   }
 
   /**
-   * Filters a string, e.g., "Petty<br>theft" to "Petty-theft"
+   * Convert a String to URL, e.g., "Petty<br>theft" to "Petty-theft"
+   * 
+   * @param String $text
+   * @param Int $length
+   * @param String $language
+   * @param Boolean $removeWords
+   * @return String
    */
   public static function url($text, $length = 200, $language = 'de', $removeWords = false) {
     $text = self::downcode($text, $language);
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
-      $text = preg_replace('/\b(' . join('|', self::$remove_list) . ')\b/i', '', $text);
+      $text = preg_replace('/\b(' . join('|', self::$remove_list[$language]) . ')\b/i', '', $text);
     }
 
-    $text = preg_replace('/^\s+|\s+$/', '', $text);    // trim leading/trailing spaces
-    $text = preg_replace('/[-\s]+/', '-', $text);      // convert spaces to hyphens
-    $text = preg_replace("/<br\W*?\/>/", "-", $text);   // replace <br /> with "-"
-    $text = preg_replace("/<br\W*?>/", "-", $text);     // replace <br> with "-"
+    $text = preg_replace('/^\s+|\s+$/', '', $text);     // trim leading & trailing spaces
+    $text = preg_replace('/[-\s]+/', '-', $text);       // convert spaces to '-'
+    $text = preg_replace('/<br\s*/?>/i', '-', $text);  // replace <br> with '-'
     $text = strip_tags($text);                          // remove all html-tags
-    $text = preg_replace("/[^A-Za-z0-9-]/", "", $text); // remove all other characters
-    $text = preg_replace(array("[^A-Za-z0-9]", "`[-]+`"), "-", $text); // remove double "line" (-)
-    return trim(substr($text, 0, $length), '-');      // trim to first $length chars
+    $text = preg_replace('/[^A-Za-z0-9-]/', '', $text); // remove all other characters
+    $text = preg_replace(array('[^A-Za-z0-9]', '`[-]+`'), '-', $text);  // remove double '-'
+
+    return trim(substr($text, 0, $length), '-');        // substr to first $length chars && trim '-'
   }
 
   /**
