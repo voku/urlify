@@ -20,7 +20,7 @@
 		}
 	],
 	"require": {
-		"php": ">=5.2.4"
+		"php": ">=5.2"
 	},
 	"autoload": {
 		"classmap":["URLify.php"],

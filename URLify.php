@@ -147,10 +147,6 @@ class URLify {
           'Ŵ' => 'W',
           'ŷ' => 'y',
           'Ŷ' => 'Y', 'Ÿ' => 'Y'
-      ),
-      'urlThings' => array(
-          '&quot;' => '-', '&amp;' => '-', '&lt;' => '-', '&gt;' => '-', '&ndash;' => '-',
-          '⁻' => '-', '—' => '-', '_' => '-', '`' => '-', '´' => '-', '\'' => '-'
       )
   );
 
@@ -229,15 +225,25 @@ class URLify {
    * @return type
    */
   private static function init($language = 'de') {
+    
+    /* check if lang is set */
+    if (!$language) {
+      return false;
+    }
+    
+    /* check if we already created the regex for this lang */
     if (
       count(self::$map) > 0 &&
-      ($language == '' || $language == self::$language)
+      $language == self::$language
     ) {
-      return false;
+      return true;
     }
 
     /* is a specific map associated with $language ? */
-    if (isset(self::$maps[$language]) && is_array(self::$maps[$language])) {
+    if (
+      isset(self::$maps[$language]) && 
+      is_array(self::$maps[$language])
+    ) {
       /* move this map to end. This means it will have priority over others */
       $m = self::$maps[$language];
       unset(self::$maps[$language]);
@@ -255,9 +261,12 @@ class URLify {
         self::$chars .= $orig;
       }
     }
-
+    
     self::$regex = '/[' . self::$chars . ']/u';
 
+    // DEBUG
+    //echo self::$regex . "\n<br>";
+    
     return true;
   }
 
@@ -265,12 +274,8 @@ class URLify {
    * Add new characters to the list. `$map` should be a hash.
    * 
    * @param Array $map
-   * @throws LogicException
    */
-  public static function add_chars($map) {
-    if (!is_array($map)) {
-      throw new LogicException('$map must be an associative array.');
-    }
+  public static function add_chars(Array $map) {
     self::$maps[] = $map;
     self::$map = array();
     self::$chars = '';
@@ -285,7 +290,30 @@ class URLify {
    */
   public static function remove_words($words, $language = 'de') {
     $words = is_array($words) ? $words : array($words);
-    self::$remove_list[$language] = array_merge(self::$remove_list[$language], $words);
+    self::$remove_list[$language] = array_merge(self::get_remove_list($language), $words);
+  }
+  
+  /**
+   * return the "self::$remove_list[$language]" array
+   * 
+   * @param String $language
+   * @return Array
+   */
+  private static function get_remove_list($language = 'de') {
+    // check for language
+    if (!$language) {
+      return array();
+    }
+    
+    // check for array
+    if (
+      !isset(self::$remove_list[$language]) || 
+      !is_array(self::$remove_list[$language])
+    ) {
+      return array();
+    }
+    
+    return self::$remove_list[$language];
   }
 
   /**
@@ -324,7 +352,7 @@ class URLify {
     $text = self::downcode($text, $language);
 
     // remove all these words from the string before urlifying
-    $text = preg_replace('/\b(' . join('|', self::$remove_list[$language]) . ')\b/i', '', $text);
+    $text = preg_replace('/\b(' . join('|', self::get_remove_list($language)) . ')\b/i', '', $text);
 
     // if downcode doesn't hit, the char will be stripped here
     $remove_pattern = ($file_name) ? '/[^-.\w\s]/u' : '/[^-\w\s]/u';
@@ -348,16 +376,22 @@ class URLify {
    * @return String
    */
   public static function url($text, $length = 200, $language = 'de', $removeWords = false) {
+    $urlThingsToDash = array(
+      '&quot;' => '-', '&amp;' => '-', '&lt;' => '-', '&gt;' => '-', '&ndash;' => '-',
+      '⁻' => '-', '—' => '-', '_' => '-', '`' => '-', '´' => '-', '\'' => '-'
+    );
+    self::add_chars($urlThingsToDash);
+    
     $text = self::downcode($text, $language);
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
-      $text = preg_replace('/\b(' . join('|', self::$remove_list[$language]) . ')\b/i', '', $text);
+      $text = preg_replace('/\b(' . join('|', self::get_remove_list($language)) . ')\b/i', '', $text);
     }
 
     $text = preg_replace('/^\s+|\s+$/', '', $text);     // trim leading & trailing spaces
     $text = preg_replace('/[-\s]+/', '-', $text);       // convert spaces to '-'
-    $text = preg_replace('/<br\s*/?>/i', '-', $text);  // replace <br> with '-'
+    $text = preg_replace('/<br\s*\/?>/i', '-', $text);  // replace <br> with '-'
     $text = strip_tags($text);                          // remove all html-tags
     $text = preg_replace('/[^A-Za-z0-9-]/', '', $text); // remove all other characters
     $text = preg_replace(array('[^A-Za-z0-9]', '`[-]+`'), '-', $text);  // remove double '-'
