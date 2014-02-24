@@ -16,10 +16,10 @@ To generate slugs for URLs:
 <?php
 
 echo URLify::filter (' J\'étudie le français ');
-// "jetudie-le-francais"
+// "J-etudie-le-francais"
 
 echo URLify::filter ('Lo siento, no hablo español.');
-// "lo-siento-no-hablo-espanol"
+// "Lo-siento-no-hablo-espanol"
 
 ?>
 ```
@@ -29,7 +29,7 @@ To generate slugs for file names:
 ```php
 <?php
 
-echo URLify::filter ('фото.jpg', 60, "", true);
+echo URLify::filter ('фото.jpg', 60, '', true);
 // "foto.jpg"
 
 ?>
@@ -71,12 +71,12 @@ echo URLify::downcode ('¿ ® ¼ ¼ ¾ ¶');
 ?>
 ```
 
-To extend the list of words to remove:
+To extend the list of words to remove for one language:
 
 ```php
 <?php
 
-URLify::remove_words (array ('remove', 'these', 'too'));
+URLify::remove_words (array ('remove', 'these', 'too'), 'de');
 
 ?>
 ```
@@ -86,11 +86,11 @@ To prioritize a certain language map:
 ```php
 <?php
 
-echo URLify::filter (' Ägypten und Österreich besitzen wie üblich ein Übermaß an ähnlich öligen Attachés ',60,"de");
-// "aegypten-und-oesterreich-besitzen-wie-ueblich-ein-uebermass-aehnlich-oeligen-attaches"
+echo URLify::filter (' Ägypten und Österreich besitzen wie üblich ein Übermaß an ähnlich öligen Attachés ', 60, 'de');
+// "Aegypten-und-Oesterreich-besitzen-wie-ueblich-ein-Uebermass-aehnlich-oeligen-Attaches"
    
-echo URLify::filter ('Cağaloğlu, çalıştığı, müjde, lazım, mahkûm',60,"tr");
-// "cagaloglu-calistigi-mujde-lazim-mahkum"
+echo URLify::filter ('Cağaloğlu, çalıştığı, müjde, lazım, mahkûm', 60, 'tr');
+// "Cagaloglu-calistigi-mujde-lazim-mahkum"
 
 ?>
 ```

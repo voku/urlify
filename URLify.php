@@ -286,11 +286,17 @@ class URLify {
    * or an array of words.
    * 
    * @param mixed $words
+   * @param type $merge (keep the previous (default) remove-words-array)
    * @param String $language
    */
-  public static function remove_words($words, $language = 'de') {
+  public static function remove_words($words, $language = 'de', $merge = true) {
     $words = is_array($words) ? $words : array($words);
-    self::$remove_list[$language] = array_merge(self::get_remove_list($language), $words);
+    
+    if ($merge === true) {
+      self::$remove_list[$language] = array_merge(self::get_remove_list($language), $words);
+    } else {
+      self::$remove_list[$language] = $words; 
+    }
   }
   
   /**
@@ -340,42 +346,17 @@ class URLify {
   }
 
   /**
-   * Filters a string, e.g., "Petty theft" to "petty-theft"
-   * 
-   * @param String $text
-   * @param Int $length
-   * @param String $language
-   * @param Boolean $file_name
-   * @return String
-   */
-  public static function filter($text, $length = 60, $language = 'de', $file_name = false) {
-    $text = self::downcode($text, $language);
-
-    // remove all these words from the string before urlifying
-    $text = preg_replace('/\b(' . join('|', self::get_remove_list($language)) . ')\b/i', '', $text);
-
-    // if downcode doesn't hit, the char will be stripped here
-    $remove_pattern = ($file_name) ? '/[^-.\w\s]/u' : '/[^-\w\s]/u';
-
-    $text = preg_replace($remove_pattern, '', $text); // remove unneeded chars
-    $text = str_replace('_', ' ', $text);             // treat underscores as spaces
-    $text = preg_replace('/^\s+|\s+$/', '', $text);   // trim leading/trailing spaces
-    $text = preg_replace('/[-\s]+/', '-', $text);     // convert spaces to hyphens
-    $text = strtolower($text);                        // convert to lowercase
-
-    return trim(substr($text, 0, $length), '-');      // substr to first $length chars && trim "-"
-  }
-
-  /**
    * Convert a String to URL, e.g., "Petty<br>theft" to "Petty-theft"
    * 
    * @param String $text
    * @param Int $length
    * @param String $language
-   * @param Boolean $removeWords
+   * @param Boolean $file_name (keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg")
+   * @param Boolean $removeWords (remove some "words" -> set via "remove_words()")
+   * @param Boolean $strtolower
    * @return String
    */
-  public static function url($text, $length = 200, $language = 'de', $removeWords = false) {
+  public static function filter($text, $length = 200, $language = 'de', $file_name = false, $removeWords = false, $strtolower = false) {
     $urlThingsToDash = array(
       '&quot;' => '-', '&amp;' => '-', '&lt;' => '-', '&gt;' => '-', '&ndash;' => '-',
       '⁻' => '-', '—' => '-', '_' => '-', '`' => '-', '´' => '-', '\'' => '-'
@@ -388,15 +369,27 @@ class URLify {
     if ($removeWords === true) {
       $text = preg_replace('/\b(' . join('|', self::get_remove_list($language)) . ')\b/i', '', $text);
     }
+    
+    // if downcode doesn't hit, the char will be stripped here
+    $remove_pattern = ($file_name) ? '/[^-.\w\s]/u' : '/[^-\w\s]/u';
 
     $text = preg_replace('/^\s+|\s+$/', '', $text);     // trim leading & trailing spaces
     $text = preg_replace('/[-\s]+/', '-', $text);       // convert spaces to '-'
     $text = preg_replace('/<br\s*\/?>/i', '-', $text);  // replace <br> with '-'
     $text = strip_tags($text);                          // remove all html-tags
-    $text = preg_replace('/[^A-Za-z0-9-]/', '', $text); // remove all other characters
+    $text = preg_replace($remove_pattern, '', $text);   // remove unneeded chars
     $text = preg_replace(array('[^A-Za-z0-9]', '`[-]+`'), '-', $text);  // remove double '-'
 
-    return trim(substr($text, 0, $length), '-');        // substr to first $length chars && trim '-'
+    if ($strtolower === true) {
+      $text = strtolower($text);                        // convert to lowercase
+    }
+    
+    // "substr" only if "$length" is set
+    if ($length) {
+      $text = substr($text, 0, $length);
+    }
+    
+    return trim($text, '-');        // trim '-' from beginning & end of the string
   }
 
   /**

@@ -10,30 +10,21 @@ class URLifyTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals('F3PWS', URLify::downcode('ΦΞΠΏΣ'));
     $this->assertEquals('foo-bar', URLify::filter('_foo_bar_'));
   }
-
-  function test_filter() {
-    $this->assertEquals('jetudie-le-francais', URLify::filter('  J\'étudie le français  '));
-    $this->assertEquals('lo-siento-no-hablo-espanol', URLify::filter('Lo siento, no hablo español.'));
-    $this->assertEquals('f3pws', URLify::filter('ΦΞΠΏΣ'));
-    $this->assertEquals('foto.jpg', URLify::filter('фото.jpg', 60, "", $file_name = true));
-    // priorization of language-specific maps
-    $this->assertEquals('ouaeou', URLify::filter('ÖÜäöü', 60, "tr"));
-    $this->assertEquals('aeoeueaeoeue', URLify::filter('ÄÖÜäöü', 60, "de"));
-
-    $this->assertEquals('bobby-mcferrin-dont-worry-be-happy', URLify::filter("Bobby McFerrin — Don't worry be happy", 600, "en"));
-  }
   
-  function test_url() {
-    $this->assertEquals('J-etudie-le-francais', URLify::url('  J\'étudie le français  '));
-    $this->assertEquals('Lo-siento-no-hablo-espanol', URLify::url('Lo siento, no hablo español.'));
-    $this->assertEquals('F3PWS-Test', URLify::url('—ΦΞΠΏΣ—Test—'));
-    $this->assertEquals('foto', URLify::url('фото'));
+  function test_filter() {
+    $this->assertEquals('J-etudie-le-francais', URLify::filter('  J\'étudie le français  '));
+    $this->assertEquals('Lo-siento-no-hablo-espanol', URLify::filter('Lo siento, no hablo español.'));
+    $this->assertEquals('F3PWS-Test', URLify::filter('—ΦΞΠΏΣ—Test—'));
     // priorization of language-specific maps
-    $this->assertEquals('AeOeUeaeoeue-der', URLify::url('ÄÖÜäöü-der', 60, "de", false));
-    $this->assertEquals('AeOeUeaeoeue', URLify::url('ÄÖÜäöü-der-die-das', 60, "de", true));
+    $this->assertEquals('foto.jpg', URLify::filter('фото.jpg', 60, 'de', true));
+    $this->assertEquals('Foto.jpg', URLify::filter('Фото.jpg', 60, 'de', true));
+    $this->assertEquals('foto.jpg', URLify::filter('Фото.jpg', 60, 'de', true, false, true));
+    
+    $this->assertEquals('AeOeUeaeoeue-der', URLify::filter('ÄÖÜäöü-der', 60, 'de', false));
+    $this->assertEquals('AeOeUeaeoeue', URLify::filter('ÄÖÜäöü-der-die-das', 60, 'de', false, true));
 
-    $this->assertEquals('Bobby-McFerrin-Don-t-worry-be-happy', URLify::url("Bobby McFerrin — Don't worry be happy", 600, "en"));
-    $this->assertEquals('OUaeou', URLify::url('ÖÜäöü', 60, "tr"));
+    $this->assertEquals('Bobby-McFerrin-Don-t-worry-be-happy', URLify::filter('Bobby McFerrin — Don\'t worry be happy', 600, 'en'));
+    $this->assertEquals('OUaeou', URLify::filter('ÖÜäöü', 60, 'tr'));
   }
 
   function test_add_chars() {
@@ -46,9 +37,9 @@ class URLifyTest extends PHPUnit_Framework_TestCase {
   }
 
   function test_remove_words() {
-    $this->assertEquals('foo-bar', URLify::filter('foo bar'));
-    URLify::remove_words(array('foo', 'bar'));
-    $this->assertEquals('', URLify::filter('foo bar'));
+    $this->assertEquals('foo-bar', URLify::filter('foo bar', 60, 'de', false, true));
+    URLify::remove_words(array('foo', 'bar'), 'de');
+    $this->assertEquals('', URLify::filter('foo bar', 60, 'de', false, true));
   }
 
   function test_many_rounds_with_unknown_language_code() {
