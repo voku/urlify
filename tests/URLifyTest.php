@@ -16,6 +16,8 @@ class URLifyTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals('Lo-siento-no-hablo-espanol', URLify::filter('Lo siento, no hablo español.'));
     $this->assertEquals('F3PWS-Test', URLify::filter('—ΦΞΠΏΣ—Test—'));
     // priorization of language-specific maps
+    $this->assertEquals('abz', URLify::filter('أبز', 60, 'ar'));
+    
     $this->assertEquals('foto.jpg', URLify::filter('фото.jpg', 60, 'de', true));
     $this->assertEquals('Foto.jpg', URLify::filter('Фото.jpg', 60, 'de', true));
     $this->assertEquals('foto.jpg', URLify::filter('Фото.jpg', 60, 'de', true, false, true));
