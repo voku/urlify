@@ -19,8 +19,12 @@
       "homepage": "http://moelleken.org/"
     }
   ],
+    "config": {
+     "vendor-dir": "vendor/composer/"
+  },  
   "require": {
-    "php": ">=5.2"
+    "php": ">=5.2",
+    "xrstf/composer-php52": "dev-master"
   },
   "autoload": {
     "psr-0": {"URLify": ""}

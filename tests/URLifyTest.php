@@ -54,4 +54,3 @@ class URLifyTest extends PHPUnit_Framework_TestCase {
 
 }
 
-?>
