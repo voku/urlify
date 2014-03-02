@@ -359,19 +359,39 @@ class URLify {
    * Convert a String to URL, e.g., "Petty<br>theft" to "Petty-theft"
    * 
    * @param String $text
-   * @param Int $length
+   * @param Int $length length of the output string
    * @param String $language
-   * @param Boolean $file_name (keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg")
-   * @param Boolean $removeWords (remove some "words" -> set via "remove_words()")
-   * @param Boolean $strtolower
+   * @param Boolean $file_name keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
+   * @param Boolean $removeWords remove some "words" -> set via "remove_words()"
+   * @param Boolean $strtolower use strtolower() at the end
+   * @param String $seperator define a new seperator for the words
    * @return String
    */
-  public static function filter($text, $length = 200, $language = 'de', $file_name = false, $removeWords = false, $strtolower = false) {
-    $urlThingsToDash = array(
-        '&quot;' => '-', '&amp;' => '-', '&lt;' => '-', '&gt;' => '-', '&ndash;' => '-',
-        '⁻' => '-', '—' => '-', '_' => '-', '`' => '-', '´' => '-', '\'' => '-'
+  public static function filter($text, $length = 200, $language = 'de', $file_name = false, $removeWords = false, $strtolower = false, $seperator = '-') {
+
+    // seperator-fallback
+    if (!$seperator) {
+      $seperator = '-';
+    }
+    
+    $urlThingsToSeparator = array(
+        '&quot;' => $seperator,
+        '&amp;' => $seperator,
+        '&lt;' => $seperator,
+        '&gt;' => $seperator,
+        '&ndash;' => $seperator,
+        '-' => $seperator,
+        '⁻' => $seperator,
+        '—' => $seperator,
+        '_' => $seperator,
+        '`' => $seperator,
+        '´' => $seperator,
+        '\'' => $seperator
     );
-    self::add_chars($urlThingsToDash);
+    self::add_chars($urlThingsToSeparator);
+
+    $text = preg_replace('/\<br (.*?)\>/', $seperator, $text);  // replace <br .*> with $seperator
+    $text = strip_tags($text);                                  // remove all html-tags
 
     $text = self::downcode($text, $language);
 
@@ -380,18 +400,16 @@ class URLify {
       $text = preg_replace('/\b(' . join('|', self::get_remove_list($language)) . ')\b/i', '', $text);
     }
 
-    // if downcode doesn't hit, the char will be stripped here
+    // keep the "." from e.g.: a file-extension?
     $remove_pattern = ($file_name) ? '/[^-.\w\s]/u' : '/[^-\w\s]/u';
 
-    $text = preg_replace('/^\s+|\s+$/', '', $text);     // trim leading & trailing spaces
-    $text = preg_replace('/[-\s]+/', '-', $text);       // convert spaces to '-'
-    $text = preg_replace('/<br\s*\/?>/i', '-', $text);  // replace <br> with '-'
-    $text = strip_tags($text);                          // remove all html-tags
-    $text = preg_replace($remove_pattern, '', $text);   // remove unneeded chars
-    $text = preg_replace(array('[^A-Za-z0-9]', '`[-]+`'), '-', $text);  // remove double '-'
+    $text = preg_replace('/^\s+|\s+$/', '', $text);           // trim leading & trailing spaces
+    $text = preg_replace('/[-\s]+/', $seperator, $text);      // convert spaces to $seperator
+    $text = preg_replace($remove_pattern, '', $text);         // remove unneeded chars
+    $text = preg_replace(array('[^A-Za-z0-9]', '`[' . $seperator . ']+`'), $seperator, $text);  // remove double $seperator 
 
     if ($strtolower === true) {
-      $text = strtolower($text);                        // convert to lowercase
+      $text = strtolower($text);                              // convert to lowercase
     }
 
     // "substr" only if "$length" is set
