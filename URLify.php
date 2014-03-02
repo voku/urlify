@@ -390,7 +390,7 @@ class URLify {
     );
     self::add_chars($urlThingsToSeparator);
 
-    $text = preg_replace('/\<br (.*?)\>/', $seperator, $text);  // replace <br .*> with $seperator
+    $text = preg_replace('/\<br (.*?)\>/i', $seperator, $text);  // replace <br .*> with $seperator
     $text = strip_tags($text);                                  // remove all html-tags
 
     $text = self::downcode($text, $language);

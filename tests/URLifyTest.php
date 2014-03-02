@@ -22,7 +22,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals('Foto.jpg', URLify::filter('Фото.jpg', 60, 'de', true));
     $this->assertEquals('foto.jpg', URLify::filter('Фото.jpg', 60, 'de', true, false, true));
     
-    $this->assertEquals('Subject-from-a-CMS', URLify::filter('<strong>Subject<br class="test">from a<br style="clear:both;" />CMS</strong>', 60, 'de'));
+    $this->assertEquals('Subject-from-a-CMS', URLify::filter('<strong>Subject<BR class="test">from a<br style="clear:both;" />CMS</strong>', 60, 'de'));
     $this->assertEquals('AeOeUeaeoeue-der', URLify::filter('ÄÖÜäöü-der', 60, 'de', false));
     $this->assertEquals('aeoeueaeoeue der', URLify::filter('ÄÖÜäöü-der', 60, 'de', false, false, true, ' '));
     $this->assertEquals('AeOeUeaeoeue', URLify::filter('ÄÖÜäöü-der-die-das', 60, 'de', false, true));
