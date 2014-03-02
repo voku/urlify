@@ -116,7 +116,7 @@ class URLify {
       ),
       /* Arabic */
       'ar' => array(
-          'أ' => 'a', 'ب' => 'b', 'ت' => 't', 'ث' =>  'th', 'ج' => 'g', 'ح' => 'h', 'خ' => 'kh', 'د' => 'd',
+          'أ' => 'a', 'ب' => 'b', 'ت' => 't', 'ث' => 'th', 'ج' => 'g', 'ح' => 'h', 'خ' => 'kh', 'د' => 'd',
           'ذ' => 'th', 'ر' => 'r', 'ز' => 'z', 'س' => 's', 'ش' => 'sh', 'ص' => 's', 'ض' => 'd', 'ط' => 't',
           'ظ' => 'th', 'ع' => 'aa', 'غ' => 'gh', 'ف' => 'f', 'ق' => 'k', 'ك' => 'k', 'ل' => 'l', 'م' => 'm',
           'ن' => 'n', 'ه' => 'h', 'و' => 'o', 'ي' => 'y'
@@ -235,24 +235,24 @@ class URLify {
    * @return type
    */
   private static function init($language = 'de') {
-    
+
     /* check if lang is set */
     if (!$language) {
       return false;
     }
-    
+
     /* check if we already created the regex for this lang */
     if (
-      count(self::$map) > 0 &&
-      $language == self::$language
+            count(self::$map) > 0 &&
+            $language == self::$language
     ) {
       return true;
     }
 
     /* is a specific map associated with $language ? */
     if (
-      isset(self::$maps[$language]) && 
-      is_array(self::$maps[$language])
+            isset(self::$maps[$language]) &&
+            is_array(self::$maps[$language])
     ) {
       /* move this map to end. This means it will have priority over others */
       $m = self::$maps[$language];
@@ -271,12 +271,12 @@ class URLify {
         self::$chars .= $orig;
       }
     }
-    
+
     self::$regex = '/[' . self::$chars . ']/u';
 
     // DEBUG
     //echo self::$regex . "\n<br>";
-    
+
     return true;
   }
 
@@ -301,14 +301,14 @@ class URLify {
    */
   public static function remove_words($words, $language = 'de', $merge = true) {
     $words = is_array($words) ? $words : array($words);
-    
+
     if ($merge === true) {
       self::$remove_list[$language] = array_merge(self::get_remove_list($language), $words);
     } else {
-      self::$remove_list[$language] = $words; 
+      self::$remove_list[$language] = $words;
     }
   }
-  
+
   /**
    * return the "self::$remove_list[$language]" array
    * 
@@ -320,15 +320,15 @@ class URLify {
     if (!$language) {
       return array();
     }
-    
+
     // check for array
     if (
-      !isset(self::$remove_list[$language]) || 
-      !is_array(self::$remove_list[$language])
+            !isset(self::$remove_list[$language]) ||
+            !is_array(self::$remove_list[$language])
     ) {
       return array();
     }
-    
+
     return self::$remove_list[$language];
   }
 
@@ -368,18 +368,18 @@ class URLify {
    */
   public static function filter($text, $length = 200, $language = 'de', $file_name = false, $removeWords = false, $strtolower = false) {
     $urlThingsToDash = array(
-      '&quot;' => '-', '&amp;' => '-', '&lt;' => '-', '&gt;' => '-', '&ndash;' => '-',
-      '⁻' => '-', '—' => '-', '_' => '-', '`' => '-', '´' => '-', '\'' => '-'
+        '&quot;' => '-', '&amp;' => '-', '&lt;' => '-', '&gt;' => '-', '&ndash;' => '-',
+        '⁻' => '-', '—' => '-', '_' => '-', '`' => '-', '´' => '-', '\'' => '-'
     );
     self::add_chars($urlThingsToDash);
-    
+
     $text = self::downcode($text, $language);
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
       $text = preg_replace('/\b(' . join('|', self::get_remove_list($language)) . ')\b/i', '', $text);
     }
-    
+
     // if downcode doesn't hit, the char will be stripped here
     $remove_pattern = ($file_name) ? '/[^-.\w\s]/u' : '/[^-\w\s]/u';
 
@@ -393,12 +393,12 @@ class URLify {
     if ($strtolower === true) {
       $text = strtolower($text);                        // convert to lowercase
     }
-    
+
     // "substr" only if "$length" is set
-    if ($length) {
+    if ($length && $length > 0) {
       $text = substr($text, 0, $length);
     }
-    
+
     return trim($text, '-');        // trim '-' from beginning & end of the string
   }
 
