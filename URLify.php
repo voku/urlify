@@ -373,25 +373,33 @@ class URLify {
     if (!$seperator) {
       $seperator = '-';
     }
-    
-    $urlThingsToSeparator = array(
-        '&quot;' => $seperator,
-        '&amp;' => $seperator,
-        '&lt;' => $seperator,
-        '&gt;' => $seperator,
-        '&ndash;' => $seperator,
-        '-' => $seperator,
-        '⁻' => $seperator,
-        '—' => $seperator,
-        '_' => $seperator,
-        '`' => $seperator,
-        '´' => $seperator,
-        '\'' => $seperator
-    );
-    self::add_chars($urlThingsToSeparator);
 
-    $text = preg_replace('/\<br (.*?)\>/i', $seperator, $text);  // replace <br .*> with $seperator
-    $text = strip_tags($text);                                  // remove all html-tags
+    // search some url-things and replace it with the seperator
+    $searchArray = array(
+        '/&quot;/',   // "
+        '/&amp;/',    // &
+        '/&lt;/',     // <
+        '/&gt;/',     // >
+        '/&ndash;/',  // –
+        '/&mdash;/',  // —
+        '/-/',
+        '/⁻/',
+        '/—/',
+        '/_/',
+        '/"/',
+        '/`/',
+        '/´/',
+        '/\'/',
+        '/\<br (.*?)\>/i'
+    );
+
+    $replaceArray = array();
+    foreach ($searchArray as $key => $searchTmp) {
+      $replaceArray[$key] = $seperator;
+    }
+
+    $text = preg_replace($searchArray, $replaceArray, $text);     // replace with $seperator
+    $text = strip_tags($text);                                    // remove all other html-tags
 
     $text = self::downcode($text, $language);
 
@@ -401,10 +409,10 @@ class URLify {
     }
 
     // keep the "." from e.g.: a file-extension?
-    $remove_pattern = ($file_name) ? '/[^-.\w\s]/u' : '/[^-\w\s]/u';
+    $remove_pattern = ($file_name) ? '/[^' . $seperator . '.\w\s]/u' : '/[^' . $seperator . '\w\s]/u';
 
     $text = preg_replace('/^\s+|\s+$/', '', $text);           // trim leading & trailing spaces
-    $text = preg_replace('/[-\s]+/', $seperator, $text);      // convert spaces to $seperator
+    $text = preg_replace('/[' . $seperator . '\s]+/', $seperator, $text);      // convert spaces to $seperator
     $text = preg_replace($remove_pattern, '', $text);         // remove unneeded chars
     $text = preg_replace(array('[^A-Za-z0-9]', '`[' . $seperator . ']+`'), $seperator, $text);  // remove double $seperator 
 
@@ -417,7 +425,8 @@ class URLify {
       $text = substr($text, 0, $length);
     }
 
-    return trim($text, '-');        // trim '-' from beginning & end of the string
+    // trim $seperator from beginning and end of the string
+    return trim($text, $seperator);
   }
 
   /**
