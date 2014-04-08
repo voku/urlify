@@ -23,8 +23,7 @@
      "vendor-dir": "vendor/composer/"
   },  
   "require": {
-    "php": ">=5.2",
-    "xrstf/composer-php52": "dev-master"
+    "php": ">=5.3"
   },
   "autoload": {
     "psr-0": {"URLify": ""}
