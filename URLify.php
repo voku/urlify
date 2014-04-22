@@ -425,7 +425,7 @@ class URLify {
     }
 
     // keep the "." from e.g.: a file-extension?
-    $remove_pattern = ($file_name) ? '/[^' . $seperator . '.\w\s]/u' : '/[^' . $seperator . '\w\s]/u';
+    $remove_pattern = ($file_name) ? '/[^' . $seperator . '.\-a-zA-Z0-9\s]/u' : '/[^' . $seperator . '\-a-zA-Z0-9\s]/u';
 
     $text = preg_replace('/^\s+|\s+$/', '', $text);           // trim leading & trailing spaces
     $text = preg_replace('/[' . $seperator . '\s]+/', $seperator, $text);      // convert spaces to $seperator
