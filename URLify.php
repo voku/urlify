@@ -246,9 +246,10 @@ class URLify {
 
   /**
    * Initializes the character map.
-   * 
-   * @param String $language
-   * @return type
+   *
+   * @param string $language
+   *
+   * @return bool
    */
   private static function init($language = 'de') {
 
@@ -290,9 +291,6 @@ class URLify {
 
     self::$regex = '/[' . self::$chars . ']/u';
 
-    // DEBUG
-    //echo self::$regex . "\n<br>";
-
     return true;
   }
 
@@ -312,7 +310,7 @@ class URLify {
    * or an array of words.
    * 
    * @param mixed $words
-   * @param type $merge (keep the previous (default) remove-words-array)
+   * @param boolean $merge (keep the previous (default) remove-words-array)
    * @param String $language
    */
   public static function remove_words($words, $language = 'de', $merge = true) {
@@ -361,7 +359,8 @@ class URLify {
     self::init($language);
 
     if (preg_match_all(self::$regex, $text, $matches)) {
-      for ($i = 0; $i < count($matches[0]); $i++) {
+      $matchesCounter = count($matches[0]);
+      for ($i = 0; $i < $matchesCounter; $i++) {
         $char = $matches[0][$i];
         if (isset(self::$map[$char])) {
           $text = str_replace($char, self::$map[$char], $text);
@@ -447,6 +446,10 @@ class URLify {
 
   /**
    * Alias of `URLify::downcode()`.
+   *
+   * @param $text
+   *
+   * @return String
    */
   public static function transliterate($text) {
     return self::downcode($text);
