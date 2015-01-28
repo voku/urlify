@@ -406,6 +406,9 @@ class URLify {
    * @return String
    */
   public static function filter($text, $length = 200, $language = 'de', $file_name = false, $removeWords = false, $strtolower = false, $seperator = '-') {
+    if (!static::$cache instanceof \voku\cache\Cache) {
+      static::$cache = new \voku\cache\Cache();
+    }
 
     // seperator-fallback
     if (!$seperator) {
