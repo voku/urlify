@@ -359,15 +359,21 @@ class URLify {
   public static function downcode($text, $language = 'de') {
     self::init($language);
 
+    $searchArray = array();
+    $replaceArray = array();
     if (preg_match_all(self::$regex, $text, $matches)) {
       $matchesCounter = count($matches[0]);
+
       for ($i = 0; $i < $matchesCounter; $i++) {
         $char = $matches[0][$i];
         if (isset(self::$map[$char])) {
-          $text = str_replace($char, self::$map[$char], $text);
+          $searchArray[] = $char;
+          $replaceArray[] = self::$map[$char];
         }
       }
     }
+
+    $text = str_replace($searchArray, $replaceArray, $text);
 
     return $text;
   }
@@ -410,31 +416,48 @@ class URLify {
         '/\<br (.*?)\>/i'
     );
 
-    $replaceArray = array();
-    foreach ($searchArray as $key => $searchTmp) {
-      $replaceArray[$key] = $seperator;
-    }
-
-    $text = preg_replace($searchArray, $replaceArray, $text);     // replace with $seperator
-    $text = strip_tags($text);                                    // remove all other html-tags
+    $text = preg_replace($searchArray, $seperator, $text);     // replace with $seperator
+    $text = strip_tags($text);                                 // remove all other html-tags
 
     $text = self::downcode($text, $language);
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
-      $text = preg_replace('/\b(' . join('|', self::get_remove_list($language)) . ')\b/i', '', $text);
+      $removeWordsSearch = '/\b(' . join('|', self::get_remove_list($language)) . ')\b/i';
+    } else {
+      $removeWordsSearch = '//';
     }
 
     // keep the "." from e.g.: a file-extension?
-    $remove_pattern = ($file_name) ? '/[^' . $seperator . '.\-a-zA-Z0-9\s]/u' : '/[^' . $seperator . '\-a-zA-Z0-9\s]/u';
+    if ($file_name) {
+      $remove_pattern = '/[^' . $seperator . '.\-a-zA-Z0-9\s]/u';
+    } else {
+      $remove_pattern = '/[^' . $seperator . '\-a-zA-Z0-9\s]/u';
+    }
 
-    $text = preg_replace('/^\s+|\s+$/', '', $text);           // trim leading & trailing spaces
-    $text = preg_replace('/[' . $seperator . '\s]+/', $seperator, $text);      // convert spaces to $seperator
-    $text = preg_replace($remove_pattern, '', $text);         // remove unneeded chars
-    $text = preg_replace(array('[^A-Za-z0-9]', '`[' . $seperator . ']+`'), $seperator, $text);  // remove double $seperator 
+    $text = preg_replace(
+        array(
+            '`[' . $seperator . ']+`',      // 6) remove double $seperator
+            '[^A-Za-z0-9]',                 // 5) only keep default-chars
+            $remove_pattern,                // 4) remove unneeded chars
+            '/[' . $seperator . '\s]+/',    // 3) convert spaces to $seperator
+            '/^\s+|\s+$/',                  // 2) trim leading & trailing spaces
+            $removeWordsSearch,             // 1) remove some extras words
+        ),
+        array(
+            $seperator,
+            '',
+            '',
+            $seperator,
+            '',
+            '',
+        ),
+        $text
+    );
 
+    // convert to lowercase
     if ($strtolower === true) {
-      $text = strtolower($text);                              // convert to lowercase
+      $text = strtolower($text);
     }
 
     // "substr" only if "$length" is set
