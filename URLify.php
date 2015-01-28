@@ -358,6 +358,16 @@ class URLify {
   public static function downcode($text, $language = 'de') {
     self::init($language);
 
+    $cache = new \voku\cache\Cache();
+    $cacheKey = "downcode-" . md5($text . $language . self::$regex);
+    if (
+        $cache->getCacheIsReady() === true
+        &&
+        $cache->existsItem($cacheKey)
+    ) {
+      return $cache->getItem($cacheKey);
+    }
+
     if (preg_match_all(self::$regex, $text, $matches)) {
       $matchesCounter = count($matches[0]);
       for ($i = 0; $i < $matchesCounter; $i++) {
@@ -367,6 +377,11 @@ class URLify {
         }
       }
     }
+
+    if ($cache->getCacheIsReady() === true) {
+      $cache->setItem($cacheKey, $text);
+    }
+
     return $text;
   }
 
@@ -387,6 +402,16 @@ class URLify {
     // seperator-fallback
     if (!$seperator) {
       $seperator = '-';
+    }
+
+    $cache = new \voku\cache\Cache();
+    $cacheKey = "filter-" . md5($text . $length . $language . (int)$file_name . (int)$removeWords . (int)$strtolower . $seperator);
+    if (
+        $cache->getCacheIsReady() === true
+        &&
+        $cache->existsItem($cacheKey)
+    ) {
+      return $cache->getItem($cacheKey);
     }
 
     // search some url-things and replace it with the seperator
@@ -441,7 +466,13 @@ class URLify {
     }
 
     // trim $seperator from beginning and end of the string
-    return trim($text, $seperator);
+    $text = trim($text, $seperator);
+
+    if ($cache->getCacheIsReady() === true) {
+      $cache->setItem($cacheKey, $text);
+    }
+
+    return $text;
   }
 
   /**
