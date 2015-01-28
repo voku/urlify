@@ -17,6 +17,11 @@
  */
 class URLify {
 
+  /**
+   * @var \voku\cache\Cache
+   */
+  private static $cache;
+
   public static $maps = array(
       /* German */
       'de' => array(
@@ -251,7 +256,11 @@ class URLify {
    *
    * @return bool
    */
-  private static function init($language = 'de') {
+  private static function init($language = 'de')
+  {
+    if (!static::$cache instanceof \voku\cache\Cache) {
+      static::$cache = new \voku\cache\Cache();
+    }
 
     /* check if lang is set */
     if (!$language) {
@@ -358,14 +367,13 @@ class URLify {
   public static function downcode($text, $language = 'de') {
     self::init($language);
 
-    $cache = new \voku\cache\Cache();
     $cacheKey = "downcode-" . md5($text . $language . self::$regex);
     if (
-        $cache->getCacheIsReady() === true
+        static::$cache->getCacheIsReady() === true
         &&
-        $cache->existsItem($cacheKey)
+        static::$cache->existsItem($cacheKey)
     ) {
-      return $cache->getItem($cacheKey);
+      return static::$cache->getItem($cacheKey);
     }
 
     if (preg_match_all(self::$regex, $text, $matches)) {
@@ -378,8 +386,8 @@ class URLify {
       }
     }
 
-    if ($cache->getCacheIsReady() === true) {
-      $cache->setItem($cacheKey, $text);
+    if (static::$cache->getCacheIsReady() === true) {
+      static::$cache->setItem($cacheKey, $text);
     }
 
     return $text;
@@ -404,14 +412,13 @@ class URLify {
       $seperator = '-';
     }
 
-    $cache = new \voku\cache\Cache();
     $cacheKey = "filter-" . md5($text . $length . $language . (int)$file_name . (int)$removeWords . (int)$strtolower . $seperator);
     if (
-        $cache->getCacheIsReady() === true
+        static::$cache->getCacheIsReady() === true
         &&
-        $cache->existsItem($cacheKey)
+        static::$cache->existsItem($cacheKey)
     ) {
-      return $cache->getItem($cacheKey);
+      return static::$cache->getItem($cacheKey);
     }
 
     // search some url-things and replace it with the seperator
@@ -468,8 +475,8 @@ class URLify {
     // trim $seperator from beginning and end of the string
     $text = trim($text, $seperator);
 
-    if ($cache->getCacheIsReady() === true) {
-      $cache->setItem($cacheKey, $text);
+    if (static::$cache->getCacheIsReady() === true) {
+      static::$cache->setItem($cacheKey, $text);
     }
 
     return $text;
