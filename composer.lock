@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "964ea380d4d695fceae6a896582cec19",
+    "hash": "e89733bf0b8f9f3186d98637c6fd0952",
     "packages": [
         {
             "name": "voku/portable-utf8",
