@@ -10,9 +10,7 @@
       "name": "Johnny Broadway",
       "email": "johnny@johnnybroadway.com",
       "homepage": "http://www.johnnybroadway.com/"
-    }
-  ],
-  "authors": [
+    },
     {
       "name": "Lars Moelleken",
       "email": "lars@moelleken.org",
@@ -20,7 +18,8 @@
     }
   ],
   "require": {
-    "php": ">=5.3"
+    "php": ">=5.3",
+    "voku/portable-utf8": "1.0.*"
   },
   "require-dev": {
     "phpunit/phpunit": "4.*"

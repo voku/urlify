@@ -1,4 +1,5 @@
 <?php
+use voku\helper\UTF8;
 
 /**
  * A PHP port of URLify.js from the Django project
@@ -18,7 +19,7 @@
 class URLify {
 
   public static $maps = array(
-      /* German */
+      // German
       'de' => array(
           'Ä' => 'Ae', 'Ö' => 'Oe', 'Ü' => 'Ue', 'ä' => 'ae', 'ö' => 'oe', 'ü' => 'ue', 'ß' => 'ss',
           'ẞ' => 'SS'
@@ -37,7 +38,7 @@ class URLify {
       'latin_symbols' => array(
           '©' => '(c)', '@' => '(at)'
       ),
-      /* Greek */
+      // Greek
       'el' => array(
           'α' => 'a', 'β' => 'b', 'γ' => 'g', 'δ' => 'd', 'ε' => 'e', 'ζ' => 'z', 'η' => 'h', 'θ' => '8',
           'ι' => 'i', 'κ' => 'k', 'λ' => 'l', 'μ' => 'm', 'ν' => 'n', 'ξ' => '3', 'ο' => 'o', 'π' => 'p',
@@ -50,12 +51,12 @@ class URLify {
           'Ά' => 'A', 'Έ' => 'E', 'Ί' => 'I', 'Ό' => 'O', 'Ύ' => 'Y', 'Ή' => 'H', 'Ώ' => 'W', 'Ϊ' => 'I',
           'Ϋ' => 'Y'
       ),
-      /* Turkish */
+      // Turkish
       'tr' => array(
           'ş' => 's', 'Ş' => 'S', 'ı' => 'i', 'İ' => 'I', 'ç' => 'c', 'Ç' => 'C', 'ü' => 'u', 'Ü' => 'U',
           'ö' => 'o', 'Ö' => 'O', 'ğ' => 'g', 'Ğ' => 'G'
       ),
-      /* Russian */
+      // Russian
       'ru' => array(
           'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'yo', 'ж' => 'zh',
           'з' => 'z', 'и' => 'i', 'й' => 'j', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o',
@@ -69,38 +70,38 @@ class URLify {
           'Я' => 'Ya',
           '№' => ''
       ),
-      /* Ukrainian */
+      // Ukrainian
       'uk' => array(
           'Є' => 'Ye', 'І' => 'I', 'Ї' => 'Yi', 'Ґ' => 'G', 'є' => 'ye', 'і' => 'i', 'ї' => 'yi', 'ґ' => 'g'
       ),
-      /* Czech */
+      // Czech
       'cs' => array(
           'č' => 'c', 'ď' => 'd', 'ě' => 'e', 'ň' => 'n', 'ř' => 'r', 'š' => 's', 'ť' => 't', 'ů' => 'u',
           'ž' => 'z', 'Č' => 'C', 'Ď' => 'D', 'Ě' => 'E', 'Ň' => 'N', 'Ř' => 'R', 'Š' => 'S', 'Ť' => 'T',
           'Ů' => 'U', 'Ž' => 'Z'
       ),
-      /* Polish */
+      // Polish
       'pl' => array(
           'ą' => 'a', 'ć' => 'c', 'ę' => 'e', 'ł' => 'l', 'ń' => 'n', 'ó' => 'o', 'ś' => 's', 'ź' => 'z',
           'ż' => 'z', 'Ą' => 'A', 'Ć' => 'C', 'Ę' => 'e', 'Ł' => 'L', 'Ń' => 'N', 'Ó' => 'O', 'Ś' => 'S',
           'Ź' => 'Z', 'Ż' => 'Z'
       ),
-      /* Romanian */
+      // Romanian
       'ro' => array(
           'ă' => 'a', 'â' => 'a', 'î' => 'i', 'ș' => 's', 'ț' => 't', 'Ţ' => 'T', 'ţ' => 't'
       ),
-      /* Latvian */
+      // Latvian
       'lv' => array(
           'ā' => 'a', 'č' => 'c', 'ē' => 'e', 'ģ' => 'g', 'ī' => 'i', 'ķ' => 'k', 'ļ' => 'l', 'ņ' => 'n',
           'š' => 's', 'ū' => 'u', 'ž' => 'z', 'Ā' => 'A', 'Č' => 'C', 'Ē' => 'E', 'Ģ' => 'G', 'Ī' => 'i',
           'Ķ' => 'k', 'Ļ' => 'L', 'Ņ' => 'N', 'Š' => 'S', 'Ū' => 'u', 'Ž' => 'Z'
       ),
-      /* Lithuanian */
+      // Lithuanian
       'lt' => array(
           'ą' => 'a', 'č' => 'c', 'ę' => 'e', 'ė' => 'e', 'į' => 'i', 'š' => 's', 'ų' => 'u', 'ū' => 'u', 'ž' => 'z',
           'Ą' => 'A', 'Č' => 'C', 'Ę' => 'E', 'Ė' => 'E', 'Į' => 'I', 'Š' => 'S', 'Ų' => 'U', 'Ū' => 'U', 'Ž' => 'Z'
       ),
-      /* Vietnamese */
+      // Vietnamese
       'vn' => array(
           'Á' => 'A', 'À' => 'A', 'Ả' => 'A', 'Ã' => 'A', 'Ạ' => 'A', 'Ă' => 'A', 'Ắ' => 'A', 'Ằ' => 'A', 'Ẳ' => 'A', 'Ẵ' => 'A', 'Ặ' => 'A', 'Â' => 'A', 'Ấ' => 'A', 'Ầ' => 'A', 'Ẩ' => 'A', 'Ẫ' => 'A', 'Ậ' => 'A',
           'á' => 'a', 'à' => 'a', 'ả' => 'a', 'ã' => 'a', 'ạ' => 'a', 'ă' => 'a', 'ắ' => 'a', 'ằ' => 'a', 'ẳ' => 'a', 'ẵ' => 'a', 'ặ' => 'a', 'â' => 'a', 'ấ' => 'a', 'ầ' => 'a', 'ẩ' => 'a', 'ẫ' => 'a', 'ậ' => 'a',
@@ -114,19 +115,19 @@ class URLify {
           'Ý' => 'Y', 'Ỳ' => 'Y', 'Ỷ' => 'Y', 'Ỹ' => 'Y', 'Ỵ' => 'Y', 'ý' => 'y', 'ỳ' => 'y', 'ỷ' => 'y', 'ỹ' => 'y', 'ỵ' => 'y',
           'Đ' => 'D', 'đ' => 'd'
       ),
-      /* Arabic */
+      // Arabic
       'ar' => array (
         'أ' => 'a', 'ب' => 'b', 'ت' => 't', 'ث' => 'th', 'ج' => 'g', 'ح' => 'h', 'خ' => 'kh', 'د' => 'd',
         'ذ' => 'th', 'ر' => 'r', 'ز' => 'z', 'س' => 's', 'ش' => 'sh', 'ص' => 's', 'ض' => 'd', 'ط' => 't',
         'ظ' => 'th', 'ع' => 'aa', 'غ' => 'gh', 'ف' => 'f', 'ق' => 'k', 'ك' => 'k', 'ل' => 'l', 'م' => 'm',
         'ن' => 'n', 'ه' => 'h', 'و' => 'o', 'ي' => 'y'
       ),
-      /* Serbian */
+      // Serbian
       'sr' => array (
         'ђ' => 'dj', 'ј' => 'j', 'љ' => 'lj', 'њ' => 'nj', 'ћ' => 'c', 'џ' => 'dz', 'đ' => 'dj',
         'Ђ' => 'Dj', 'Ј' => 'j', 'Љ' => 'Lj', 'Њ' => 'Nj', 'Ћ' => 'C', 'Џ' => 'Dz', 'Đ' => 'Dj'
       ),
-      /* Azerbaijani */
+      // Azerbaijani
       'az' => array (
         'ç' => 'c', 'ə' => 'e', 'ğ' => 'g', 'ı' => 'i', 'ö' => 'o', 'ş' => 's', 'ü' => 'u',
         'Ç' => 'C', 'Ə' => 'E', 'Ğ' => 'G', 'İ' => 'I', 'Ö' => 'O', 'Ş' => 'S', 'Ü' => 'U'
@@ -177,70 +178,78 @@ class URLify {
           'since', 'than', 'the', 'this', 'that', 'to', 'up', 'via',
           'with'
       ),
-      /* German */
+      // German
       'de' => array(
           'ein', 'eine', 'wie', 'an', 'vor', 'aber', 'von', 'für',
           'ist', 'in', 'von', 'auf', 'pro', 'da', 'als',
           'der', 'die', 'das', 'dass', 'zu', 'mit'
       ),
-      /* Greek */
+      // Greek
       'el' => array(
       ),
-      /* Turkish */
+      // Turkish
       'tr' => array(
       ),
-      /* Russian */
+      // Russian
       'ru' => array(
       ),
-      /* Ukrainian */
+      // Ukrainian
       'uk' => array(
       ),
-      /* Czech */
+      // Czech
       'cs' => array(
       ),
-      /* Polish */
+      // Polish
       'pl' => array(
       ),
-      /* Romanian */
+      // Romanian
       'ro' => array(
       ),
-      /* Latvian */
+      // Latvian
       'lv' => array(
       ),
-      /* Lithuanian */
+      // Lithuanian
       'lt' => array(
       ),
-      /* Vietnamese */
+      // Vietnamese
       'vn' => array(
       ),
-      /* Arabic */
+      // Arabic
       'ar' => array(
       ),
-      /* Serbian */
+      // Serbian
       'sr' => array(
       ),
-      /* Azerbaijani */
+      // Azerbaijani
       'az' => array(
       )
   );
 
   /**
    * The character map.
+   *
+   * @var array
    */
   private static $map = array();
 
   /**
    * The character list as a string.
+   *
+   * @var string
    */
   private static $chars = '';
 
   /**
    * The character list as a regular expression.
+   *
+   * @var string
    */
   private static $regex = '';
 
   /**
    * The current language
+   *
+   * @var string
    */
   private static $language = '';
 
@@ -253,32 +262,31 @@ class URLify {
    */
   private static function init($language = 'de')
   {
-
-    /* check if lang is set */
+    // check if lang is set
     if (!$language) {
       return false;
     }
 
-    /* check if we already created the regex for this lang */
+    // check if we already created the regex for this lang
     if (
-            count(self::$map) > 0 &&
-            $language == self::$language
+        count(self::$map) > 0 &&
+        $language == self::$language
     ) {
       return true;
     }
 
-    /* is a specific map associated with $language ? */
+    // is a specific map associated with $language?
     if (
-            isset(self::$maps[$language]) &&
-            is_array(self::$maps[$language])
+        isset(self::$maps[$language]) &&
+        is_array(self::$maps[$language])
     ) {
-      /* move this map to end. This means it will have priority over others */
+      // move this map to end. This means it will have priority over others
       $m = self::$maps[$language];
       unset(self::$maps[$language]);
       self::$maps[$language] = $m;
     }
 
-    /* reset static vars */
+    // reset static vars
     self::$language = $language;
     self::$map = array();
     self::$chars = '';
@@ -297,10 +305,11 @@ class URLify {
 
   /**
    * Add new characters to the list. `$map` should be a hash.
-   * 
+   *
    * @param Array $map
    */
-  public static function add_chars(Array $map) {
+  public static function add_chars(Array $map)
+  {
     self::$maps[] = $map;
     self::$map = array();
     self::$chars = '';
@@ -309,12 +318,13 @@ class URLify {
   /**
    * Append words to the remove list. Accepts either single words
    * or an array of words.
-   * 
-   * @param mixed $words
+   *
+   * @param mixed   $words
    * @param boolean $merge (keep the previous (default) remove-words-array)
-   * @param String $language
+   * @param String  $language
    */
-  public static function remove_words($words, $language = 'de', $merge = true) {
+  public static function remove_words($words, $language = 'de', $merge = true)
+  {
     $words = is_array($words) ? $words : array($words);
 
     if ($merge === true) {
@@ -326,11 +336,13 @@ class URLify {
 
   /**
    * return the "self::$remove_list[$language]" array
-   * 
+   *
    * @param String $language
+   *
    * @return Array
    */
-  private static function get_remove_list($language = 'de') {
+  private static function get_remove_list($language = 'de')
+  {
     // check for language
     if (!$language) {
       return array();
@@ -338,8 +350,8 @@ class URLify {
 
     // check for array
     if (
-            !isset(self::$remove_list[$language]) ||
-            !is_array(self::$remove_list[$language])
+        !isset(self::$remove_list[$language]) ||
+        !is_array(self::$remove_list[$language])
     ) {
       return array();
     }
@@ -351,12 +363,14 @@ class URLify {
    * Transliterates characters to their ASCII equivalents.
    * $language specifies a priority for a specific language.
    * The latter is useful if languages have different rules for the same character.
-   * 
+   *
    * @param String $text
    * @param String $language
+   *
    * @return String
    */
-  public static function downcode($text, $language = 'de') {
+  public static function downcode($text, $language = 'de')
+  {
     self::init($language);
 
     $searchArray = array();
@@ -373,25 +387,24 @@ class URLify {
       }
     }
 
-    $text = str_replace($searchArray, $replaceArray, $text);
-
-    return $text;
+    return str_replace($searchArray, $replaceArray, $text);
   }
 
   /**
    * Convert a String to URL, e.g., "Petty<br>theft" to "Petty-theft"
-   * 
-   * @param String $text
-   * @param Int $length length of the output string
-   * @param String $language
-   * @param Boolean $file_name keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
+   *
+   * @param String  $text
+   * @param Int     $length      length of the output string
+   * @param String  $language
+   * @param Boolean $file_name   keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
    * @param Boolean $removeWords remove some "words" -> set via "remove_words()"
-   * @param Boolean $strtolower use strtolower() at the end
-   * @param String $seperator define a new seperator for the words
+   * @param Boolean $strtolower  use strtolower() at the end
+   * @param String  $seperator   define a new seperator for the words
+   *
    * @return String
    */
-  public static function filter($text, $length = 200, $language = 'de', $file_name = false, $removeWords = false, $strtolower = false, $seperator = '-') {
-
+  public static function filter($text, $length = 200, $language = 'de', $file_name = false, $removeWords = false, $strtolower = false, $seperator = '-')
+  {
     // seperator-fallback
     if (!$seperator) {
       $seperator = '-';
@@ -416,10 +429,11 @@ class URLify {
         '/\<br (.*?)\>/i'
     );
 
-    $text = preg_replace($searchArray, $seperator, $text);     // replace with $seperator
-    $text = strip_tags($text);                                 // remove all other html-tags
-
-    $text = self::downcode($text, $language);
+    $text = preg_replace($searchArray, $seperator, $text);     // 1) replace with $seperator
+    $text = UTF8::strip_tags($text);                           // 2) remove all other html-tags
+    $text = self::downcode($text, $language);                  // 3) use special language replacer
+    $text = UTF8::toAscii($text, '');                          // 4) convert everything into ACII
+    $text = preg_replace($searchArray, $seperator, $text);     // 5) replace with $seperator, again
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
@@ -478,7 +492,8 @@ class URLify {
    *
    * @return String
    */
-  public static function transliterate($text) {
+  public static function transliterate($text)
+  {
     return self::downcode($text);
   }
 
