@@ -132,6 +132,7 @@ class URLify {
         'ç' => 'c', 'ə' => 'e', 'ğ' => 'g', 'ı' => 'i', 'ö' => 'o', 'ş' => 's', 'ü' => 'u',
         'Ç' => 'C', 'Ə' => 'E', 'Ğ' => 'G', 'İ' => 'I', 'Ö' => 'O', 'Ş' => 'S', 'Ü' => 'U'
     ),
+    // other
     'other' => array(
         'ǽ' => 'ae', 'ª' => 'a', 'ǎ' => 'a', 'ǻ' => 'a',
         'Ǽ' => 'AE', 'Ǎ' => 'A', 'Ǻ' => 'A',
@@ -233,6 +234,29 @@ class URLify {
   private static $map = array();
 
   /**
+   * a array of strings that will convert into the seperator-char - used by "URLify::filter()"
+   *
+   * @var array
+   */
+  private static $arrayToSeperator = array(
+      '/&quot;/',   // "
+      '/&amp;/',    // &
+      '/&lt;/',     // <
+      '/&gt;/',     // >
+      '/&ndash;/',  // –
+      '/&mdash;/',  // —
+      '/-/',
+      '/⁻/',
+      '/—/',
+      '/_/',
+      '/"/',
+      '/`/',
+      '/´/',
+      '/\'/',
+      '/\<br (.*?)\>/i'
+  );
+
+  /**
    * The character list as a string.
    *
    * @var string
@@ -304,6 +328,19 @@ class URLify {
   }
 
   /**
+   * Add new strings the will be replaced with the seperator
+   *
+   * @param array $array
+   */
+  public static function add_array_to_seperator(Array $array, $append = true)
+  {
+    if ($append === true) {
+      self::$arrayToSeperator = array_merge(self::$arrayToSeperator, $array);
+    }
+    self::$arrayToSeperator = $array;
+  }
+
+  /**
    * Add new characters to the list. `$map` should be a hash.
    *
    * @param Array $map
@@ -366,10 +403,13 @@ class URLify {
    *
    * @param String $text
    * @param String $language
+   * @param boolean $asciiOnlyForLanguage set to "true" if you only want to convert the language-maps
    *
-   * @return String
+   * @param string $substChr
+   *
+   * @return string
    */
-  public static function downcode($text, $language = 'de')
+  public static function downcode($text, $language = 'de', $asciiOnlyForLanguage = false, $substChr = '')
   {
     self::init($language);
     $text = UTF8::urldecode($text);
@@ -388,7 +428,14 @@ class URLify {
       }
     }
 
-    return str_replace($searchArray, $replaceArray, $text);
+    $text = str_replace($searchArray, $replaceArray, $text);
+
+    // convert everything into ASCII
+    if ($asciiOnlyForLanguage === true) {
+      return (string) $text;
+    } else {
+      return UTF8::to_ascii($text, $substChr);
+    }
   }
 
   /**
@@ -411,30 +458,10 @@ class URLify {
       $seperator = '-';
     }
 
-    // search some url-things and replace it with the seperator
-    $searchArray = array(
-        '/&quot;/',   // "
-        '/&amp;/',    // &
-        '/&lt;/',     // <
-        '/&gt;/',     // >
-        '/&ndash;/',  // –
-        '/&mdash;/',  // —
-        '/-/',
-        '/⁻/',
-        '/—/',
-        '/_/',
-        '/"/',
-        '/`/',
-        '/´/',
-        '/\'/',
-        '/\<br (.*?)\>/i'
-    );
-
-    $text = preg_replace($searchArray, $seperator, $text);     // 1) replace with $seperator
-    $text = UTF8::strip_tags($text);                           // 2) remove all other html-tags
-    $text = self::downcode($text, $language);                  // 3) use special language replacer
-    $text = UTF8::toAscii($text, '');                          // 4) convert everything into ACII
-    $text = preg_replace($searchArray, $seperator, $text);     // 5) replace with $seperator, again
+    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);     // 1) replace with $seperator
+    $text = UTF8::strip_tags($text);                                      // 2) remove all other html-tags
+    $text = self::downcode($text, $language);                             // 3) use special language replacer
+    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);     // 4) replace with $seperator, again
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
@@ -475,12 +502,12 @@ class URLify {
       $text = strtolower($text);
     }
 
-    // trim $seperator from beginning and end of the string
+    // trim "$seperator" from beginning and end of the string
     $text = trim($text, $seperator);
 
     // "substr" only if "$length" is set
     if ($length && $length > 0) {
-      $text = substr($text, 0, $length);
+      $text = (string) substr($text, 0, $length);
     }
 
     return $text;
