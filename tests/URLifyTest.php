@@ -86,14 +86,17 @@ class URLifyTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('R-14-14-34-test-P', URLify::filter('¿ ® ¼ ¼ ¾ test ¶'));
     }
 
-
     URLify::add_array_to_seperator(
         array(
             "/®/",
             "/test/"
         )
     );
-    $this->assertEquals('14-14-34-P', URLify::filter('¿ ® ¼ ¼ ¾ ¶'));
+    if ('glibc' === ICONV_IMPL) {
+      $this->assertEquals('14-14-34', URLify::filter('¿ ® ¼ ¼ ¾ ¶'));
+    } else {
+      $this->assertEquals('14-14-34-P', URLify::filter('¿ ® ¼ ¼ ¾ ¶'));
+    }
   }
 
   public function testAddChars()
