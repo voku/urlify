@@ -80,7 +80,13 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testAddArrayToSeperator()
   {
-    $this->assertEquals('R-14-14-34-test-P', URLify::filter('¿ ® ¼ ¼ ¾ test ¶'));
+    if ('glibc' === ICONV_IMPL) {
+      $this->assertEquals('R-14-14-34-test', URLify::filter('¿ ® ¼ ¼ ¾ test ¶'));
+    } else {
+      $this->assertEquals('R-14-14-34-test-P', URLify::filter('¿ ® ¼ ¼ ¾ test ¶'));
+    }
+
+
     URLify::add_array_to_seperator(
         array(
             "/®/",
@@ -92,7 +98,12 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testAddChars()
   {
-    $this->assertEquals('? (R) 1/4 1/4 3/4 P', URLify::downcode('¿ ® ¼ ¼ ¾ ¶', 'latin', false, '?'));
+    if ('glibc' === ICONV_IMPL) {
+      $this->assertEquals('? (R) 1/4 1/4 3/4 ?', URLify::downcode('¿ ® ¼ ¼ ¾ ¶', 'latin', false, '?'));
+    } else {
+      $this->assertEquals('? (R) 1/4 1/4 3/4 P', URLify::downcode('¿ ® ¼ ¼ ¾ ¶', 'latin', false, '?'));
+    }
+
     URLify::add_chars(
         array(
             '¿' => '?',
