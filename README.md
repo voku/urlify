@@ -76,6 +76,22 @@ echo URLify::downcode ('¿ ® ¼ ¼ ¾ ¶');
 ?>
 ```
 
+To extend or replace the default replacing list:
+
+```php
+<?php
+
+URLify::add_array_to_seperator(array (
+	"/®/"
+)
+);
+
+echo URLify::filter('¿ ® ¼ ¼ ¾ ¶');
+// "14-14-34-P"
+
+?>
+```
+
 To extend the list of words to remove for one language:
 
 ```php
