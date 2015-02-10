@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/voku/urlify.png?branch=master)](https://travis-ci.org/voku/urlify)
+[![Coverage Status](https://coveralls.io/repos/voku/urlify/badge.svg)](https://coveralls.io/r/voku/urlify)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/741def77-3945-4692-a2da-a4feadfb2928/mini.png)](https://insight.sensiolabs.com/projects/741def77-3945-4692-a2da-a4feadfb2928)
 [![Total Downloads](https://poser.pugx.org/voku/urlify/downloads.svg)](https://packagist.org/packages/voku/urlify)
 [![License](https://poser.pugx.org/voku/urlify/license.svg)](https://packagist.org/packages/voku/urlify)
