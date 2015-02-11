@@ -434,7 +434,7 @@ class URLify {
     if ($asciiOnlyForLanguage === true) {
       return (string) $text;
     } else {
-      return UTF8::to_ascii($text, $substChr);
+      return UTF8::str_transliterate($text, $substChr);
     }
   }
 

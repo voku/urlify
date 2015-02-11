@@ -12,6 +12,7 @@ Lithuanian, Polish, Romanian, Russian, Turkish and Ukrainian. Symbols it cannot
 transliterate it will simply omit.
 
 * Author: [jbroadway](http://github.com/jbroadway)
+* Author: [voku](http://github.com/voku)
 * License: MIT
 
 ## Usage:
