@@ -449,10 +449,18 @@ class URLify {
    * @param Boolean $strtolower  use strtolower() at the end
    * @param String  $seperator   define a new seperator for the words
    *
-   * @return String
+   * @return String|boolean false on error
    */
   public static function filter($text, $length = 200, $language = 'de', $file_name = false, $removeWords = false, $strtolower = false, $seperator = '-')
   {
+    if (!$language) {
+      return '';
+    }
+
+    if ($length <= 0) {
+      return '';
+    }
+
     // seperator-fallback
     if (!$seperator) {
       $seperator = '-';
@@ -502,13 +510,13 @@ class URLify {
       $text = strtolower($text);
     }
 
-    // trim "$seperator" from beginning and end of the string
-    $text = trim($text, $seperator);
-
     // "substr" only if "$length" is set
     if ($length && $length > 0) {
       $text = (string) substr($text, 0, $length);
     }
+
+    // trim "$seperator" from beginning and end of the string
+    $text = trim($text, $seperator);
 
     return $text;
   }

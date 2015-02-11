@@ -8,7 +8,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('  J\'etudie le francais  ', URLify::downcode('  J\'étudie le français  '));
     $this->assertEquals('Lo siento, no hablo espanol.', URLify::downcode('Lo siento, no hablo español.'));
     $this->assertEquals('F3PWS, 中文空白', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', true));
-    $this->assertEquals('F3PWS, ', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', false));
+    $this->assertEquals('F3PWS, Zhong Wen Kong Bai ', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', false));
     $this->assertEquals('foo-bar', URLify::filter('_foo_bar_'));
   }
 
@@ -18,11 +18,11 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         '  J\'étudie le français  '                                                    => 'J-etudie-le-francais',
         'Lo siento, no hablo español.'                                                 => 'Lo-siento-no-hablo-espanol',
         '—ΦΞΠΏΣ—Test—'                                                                 => 'F3PWS-Test',
-        '大般若經'                                                                         => '',
+        '大般若經'                                                                         => 'Da-Ban-Ruo-Jing',
         'ياكرهي لتويتر'                                                                => 'ykrhy-ltoytr',
         "test\xe2\x80\x99öäü"                                                          => 'test-oeaeue',
         'Ɓtest'                                                                        => 'Btest',
-        '-ABC-中文空白'                                                                    => 'ABC',
+        '-ABC-中文空白'                                                                    => 'ABC-Zhong-Wen-Kong-Bai',
         ' '                                                                            => '',
         ''                                                                             => '',
         '<strong>Subject<BR class="test">from a<br style="clear:both;" />CMS</strong>' => 'Subject-from-a-CMS'
@@ -51,10 +51,11 @@ class URLifyTest extends PHPUnit_Framework_TestCase
   public function testFilterFile()
   {
     $testArray = array(
-        'test-.txt'   => 'test-大般若經.txt',
+        'test-Da-Ban-Ruo-Jing-.txt'   => 'test-大般若經.txt',
         'foto.jpg'    => 'фото.jpg',
         'Foto.jpg'    => 'Фото.jpg',
         'oeaeue-test' => 'öäü  - test',
+        'shdgshdg.png' => 'שדגשדג.png',
         ''            => ' ',
     );
 
@@ -80,32 +81,20 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testAddArrayToSeperator()
   {
-    if ('glibc' === ICONV_IMPL) {
-      $this->assertEquals('R-14-14-34-test', URLify::filter('¿ ® ¼ ¼ ¾ test ¶'));
-    } else {
-      $this->assertEquals('R-14-14-34-test-P', URLify::filter('¿ ® ¼ ¼ ¾ test ¶'));
-    }
+    $this->assertEquals('r-14-14-34-test-P', URLify::filter('¿ ® ¼ ¼ ¾ test ¶'));
 
     URLify::add_array_to_seperator(
         array(
             "/®/",
-            "/test/"
+            "/tester/"
         )
     );
-    if ('glibc' === ICONV_IMPL) {
-      $this->assertEquals('14-14-34', URLify::filter('¿ ® ¼ ¼ ¾ ¶'));
-    } else {
-      $this->assertEquals('14-14-34-P', URLify::filter('¿ ® ¼ ¼ ¾ ¶'));
-    }
+    $this->assertEquals('14-14-34-P', URLify::filter('¿ ® ¼ ¼ ¾ ¶'));
   }
 
   public function testAddChars()
   {
-    if ('glibc' === ICONV_IMPL) {
-      $this->assertEquals('? (R) 1/4 1/4 3/4 ?', URLify::downcode('¿ ® ¼ ¼ ¾ ¶', 'latin', false, '?'));
-    } else {
-      $this->assertEquals('? (R) 1/4 1/4 3/4 P', URLify::downcode('¿ ® ¼ ¼ ¾ ¶', 'latin', false, '?'));
-    }
+    $this->assertEquals('? (r) 1/4 1/4 3/4 P', URLify::downcode('¿ ® ¼ ¼ ¾ ¶', 'latin', false, '?'));
 
     URLify::add_chars(
         array(
@@ -142,6 +131,46 @@ class URLifyTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('Lo siento, no hablo espanol.', $res);
     }
   }
+
+  public function testUrlSlug()
+  {
+    $tests = array(
+        "  -ABC-中文空白-  " => "abc-zhong-wen-kong-bai",
+        "      - ÖÄÜ- "  => "oau",
+        "öäü"            => "oau",
+        ""               => "",
+        " test test"     => "test-test",
+        "أبز"            => "abz"
+    );
+
+    foreach ($tests as $before => $after) {
+      $this->assertEquals($after, URLify::filter($before, 100, 'latin', false, true, true, '-'));
+    }
+
+    $tests = array(
+        "  -ABC-中文空白-  " => "abc",
+        "      - ÖÄÜ- "  => "oau",
+        "  öäüabc"       => "oau",
+        " DÃ¼sseldorf"   => "dus",
+        "Abcdef"         => "abcd",
+    );
+
+    foreach ($tests as $before => $after) {
+      $this->assertEquals($after, URLify::filter($before, 4, 'latin', false, true, true, '-'));
+    }
+
+    $tests = array(
+        "Facebook bekämpft erstmals Durchsuchungsbefehle" => "facebook-bekaempft-erstmals-durchsuchungsbefehle",
+        "  -ABC-中文空白-  "                                  => "abc-zhong-wen-kong-bai",
+        "      - ÖÄÜ- "                                   => "oeaeue",
+        "öäü"                                             => "oeaeue"
+    );
+
+    foreach ($tests as $before => $after) {
+      $this->assertEquals($after, URLify::filter($before, 100, 'de', false, true, true, '-'));
+    }
+  }
+
 
 }
 
