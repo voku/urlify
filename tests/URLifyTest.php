@@ -51,12 +51,14 @@ class URLifyTest extends PHPUnit_Framework_TestCase
   public function testFilterFile()
   {
     $testArray = array(
-        'test-Da-Ban-Ruo-Jing-.txt'   => 'test-大般若經.txt',
-        'foto.jpg'    => 'фото.jpg',
-        'Foto.jpg'    => 'Фото.jpg',
-        'oeaeue-test' => 'öäü  - test',
-        'shdgshdg.png' => 'שדגשדג.png',
-        ''            => ' ',
+        'test-Da-Ban-Ruo-Jing-.txt'             => 'test-大般若經.txt',
+        'foto.jpg'                              => 'фото.jpg',
+        'Foto.jpg'                              => 'Фото.jpg',
+        'oeaeue-test'                           => 'öäü  - test',
+        'shdgshdg.png'                          => 'שדגשדג.png',
+        'cr-aaaaaeaaeOOOOOe141234SSucdthu-.jpg' => '—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–.jpg',
+        '000-c-c.txt'                           => '000—©—©.txt',
+        ''                                      => ' ',
     );
 
     foreach ($testArray as $after => $before) {
