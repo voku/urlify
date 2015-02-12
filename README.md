@@ -15,10 +15,8 @@ A PHP port of URLify.js from the Django project + str_transliterate from "Portab
 Handles symbols from Latin languages, Greek, Turkish, Russian, Ukrainian,
 Czech, Polish, and Latvian and many other via "str_transliterate".
 
-* Author: [jbroadway](http://github.com/jbroadway)
-* Author: [voku](http://github.com/voku)
-
-* License: MIT
+- Author: [jbroadway](http://github.com/jbroadway) / [voku](http://github.com/voku)
+- License: MIT
 
 ## Usage:
 
