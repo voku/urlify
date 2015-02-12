@@ -3,21 +3,28 @@
 namespace voku\helper;
 
 /**
- * A PHP port of URLify.js from the Django project
- * (https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js).
+ * A PHP port of URLify.js from the Django project + str_transliterate from "Portable UTF-8".
+ *
+ * - https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js
+ * - https://github.com/voku/portable-utf8
+ *
  * Handles symbols from Latin languages, Greek, Turkish, Russian, Ukrainian,
- * Czech, Polish, and Latvian. Symbols it cannot transliterate
- * it will simply omit.
+ * Czech, Polish, and Latvian and many other via "str_transliterate".
  *
  * Usage:
  *
- *     echo URLify::filter (' J\'étudie le français ');
+ *     echo URLify::filter(' J\'étudie le français ');
  *     // "jetudie-le-francais"
  *
- *     echo URLify::filter ('Lo siento, no hablo español.');
+ *     echo URLify::filter('Lo siento, no hablo español.');
  *     // "lo-siento-no-hablo-espanol"
  */
 class URLify {
+
+  /**
+   * @var array
+   */
+  protected static $urlifyCache;
 
   public static $maps = array(
     // German
@@ -294,7 +301,8 @@ class URLify {
 
     // check if we already created the regex for this lang
     if (
-        count(self::$map) > 0 &&
+        count(self::$map) > 0
+        &&
         $language == self::$language
     ) {
       return true;
@@ -302,7 +310,8 @@ class URLify {
 
     // is a specific map associated with $language?
     if (
-        isset(self::$maps[$language]) &&
+        isset(self::$maps[$language])
+        &&
         is_array(self::$maps[$language])
     ) {
       // move this map to end. This means it will have priority over others
@@ -443,28 +452,45 @@ class URLify {
    * Convert a String to URL, e.g., "Petty<br>theft" to "Petty-theft"
    *
    * @param String  $text
-   * @param Int     $length      length of the output string
+   * @param Int     $length      length of the output string, set to -1 to disable it
    * @param String  $language
-   * @param Boolean $file_name   keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
+   * @param Boolean $fileName   keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
    * @param Boolean $removeWords remove some "words" -> set via "remove_words()"
    * @param Boolean $strtolower  use strtolower() at the end
    * @param String  $seperator   define a new seperator for the words
    *
    * @return String|boolean false on error
    */
-  public static function filter($text, $length = 200, $language = 'de', $file_name = false, $removeWords = false, $strtolower = false, $seperator = '-')
+  public static function filter($text, $length = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-')
   {
     if (!$language) {
-      return '';
-    }
-
-    if ($length <= 0) {
       return '';
     }
 
     // seperator-fallback
     if (!$seperator) {
       $seperator = '-';
+    }
+
+    // get the remove-array
+    $removeArray = self::get_remove_list($language);
+
+    // generate a unique cache-key
+    $cacheKey = md5(
+        $text .
+        $seperator .
+        $language .
+        (int)$fileName .
+        (int)$removeWords .
+        (int)$strtolower .
+        serialize($removeArray) .
+        serialize(self::$arrayToSeperator) .
+        serialize(self::$maps)
+    );
+
+    // check the cache
+    if (isset(static::$urlifyCache[$cacheKey])) {
+      return static::$urlifyCache[$cacheKey];
     }
 
     $text = preg_replace(self::$arrayToSeperator, $seperator, $text);     // 1) replace with $seperator
@@ -474,23 +500,23 @@ class URLify {
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
-      $removeWordsSearch = '/\b(' . join('|', self::get_remove_list($language)) . ')\b/i';
+      $removeWordsSearch = '/\b(' . join('|', $removeArray) . ')\b/i';
     } else {
       $removeWordsSearch = '//';
     }
 
     // keep the "." from e.g.: a file-extension?
-    if ($file_name) {
-      $remove_pattern = '/[^' . $seperator . '.\-a-zA-Z0-9\s]/u';
+    if ($fileName) {
+      $removePattern = '/[^' . $seperator . '.\-a-zA-Z0-9\s]/u';
     } else {
-      $remove_pattern = '/[^' . $seperator . '\-a-zA-Z0-9\s]/u';
+      $removePattern = '/[^' . $seperator . '\-a-zA-Z0-9\s]/u';
     }
 
     $text = preg_replace(
         array(
             '`[' . $seperator . ']+`',      // 6) remove double $seperator
             '[^A-Za-z0-9]',                 // 5) only keep default-chars
-            $remove_pattern,                // 4) remove unneeded chars
+            $removePattern,                // 4) remove unneeded chars
             '/[' . $seperator . '\s]+/',    // 3) convert spaces to $seperator
             '/^\s+|\s+$/',                  // 2) trim leading & trailing spaces
             $removeWordsSearch,             // 1) remove some extras words
@@ -518,6 +544,8 @@ class URLify {
 
     // trim "$seperator" from beginning and end of the string
     $text = trim($text, $seperator);
+
+    static::$urlifyCache[$cacheKey] = $text;
 
     return $text;
   }

@@ -1,0 +1,15 @@
+
+v1.2
+
+- fixed string-length parameter (disble "substr" via "$length" < 0)
+- added namespace (voku\helper\URLify)
+- added static cache for the "language-array"
+
+v1.1.1
+
+- replaced "UTF8::to_ascii()" with "UTF8::str_transliterate()"
+
+v1.1
+
+- added dynamic seperator via "URLify::to_ascii()"
+- added "str_transliterate()" from "Portable UTF-8"
