@@ -1,5 +1,7 @@
 <?php
 
+use voku\helper\URLify;
+
 class URLifyTest extends PHPUnit_Framework_TestCase
 {
 

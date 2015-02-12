@@ -1,5 +1,6 @@
 <?php
-use voku\helper\UTF8;
+
+namespace voku\helper;
 
 /**
  * A PHP port of URLify.js from the Django project
