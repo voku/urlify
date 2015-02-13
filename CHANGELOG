@@ -1,4 +1,9 @@
 
+v1.2.1
+
+- fixed phpdoc from "URLify::remove_words()"
+- added "URLify::reset_remove_list"
+
 v1.2
 
 - fixed string-length parameter (disble "substr" via "$length" < 0)

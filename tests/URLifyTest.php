@@ -7,12 +7,18 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testDowncode()
   {
-    $this->assertEquals('  J\'etudie le francais  ', URLify::downcode('  J\'étudie le français  '));
-    $this->assertEquals('Lo siento, no hablo espanol.', URLify::downcode('Lo siento, no hablo español.'));
+    $testArray = array(
+        '  J\'étudie le français  ' => '  J\'etudie le francais  ',
+        'Lo siento, no hablo español.' => 'Lo siento, no hablo espanol.'
+    );
+
+    foreach ($testArray as $before => $after) {
+      $this->assertEquals($after, URLify::downcode($before), $before);
+      $this->assertEquals($after, URLify::transliterate($before), $before);
+    }
+
     $this->assertEquals('F3PWS, 中文空白', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', true));
     $this->assertEquals('F3PWS, Zhong Wen Kong Bai ', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', false));
-    $this->assertEquals('foo-bar', URLify::filter('_foo_bar_'));
-    $this->assertEquals('foo-bar', URLify::filter('_foo_bar_'));
   }
 
   public function testDefaultFilter()
@@ -34,6 +40,16 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     foreach ($testArray as $before => $after) {
       $this->assertEquals($after, URLify::filter($before), $before);
     }
+
+    // test static cache
+    $this->assertEquals('foo-bar', URLify::filter('_foo_bar_'));
+    $this->assertEquals('foo-bar', URLify::filter('_foo_bar_'));
+
+    // test no language
+    $this->assertEquals('', URLify::filter('_foo_bar_', -1, ''));
+
+    // test new "seperator"
+    $this->assertEquals('foo_bar', URLify::filter('_foo_bar_', -1, 'de', false, false, false, '_'));
   }
 
   public function testFilterLanguage()
@@ -136,12 +152,26 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testRemoveWords()
   {
+    // append
     $this->assertEquals('foo-bar', URLify::filter('foo bar', 60, 'de', false, true));
     URLify::remove_words(
         array(
             'foo',
             'bar'
-        ), 'de'
+        ), 'de', true
+    );
+    $this->assertEquals('', URLify::filter('foo bar', 60, 'de', false, true));
+
+    // reset
+    URLify::reset_remove_list();
+
+    // replace
+    $this->assertEquals('foo-bar', URLify::filter('foo bar', 60, 'de', false, true));
+    URLify::remove_words(
+        array(
+            'foo',
+            'bar'
+        ), 'de', false
     );
     $this->assertEquals('', URLify::filter('foo bar', 60, 'de', false, true));
   }
@@ -197,6 +227,36 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     }
   }
 
+  public function testGetRemoveList()
+  {
+    $test = new URLify();
+    $test->reset_remove_list();
 
+    $removeArray = $this->invokeMethod($test, 'get_remove_list', array('de'));
+    $this->assertEquals(true, is_array($removeArray));
+    $this->assertEquals(true, in_array('ein', $removeArray));
+
+    $removeArray = $this->invokeMethod($test, 'get_remove_list', array(''));
+    $this->assertEquals(true, is_array($removeArray));
+    $this->assertEquals(false, in_array('ein', $removeArray));
+  }
+
+  /**
+   * Call protected/private method of a class.
+   *
+   * @param object &$object    Instantiated object that we will run method on.
+   * @param string $methodName Method name to call
+   * @param array  $parameters Array of parameters to pass into method.
+   *
+   * @return mixed Method return.
+   */
+  public function invokeMethod(&$object, $methodName, array $parameters = array())
+  {
+    $reflection = new \ReflectionClass(get_class($object));
+    $method = $reflection->getMethod($methodName);
+    $method->setAccessible(true);
+
+    return $method->invokeArgs($object, $parameters);
+  }
 }
 

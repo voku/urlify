@@ -180,59 +180,7 @@ class URLify {
   /**
    * List of words to remove from URLs.
    */
-  public static $remove_list = array(
-      'en' => array(
-          'a', 'an', 'as', 'at', 'before', 'but', 'by', 'for', 'from',
-          'is', 'in', 'into', 'like', 'of', 'off', 'on', 'onto', 'per',
-          'since', 'than', 'the', 'this', 'that', 'to', 'up', 'via',
-          'with'
-      ),
-      // German
-      'de' => array(
-          'ein', 'eine', 'wie', 'an', 'vor', 'aber', 'von', 'für',
-          'ist', 'in', 'von', 'auf', 'pro', 'da', 'als',
-          'der', 'die', 'das', 'dass', 'zu', 'mit'
-      ),
-      // Greek
-      'el' => array(
-      ),
-      // Turkish
-      'tr' => array(
-      ),
-      // Russian
-      'ru' => array(
-      ),
-      // Ukrainian
-      'uk' => array(
-      ),
-      // Czech
-      'cs' => array(
-      ),
-      // Polish
-      'pl' => array(
-      ),
-      // Romanian
-      'ro' => array(
-      ),
-      // Latvian
-      'lv' => array(
-      ),
-      // Lithuanian
-      'lt' => array(
-      ),
-      // Vietnamese
-      'vn' => array(
-      ),
-      // Arabic
-      'ar' => array(
-      ),
-      // Serbian
-      'sr' => array(
-      ),
-      // Azerbaijani
-      'az' => array(
-      )
-  );
+  public static $remove_list = array();
 
   /**
    * The character map.
@@ -292,7 +240,7 @@ class URLify {
    *
    * @return bool
    */
-  private static function init($language = 'de')
+  private static function init_downcode($language = 'de')
   {
     // check if lang is set
     if (!$language) {
@@ -338,9 +286,70 @@ class URLify {
   }
 
   /**
+   * reset the word-remove-array
+   */
+  public static function reset_remove_list()
+  {
+    self::$remove_list = array(
+        'en' => array(
+            'a', 'an', 'as', 'at', 'before', 'but', 'by', 'for', 'from',
+            'is', 'in', 'into', 'like', 'of', 'off', 'on', 'onto', 'per',
+            'since', 'than', 'the', 'this', 'that', 'to', 'up', 'via',
+            'with'
+        ),
+        // German
+        'de' => array(
+            'ein', 'eine', 'wie', 'an', 'vor', 'aber', 'von', 'für',
+            'ist', 'in', 'von', 'auf', 'pro', 'da', 'als',
+            'der', 'die', 'das', 'dass', 'zu', 'mit'
+        ),
+        // Greek
+        'el' => array(
+        ),
+        // Turkish
+        'tr' => array(
+        ),
+        // Russian
+        'ru' => array(
+        ),
+        // Ukrainian
+        'uk' => array(
+        ),
+        // Czech
+        'cs' => array(
+        ),
+        // Polish
+        'pl' => array(
+        ),
+        // Romanian
+        'ro' => array(
+        ),
+        // Latvian
+        'lv' => array(
+        ),
+        // Lithuanian
+        'lt' => array(
+        ),
+        // Vietnamese
+        'vn' => array(
+        ),
+        // Arabic
+        'ar' => array(
+        ),
+        // Serbian
+        'sr' => array(
+        ),
+        // Azerbaijani
+        'az' => array(
+        )
+    );
+  }
+
+  /**
    * Add new strings the will be replaced with the seperator
    *
    * @param array $array
+   * @param bool  $append
    */
   public static function add_array_to_seperator(Array $array, $append = true)
   {
@@ -367,8 +376,8 @@ class URLify {
    * or an array of words.
    *
    * @param mixed   $words
-   * @param boolean $merge (keep the previous (default) remove-words-array)
    * @param String  $language
+   * @param boolean $merge (keep the previous (default) remove-words-array)
    */
   public static function remove_words($words, $language = 'de', $merge = true)
   {
@@ -421,7 +430,7 @@ class URLify {
    */
   public static function downcode($text, $language = 'de', $asciiOnlyForLanguage = false, $substChr = '')
   {
-    self::init($language);
+    self::init_downcode($language);
     $text = UTF8::urldecode($text);
 
     $searchArray = array();
@@ -470,6 +479,11 @@ class URLify {
     // seperator-fallback
     if (!$seperator) {
       $seperator = '-';
+    }
+
+    // set remove-array
+    if (!isset(self::$remove_list[$language])) {
+      self::reset_remove_list();
     }
 
     // get the remove-array
