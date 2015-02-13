@@ -48,6 +48,9 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     // test no language
     $this->assertEquals('', URLify::filter('_foo_bar_', -1, ''));
 
+    // test no "seperator"
+    $this->assertEquals('foo-bar', URLify::filter('_foo_bar_', -1, 'de', false, false, false, ''));
+
     // test new "seperator"
     $this->assertEquals('foo_bar', URLify::filter('_foo_bar_', -1, 'de', false, false, false, '_'));
   }
