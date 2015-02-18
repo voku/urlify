@@ -472,6 +472,8 @@ class URLify {
    */
   public static function filter($text, $length = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-')
   {
+    static $cacheKeyCache;
+
     if (!$language) {
       return '';
     }
@@ -489,6 +491,35 @@ class URLify {
     // get the remove-array
     $removeArray = self::get_remove_list($language);
 
+    // try to get cache for the cache-key
+
+    if (
+        isset($cacheKeyCache['removeArray'])
+        &&
+        $cacheKeyCache['removeArray']['array'] !== $removeArray
+    ) {
+      $cacheKeyCache['removeArray']['array'] = $removeArray;
+      $cacheKeyCache['removeArray']['string'] = json_encode($removeArray);
+    }
+
+    if (
+        isset($cacheKeyCache['arrayToSeperator'])
+        &&
+        $cacheKeyCache['arrayToSeperator']['array'] !== self::$arrayToSeperator
+    ) {
+      $cacheKeyCache['arrayToSeperator']['array'] = self::$arrayToSeperator;
+      $cacheKeyCache['arrayToSeperator']['string'] = json_encode(self::$arrayToSeperator);
+    }
+
+    if (
+        isset($cacheKeyCache['maps'])
+        &&
+        $cacheKeyCache['maps']['array'] !== self::$maps
+    ) {
+      $cacheKeyCache['maps']['array'] = self::$maps;
+      $cacheKeyCache['maps']['string'] = json_encode(self::$maps);
+    }
+
     // generate a unique cache-key
     $cacheKey = md5(
         $text .
@@ -497,9 +528,9 @@ class URLify {
         (int)$fileName .
         (int)$removeWords .
         (int)$strtolower .
-        serialize($removeArray) .
-        serialize(self::$arrayToSeperator) .
-        serialize(self::$maps)
+        $cacheKeyCache['removeArray']['string'] .
+        $cacheKeyCache['arrayToSeperator']['string'] .
+        $cacheKeyCache['maps']['string']
     );
 
     // check the cache
