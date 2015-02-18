@@ -496,8 +496,10 @@ class URLify {
     if (
         isset($cacheKeyCache['removeArray'])
         &&
-        $cacheKeyCache['removeArray']['array'] !== $removeArray
+        $cacheKeyCache['removeArray']['array'] === $removeArray
     ) {
+      // nothing
+    } else {
       $cacheKeyCache['removeArray']['array'] = $removeArray;
       $cacheKeyCache['removeArray']['string'] = json_encode($removeArray);
     }
@@ -505,8 +507,10 @@ class URLify {
     if (
         isset($cacheKeyCache['arrayToSeperator'])
         &&
-        $cacheKeyCache['arrayToSeperator']['array'] !== self::$arrayToSeperator
+        $cacheKeyCache['arrayToSeperator']['array'] === self::$arrayToSeperator
     ) {
+      // nothing
+    } else {
       $cacheKeyCache['arrayToSeperator']['array'] = self::$arrayToSeperator;
       $cacheKeyCache['arrayToSeperator']['string'] = json_encode(self::$arrayToSeperator);
     }
@@ -514,8 +518,10 @@ class URLify {
     if (
         isset($cacheKeyCache['maps'])
         &&
-        $cacheKeyCache['maps']['array'] !== self::$maps
+        $cacheKeyCache['maps']['array'] === self::$maps
     ) {
+      // nothing
+    } else {
       $cacheKeyCache['maps']['array'] = self::$maps;
       $cacheKeyCache['maps']['string'] = json_encode(self::$maps);
     }
