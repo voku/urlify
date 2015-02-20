@@ -101,6 +101,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('AeOeUeaeoeue', URLify::filter('ÄÖÜäöü-der-die-das', 60, 'de', false, true));
     $this->assertEquals('Bobby-McFerrin-Don-t-worry-be-happy', URLify::filter('Bobby McFerrin — Don\'t worry be happy', 600, 'en'));
     $this->assertEquals('OUaeou', URLify::filter('ÖÜäöü', 60, 'tr'));
+    $this->assertEquals('hello-zs-privet', URLify::filter('hello žš, привет', 60, 'ru'));
   }
 
   public function testFilterAllLanguages()
