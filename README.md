@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/voku/urlify.png?branch=master)](https://travis-ci.org/voku/urlify)
 [![Coverage Status](https://coveralls.io/repos/voku/urlify/badge.svg)](https://coveralls.io/r/voku/urlify)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/voku/urlify/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/voku/urlify/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/741def77-3945-4692-a2da-a4feadfb2928/mini.png)](https://insight.sensiolabs.com/projects/741def77-3945-4692-a2da-a4feadfb2928)
 [![Dependency Status](https://www.versioneye.com/php/voku:urlify/dev-master/badge.svg)](https://www.versioneye.com/php/voku:urlify/dev-master)
 [![Total Downloads](https://poser.pugx.org/voku/urlify/downloads.svg)](https://packagist.org/packages/voku/urlify)
