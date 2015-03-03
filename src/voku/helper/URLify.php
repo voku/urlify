@@ -22,17 +22,17 @@ namespace voku\helper;
 class URLify
 {
 
-  /**
-   * @var array
-   */
-  protected static $urlifyCache = array();
+    /**
+     * @var array
+     */
+    protected static $urlifyCache = array();
 
-  /**
-   * @var array
-   */
-  protected static $cacheKeyCache = array();
+    /**
+     * @var array
+     */
+    protected static $cacheKeyCache = array();
 
-  public static $maps = array(
+    public static $maps = array(
     // German
     'de'            => array(
         'Ä' => 'Ae',
@@ -673,82 +673,82 @@ class URLify
         'Ŷ' => 'Y',
         'Ÿ' => 'Y'
     )
-  );
+    );
 
-  /**
-   * List of words to remove from URLs.
-   */
-  public static $remove_list = array();
+    /**
+     * List of words to remove from URLs.
+     */
+    public static $remove_list = array();
 
-  /**
-   * The character map.
-   *
-   * @var array
-   */
-  private static $map = array();
+    /**
+     * The character map.
+     *
+     * @var array
+     */
+    private static $map = array();
 
-  /**
-   * a array of strings that will convert into the seperator-char - used by "URLify::filter()"
-   *
-   * @var array
-   */
-  private static $arrayToSeperator = array(
-      '/&quot;/',
-      // "
-      '/&amp;/',
-      // &
-      '/&lt;/',
-      // <
-      '/&gt;/',
-      // >
-      '/&ndash;/',
-      // –
-      '/&mdash;/',
-      // —
-      '/-/',
-      '/⁻/',
-      '/—/',
-      '/_/',
-      '/"/',
-      '/`/',
-      '/´/',
-      '/\'/',
-      '/\<br (.*?)\>/i'
-  );
+    /**
+     * a array of strings that will convert into the seperator-char - used by "URLify::filter()"
+     *
+     * @var array
+     */
+    private static $arrayToSeperator = array(
+        '/&quot;/',
+        // "
+        '/&amp;/',
+        // &
+        '/&lt;/',
+        // <
+        '/&gt;/',
+        // >
+        '/&ndash;/',
+        // –
+        '/&mdash;/',
+        // —
+        '/-/',
+        '/⁻/',
+        '/—/',
+        '/_/',
+        '/"/',
+        '/`/',
+        '/´/',
+        '/\'/',
+        '/\<br (.*?)\>/i'
+    );
 
-  /**
-   * The character list as a string.
-   *
-   * @var string
-   */
-  private static $chars = '';
+    /**
+     * The character list as a string.
+     *
+     * @var string
+     */
+    private static $chars = '';
 
-  /**
-   * The character list as a regular expression.
-   *
-   * @var string
-   */
-  private static $regex = '';
+    /**
+     * The character list as a regular expression.
+     *
+     * @var string
+     */
+    private static $regex = '';
 
-  /**
-   * The current language
-   *
-   * @var string
-   */
-  private static $language = '';
+    /**
+     * The current language
+     *
+     * @var string
+     */
+    private static $language = '';
 
-  /**
-   * Initializes the character map.
-   *
-   * @param string $language
-   *
-   * @return bool
-   */
-  private static function init_downcode($language = 'de')
-  {
+    /**
+     * Initializes the character map.
+     *
+     * @param string $language
+     *
+     * @return bool
+     */
+    private static function init_downcode($language = 'de')
+    {
     // check if lang is set
     if (!$language) {
-      return false;
+        return false;
     }
 
     // check if we already created the regex for this lang
@@ -757,7 +757,7 @@ class URLify
         &&
         $language == self::$language
     ) {
-      return true;
+        return true;
     }
 
     // is a specific map associated with $language?
@@ -766,10 +766,10 @@ class URLify
         &&
         is_array(self::$maps[$language])
     ) {
-      // move this map to end. This means it will have priority over others
-      $m = self::$maps[$language];
-      unset(self::$maps[$language]);
-      self::$maps[$language] = $m;
+        // move this map to end. This means it will have priority over others
+        $m = self::$maps[$language];
+        unset(self::$maps[$language]);
+        self::$maps[$language] = $m;
     }
 
     // reset static vars
@@ -778,22 +778,22 @@ class URLify
     self::$chars = '';
 
     foreach (self::$maps as $map) {
-      foreach ($map as $orig => $conv) {
+        foreach ($map as $orig => $conv) {
         self::$map[$orig] = $conv;
         self::$chars .= $orig;
-      }
+        }
     }
 
     self::$regex = '/[' . self::$chars . ']/u';
 
     return true;
-  }
+    }
 
-  /**
-   * reset the word-remove-array
-   */
-  public static function reset_remove_list()
-  {
+    /**
+     * reset the word-remove-array
+     */
+    public static function reset_remove_list()
+    {
     self::$remove_list = array(
         'en' => array(
             'a',
@@ -875,65 +875,65 @@ class URLify
         // Azerbaijani
         'az' => array()
     );
-  }
+    }
 
-  /**
-   * Add new strings the will be replaced with the seperator
-   *
-   * @param array $array
-   * @param bool  $append
-   */
-  public static function add_array_to_seperator(Array $array, $append = true)
-  {
+    /**
+     * Add new strings the will be replaced with the seperator
+     *
+     * @param array $array
+     * @param bool  $append
+     */
+    public static function add_array_to_seperator(Array $array, $append = true)
+    {
     if ($append === true) {
-      self::$arrayToSeperator = array_merge(self::$arrayToSeperator, $array);
+        self::$arrayToSeperator = array_merge(self::$arrayToSeperator, $array);
     }
     self::$arrayToSeperator = $array;
-  }
+    }
 
-  /**
-   * Add new characters to the list. `$map` should be a hash.
-   *
-   * @param Array $map
-   */
-  public static function add_chars(Array $map)
-  {
+    /**
+     * Add new characters to the list. `$map` should be a hash.
+     *
+     * @param Array $map
+     */
+    public static function add_chars(Array $map)
+    {
     self::$maps[] = $map;
     self::$map = array();
     self::$chars = '';
-  }
+    }
 
-  /**
-   * Append words to the remove list. Accepts either single words
-   * or an array of words.
-   *
-   * @param mixed   $words
-   * @param String  $language
-   * @param boolean $merge (keep the previous (default) remove-words-array)
-   */
-  public static function remove_words($words, $language = 'de', $merge = true)
-  {
+    /**
+     * Append words to the remove list. Accepts either single words
+     * or an array of words.
+     *
+     * @param mixed   $words
+     * @param String  $language
+     * @param boolean $merge (keep the previous (default) remove-words-array)
+     */
+    public static function remove_words($words, $language = 'de', $merge = true)
+    {
     $words = is_array($words) ? $words : array($words);
 
     if ($merge === true) {
-      self::$remove_list[$language] = array_merge(self::get_remove_list($language), $words);
+        self::$remove_list[$language] = array_merge(self::get_remove_list($language), $words);
     } else {
-      self::$remove_list[$language] = $words;
+        self::$remove_list[$language] = $words;
     }
-  }
+    }
 
-  /**
-   * return the "self::$remove_list[$language]" array
-   *
-   * @param String $language
-   *
-   * @return Array
-   */
-  private static function get_remove_list($language = 'de')
-  {
+    /**
+     * return the "self::$remove_list[$language]" array
+     *
+     * @param String $language
+     *
+     * @return Array
+     */
+    private static function get_remove_list($language = 'de')
+    {
     // check for language
     if (!$language) {
-      return array();
+        return array();
     }
 
     // check for array
@@ -941,81 +941,81 @@ class URLify
         !isset(self::$remove_list[$language]) ||
         !is_array(self::$remove_list[$language])
     ) {
-      return array();
+        return array();
     }
 
     return self::$remove_list[$language];
-  }
+    }
 
-  /**
-   * Transliterates characters to their ASCII equivalents.
-   * $language specifies a priority for a specific language.
-   * The latter is useful if languages have different rules for the same character.
-   *
-   * @param String  $text
-   * @param String  $language
-   * @param boolean $asciiOnlyForLanguage set to "true" if you only want to convert the language-maps
-   *
-   * @param string  $substChr
-   *
-   * @return string
-   */
-  public static function downcode($text, $language = 'de', $asciiOnlyForLanguage = false, $substChr = '')
-  {
+    /**
+     * Transliterates characters to their ASCII equivalents.
+     * $language specifies a priority for a specific language.
+     * The latter is useful if languages have different rules for the same character.
+     *
+     * @param String  $text
+     * @param String  $language
+     * @param boolean $asciiOnlyForLanguage set to "true" if you only want to convert the language-maps
+     *
+     * @param string  $substChr
+     *
+     * @return string
+     */
+    public static function downcode($text, $language = 'de', $asciiOnlyForLanguage = false, $substChr = '')
+    {
     self::init_downcode($language);
     $text = UTF8::urldecode($text);
 
     $searchArray = array();
     $replaceArray = array();
     if (preg_match_all(self::$regex, $text, $matches)) {
-      $matchesCounter = count($matches[0]);
+        $matchesCounter = count($matches[0]);
 
-      for ($i = 0; $i < $matchesCounter; $i++) {
+        for ($i = 0; $i < $matchesCounter; $i++) {
         $char = $matches[0][$i];
         if (isset(self::$map[$char])) {
-          $searchArray[] = $char;
-          $replaceArray[] = self::$map[$char];
+            $searchArray[] = $char;
+            $replaceArray[] = self::$map[$char];
         }
-      }
+        }
     }
 
     $text = str_replace($searchArray, $replaceArray, $text);
 
     // convert everything into ASCII
     if ($asciiOnlyForLanguage === true) {
-      return (string)$text;
+        return (string)$text;
     } else {
-      return UTF8::str_transliterate($text, $substChr);
+        return UTF8::str_transliterate($text, $substChr);
     }
-  }
+    }
 
-  /**
-   * Convert a String to URL, e.g., "Petty<br>theft" to "Petty-theft"
-   *
-   * @param String  $text
-   * @param Int     $length      length of the output string, set to -1 to disable it
-   * @param String  $language
-   * @param Boolean $fileName    keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
-   * @param Boolean $removeWords remove some "words" -> set via "remove_words()"
-   * @param Boolean $strtolower  use strtolower() at the end
-   * @param String  $seperator   define a new seperator for the words
-   *
-   * @return String|boolean false on error
-   */
-  public static function filter($text, $length = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-')
-  {
+    /**
+     * Convert a String to URL, e.g., "Petty<br>theft" to "Petty-theft"
+     *
+     * @param String  $text
+     * @param Int     $length      length of the output string, set to -1 to disable it
+     * @param String  $language
+     * @param Boolean $fileName    keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
+     * @param Boolean $removeWords remove some "words" -> set via "remove_words()"
+     * @param Boolean $strtolower  use strtolower() at the end
+     * @param String  $seperator   define a new seperator for the words
+     *
+     * @return String|boolean false on error
+     */
+    public static function filter($text, $length = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-')
+    {
     if (!$language) {
-      return '';
+        return '';
     }
 
     // seperator-fallback
     if (!$seperator) {
-      $seperator = '-';
+        $seperator = '-';
     }
 
     // set remove-array
     if (!isset(self::$remove_list[$language])) {
-      self::reset_remove_list();
+        self::reset_remove_list();
     }
 
     // get the remove-array
@@ -1032,9 +1032,9 @@ class URLify
         $text .
         $seperator .
         $language .
-        (int)$fileName .
-        (int)$removeWords .
-        (int)$strtolower .
+        (int) $fileName .
+        (int) $removeWords .
+        (int) $strtolower .
         static::$cacheKeyCache['removeArray']['string'] .
         static::$cacheKeyCache['arrayToSeperator']['string'] .
         static::$cacheKeyCache['maps']['string']
@@ -1042,26 +1042,26 @@ class URLify
 
     // check the cache
     if (isset(static::$urlifyCache[$cacheKey])) {
-      return static::$urlifyCache[$cacheKey];
+        return static::$urlifyCache[$cacheKey];
     }
 
-    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);     // 1) replace with $seperator
-    $text = UTF8::strip_tags($text);                                      // 2) remove all other html-tags
-    $text = self::downcode($text, $language);                             // 3) use special language replacer
-    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);     // 4) replace with $seperator, again
+    $text = preg_replace(self::$arrayToSeperator, $seperator, $text); // 1) replace with $seperator
+    $text = UTF8::strip_tags($text); // 2) remove all other html-tags
+    $text = self::downcode($text, $language); // 3) use special language replacer
+    $text = preg_replace(self::$arrayToSeperator, $seperator, $text); // 4) replace with $seperator, again
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
-      $removeWordsSearch = '/\b(' . join('|', $removeArray) . ')\b/i';
+        $removeWordsSearch = '/\b(' . join('|', $removeArray) . ')\b/i';
     } else {
-      $removeWordsSearch = '//';
+        $removeWordsSearch = '//';
     }
 
     // keep the "." from e.g.: a file-extension?
     if ($fileName) {
-      $removePattern = '/[^' . $seperator . '.\-a-zA-Z0-9\s]/u';
+        $removePattern = '/[^' . $seperator . '.\-a-zA-Z0-9\s]/u';
     } else {
-      $removePattern = '/[^' . $seperator . '\-a-zA-Z0-9\s]/u';
+        $removePattern = '/[^' . $seperator . '\-a-zA-Z0-9\s]/u';
     }
 
     $text = preg_replace(
@@ -1092,12 +1092,12 @@ class URLify
 
     // convert to lowercase
     if ($strtolower === true) {
-      $text = strtolower($text);
+        $text = strtolower($text);
     }
 
     // "substr" only if "$length" is set
     if ($length && $length > 0) {
-      $text = (string)substr($text, 0, $length);
+        $text = (string)substr($text, 0, $length);
     }
 
     // trim "$seperator" from beginning and end of the string
@@ -1106,36 +1106,36 @@ class URLify
     static::$urlifyCache[$cacheKey] = $text;
 
     return $text;
-  }
+    }
 
-  /**
-   * check the cache-key
-   *
-   * @param string $key
-   * @param array  $array
-   */
-  private static function checkCacheKey($key, $array)
-  {
+    /**
+     * check the cache-key
+     *
+     * @param string $key
+     * @param array  $array
+     */
+    private static function checkCacheKey($key, $array)
+    {
     if (
         !isset(static::$cacheKeyCache[$key])
         ||
         static::$cacheKeyCache[$key]['array'] !== $array
     ) {
-      static::$cacheKeyCache[$key]['array'] = $array;
-      static::$cacheKeyCache[$key]['string'] = json_encode($array);
+        static::$cacheKeyCache[$key]['array'] = $array;
+        static::$cacheKeyCache[$key]['string'] = json_encode($array);
     }
-  }
+    }
 
-  /**
-   * Alias of `URLify::downcode()`.
-   *
-   * @param $text
-   *
-   * @return String
-   */
-  public static function transliterate($text)
-  {
+    /**
+     * Alias of `URLify::downcode()`.
+     *
+     * @param $text
+     *
+     * @return String
+     */
+    public static function transliterate($text)
+    {
     return self::downcode($text);
-  }
+    }
 
 }
