@@ -8,7 +8,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
   public function testDowncode()
   {
     $testArray = array(
-        '  J\'étudie le français  ' => '  J\'etudie le francais  ',
+        '  J\'étudie le français  '    => '  J\'etudie le francais  ',
         'Lo siento, no hablo español.' => 'Lo siento, no hablo espanol.'
     );
 
