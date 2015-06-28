@@ -8,8 +8,9 @@ namespace voku\helper;
  * - https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js
  * - https://github.com/voku/portable-utf8
  *
- * Handles symbols from Latin languages, Greek, Turkish, Russian, Ukrainian,
- * Czech, Polish, and Latvian and many other via "str_transliterate".
+ * Handles symbols from Latin languages, German, Greek, Turkish, Bulgarian, Russian,
+ * Ukrainian, Czech, Polish, Romanian, Latvian, Lithuanian, Vietnamese, Arabic,
+ * Serbian, Azerbaijani and many other via "str_transliterate".
  *
  * Usage:
  *
@@ -198,6 +199,69 @@ class URLify
           'Ö' => 'O',
           'ğ' => 'g',
           'Ğ' => 'G'
+      ),
+    // Bulgarian
+      'bg'            => array(
+          'Щ' => 'Sht',
+          'Ш' => 'Sh',
+          'Ч' => 'Ch',
+          'Ц' => 'C',
+          'Ю' => 'Yu',
+          'Я' => 'Ya',
+          'Ж' => 'J',
+          'А' => 'A',
+          'Б' => 'B',
+          'В' => 'V',
+          'Г' => 'G',
+          'Д' => 'D',
+          'Е' => 'E',
+          'З' => 'Z',
+          'И' => 'I',
+          'Й' => 'Y',
+          'К' => 'K',
+          'Л' => 'L',
+          'М' => 'M',
+          'Н' => 'N',
+          'О' => 'O',
+          'П' => 'P',
+          'Р' => 'R',
+          'С' => 'S',
+          'Т' => 'T',
+          'У' => 'U',
+          'Ф' => 'F',
+          'Х' => 'H',
+          'Ь' => '',
+          'Ъ' => 'A',
+          'щ' => 'sht',
+          'ш' => 'sh',
+          'ч' => 'ch',
+          'ц' => 'c',
+          'ю' => 'yu',
+          'я' => 'ya',
+          'ж' => 'j',
+          'а' => 'a',
+          'б' => 'b',
+          'в' => 'v',
+          'г' => 'g',
+          'д' => 'd',
+          'е' => 'e',
+          'з' => 'z',
+          'и' => 'i',
+          'й' => 'y',
+          'к' => 'k',
+          'л' => 'l',
+          'м' => 'm',
+          'н' => 'n',
+          'о' => 'o',
+          'п' => 'p',
+          'р' => 'r',
+          'с' => 's',
+          'т' => 't',
+          'у' => 'u',
+          'ф' => 'f',
+          'х' => 'h',
+          'ь' => '',
+          'ъ' => 'a'
       ),
     // Russian
       'ru'            => array(
@@ -862,7 +926,7 @@ class URLify
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
-      $removeWordsSearch = '/\b(' . join('|', $removeArray) . ')\b/i';
+      $removeWordsSearch = '/\b(' . implode('|', $removeArray) . ')\b/i';
     } else {
       $removeWordsSearch = '//';
     }
@@ -976,6 +1040,8 @@ class URLify
         'el' => array(),
       // Turkish
         'tr' => array(),
+      // Bulgarian
+        'bg' => array(),
       // Russian
         'ru' => array(),
       // Ukrainian
@@ -1077,9 +1143,9 @@ class URLify
 
     // check if we already created the regex for this lang
     if (
-        count(self::$map) > 0
+        $language === self::$language
         &&
-        $language == self::$language
+        count(self::$map) > 0
     ) {
       return true;
     }
