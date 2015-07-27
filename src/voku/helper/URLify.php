@@ -829,7 +829,9 @@ class URLify
    */
   public static function remove_words($words, $language = 'de', $merge = true)
   {
-    $words = is_array($words) ? $words : array($words);
+    if (is_array($words) !== true) {
+      $words = array($words);
+    }
 
     if ($merge === true) {
       self::$remove_list[$language] = array_merge(self::get_remove_list($language), $words);
@@ -854,7 +856,8 @@ class URLify
 
     // check for array
     if (
-        !isset(self::$remove_list[$language]) ||
+        !isset(self::$remove_list[$language])
+        ||
         !is_array(self::$remove_list[$language])
     ) {
       return array();
@@ -919,10 +922,11 @@ class URLify
       return static::$urlifyCache[$cacheKey];
     }
 
-    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);   // 1) replace with $seperator
-    $text = UTF8::strip_tags($text);                                    // 2) remove all other html-tags
-    $text = self::downcode($text, $language);                           // 3) use special language replacer
-    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);   // 4) replace with $seperator, again
+    $text = UTF8::clean($text);                                         // 1) clean invalied chars
+    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);   // 2) replace with $seperator
+    $text = strip_tags($text);                                          // 3) remove all other html-tags
+    $text = self::downcode($text, $language);                           // 4) use special language replacer
+    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);   // 5) replace with $seperator, again
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
