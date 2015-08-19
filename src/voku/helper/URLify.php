@@ -867,11 +867,13 @@ class URLify
   }
 
   /**
-   * Convert a String to URL, e.g., "Petty<br>theft" to "Petty-theft"
+   * Convert a String to URL
    *
-   * @param String  $text
-   * @param Int     $length      length of the output string, set to -1 to disable it
-   * @param String  $language
+   * e.g.: "Petty<br>theft" to "Petty-theft"
+   *
+   * @param String  $text        the text you want to convert
+   * @param Int     $maxLength   max. length of the output string, set to -1 to disable it
+   * @param String  $language    the language you want to convert to
    * @param Boolean $fileName    keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
    * @param Boolean $removeWords remove some "words" -> set via "remove_words()"
    * @param Boolean $strtolower  use strtolower() at the end
@@ -879,7 +881,7 @@ class URLify
    *
    * @return String|boolean false on error
    */
-  public static function filter($text, $length = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-')
+  public static function filter($text, $maxLength = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-')
   {
     if (!$language) {
       return '';
@@ -968,8 +970,8 @@ class URLify
     }
 
     // "substr" only if "$length" is set
-    if ($length && $length > 0) {
-      $text = (string)substr($text, 0, $length);
+    if ($maxLength && $maxLength > 0) {
+      $text = (string)substr($text, 0, $maxLength);
     }
 
     // trim "$seperator" from beginning and end of the string
