@@ -799,7 +799,7 @@ class URLify
    * @param array $array
    * @param bool  $append
    */
-  public static function add_array_to_seperator(Array $array, $append = true)
+  public static function add_array_to_seperator(array $array, $append = true)
   {
     if ($append === true) {
       self::$arrayToSeperator = array_merge(self::$arrayToSeperator, $array);
@@ -812,7 +812,7 @@ class URLify
    *
    * @param Array $map
    */
-  public static function add_chars(Array $map)
+  public static function add_chars(array $map)
   {
     self::$maps[] = $map;
     self::$map = array();
