@@ -131,8 +131,8 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
     URLify::add_array_to_seperator(
         array(
-            "/®/",
-            "/tester/"
+            '/®/',
+            '/tester/'
         )
     );
     $this->assertEquals('14-14-34-P', URLify::filter('¿ ® ¼ ¼ ¾ ¶'));
@@ -195,12 +195,12 @@ class URLifyTest extends PHPUnit_Framework_TestCase
   public function testUrlSlug()
   {
     $tests = array(
-        "  -ABC-中文空白-  " => "abc-zhong-wen-kong-bai",
-        "      - ÖÄÜ- "  => "oau",
-        "öäü"            => "oau",
-        ""               => "",
-        " test test"     => "test-test",
-        "أبز"            => "abz"
+        '  -ABC-中文空白-  ' => 'abc-zhong-wen-kong-bai',
+        '      - ÖÄÜ- '  => 'oau',
+        'öäü'            => 'oau',
+        ''               => '',
+        ' test test'     => 'test-test',
+        'أبز'            => 'abz'
     );
 
     foreach ($tests as $before => $after) {
@@ -208,11 +208,11 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     }
 
     $tests = array(
-        "  -ABC-中文空白-  " => "abc",
-        "      - ÖÄÜ- "  => "oau",
-        "  öäüabc"       => "oau",
-        " DÃ¼sseldorf"   => "dus",
-        "Abcdef"         => "abcd",
+        '  -ABC-中文空白-  ' => 'abc',
+        '      - ÖÄÜ- '  => 'oau',
+        '  öäüabc'       => 'oau',
+        ' DÃ¼sseldorf'   => 'dus',
+        'Abcdef'         => 'abcd',
     );
 
     foreach ($tests as $before => $after) {
@@ -220,10 +220,10 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     }
 
     $tests = array(
-        "Facebook bekämpft erstmals Durchsuchungsbefehle" => "facebook-bekaempft-erstmals-durchsuchungsbefehle",
-        "  -ABC-中文空白-  "                                  => "abc-zhong-wen-kong-bai",
-        "      - ÖÄÜ- "                                   => "oeaeue",
-        "öäü"                                             => "oeaeue"
+        'Facebook bekämpft erstmals Durchsuchungsbefehle' => 'facebook-bekaempft-erstmals-durchsuchungsbefehle',
+        '  -ABC-中文空白-  '                                  => 'abc-zhong-wen-kong-bai',
+        '      - ÖÄÜ- '                                   => 'oeaeue',
+        'öäü'                                             => 'oeaeue'
     );
 
     foreach ($tests as $before => $after) {
@@ -263,4 +263,3 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     return $method->invokeArgs($object, $parameters);
   }
 }
-

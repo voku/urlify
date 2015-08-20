@@ -19,10 +19,10 @@ class Utf8UrlSlugTest extends PHPUnit_Framework_TestCase
   public function test_invalid_char()
   {
     $str = "tes\xE9ting";
-    $this->assertEquals("testing", URLify::filter($str));
+    $this->assertEquals('testing', URLify::filter($str));
 
-    $str = "W%F6bse";
-    $this->assertEquals("Woebse", URLify::filter($str));
+    $str = 'W%F6bse';
+    $this->assertEquals('Woebse', URLify::filter($str));
   }
 
   public function test_empty_str()
@@ -34,12 +34,12 @@ class Utf8UrlSlugTest extends PHPUnit_Framework_TestCase
   public function test_nul_and_non_7_bit()
   {
     $str = "a\x00ñ\x00c";
-    $this->assertEquals("anc", URLify::filter($str));
+    $this->assertEquals('anc', URLify::filter($str));
   }
 
   public function test_nul()
   {
     $str = "a\x00b\x00c";
-    $this->assertEquals("abc", URLify::filter($str));
+    $this->assertEquals('abc', URLify::filter($str));
   }
 }
