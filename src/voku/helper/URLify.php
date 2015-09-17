@@ -724,18 +724,14 @@ class URLify
         'Ÿ' => 'Y',
     ),
   );
+
   /**
    * List of words to remove from URLs.
+   *
+   * @var array
    */
   public static $remove_list = array();
-  /**
-   * @var array
-   */
-  protected static $urlifyCache = array();
-  /**
-   * @var array
-   */
-  protected static $cacheKeyCache = array();
+
   /**
    * The character map.
    *
@@ -894,31 +890,7 @@ class URLify
     // get the remove-array
     $removeArray = self::get_remove_list($language);
 
-    // try to get cache for the cache-key and save it into "static::$cacheKeyCache"
-
-    self::checkCacheKey('removeArray', $removeArray);
-    self::checkCacheKey('arrayToSeperator', self::$arrayToSeperator);
-    self::checkCacheKey('maps', self::$maps);
-
-    // generate a unique cache-key
-    $cacheKey = md5(
-        $text .
-        $seperator .
-        $language .
-        (int)$fileName .
-        (int)$removeWords .
-        (int)$strtolower .
-        static::$cacheKeyCache['removeArray']['string'] .
-        static::$cacheKeyCache['arrayToSeperator']['string'] .
-        static::$cacheKeyCache['maps']['string']
-    );
-
-    // check the cache
-    if (isset(static::$urlifyCache[$cacheKey])) {
-      return static::$urlifyCache[$cacheKey];
-    }
-
-    $text = UTF8::clean($text);                                         // 1) clean invalied chars
+    $text = UTF8::clean($text);                                         // 1) clean invalid chars
     $text = preg_replace(self::$arrayToSeperator, $seperator, $text);   // 2) replace with $seperator
     $text = strip_tags($text);                                          // 3) remove all other html-tags
     $text = self::downcode($text, $language);                           // 4) use special language replacer
@@ -969,11 +941,7 @@ class URLify
     }
 
     // trim "$seperator" from beginning and end of the string
-    $text = trim($text, $seperator);
-
-    static::$urlifyCache[$cacheKey] = $text;
-
-    return $text;
+    return trim($text, $seperator);
   }
 
   /**
@@ -1065,24 +1033,6 @@ class URLify
       // Azerbaijani
       'az' => array(),
     );
-  }
-
-  /**
-   * check the cache-key
-   *
-   * @param string $key
-   * @param array  $array
-   */
-  private static function checkCacheKey($key, $array)
-  {
-    if (
-        !isset(static::$cacheKeyCache[$key])
-        ||
-        static::$cacheKeyCache[$key]['array'] !== $array
-    ) {
-      static::$cacheKeyCache[$key]['array'] = $array;
-      static::$cacheKeyCache[$key]['string'] = json_encode($array);
-    }
   }
 
   /**
