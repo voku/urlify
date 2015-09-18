@@ -868,10 +868,12 @@ class URLify
    * @param Boolean $removeWords remove some "words" -> set via "remove_words()"
    * @param Boolean $strtolower  use strtolower() at the end
    * @param String  $seperator   define a new seperator for the words
+   * @param Boolean $asciiOnlyForLanguage set to "true" if you only want to convert the language-maps
+   * @param Boolean $convertUtf8Specials convert special chars with portable-utf8 (e.g. \0, \xE9, %F6, ...)
    *
    * @return String|boolean false on error
    */
-  public static function filter($text, $maxLength = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-')
+  public static function filter($text, $maxLength = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-', $asciiOnlyForLanguage = false, $convertUtf8Specials = true)
   {
     if (!$language) {
       return '';
@@ -890,11 +892,19 @@ class URLify
     // get the remove-array
     $removeArray = self::get_remove_list($language);
 
-    $text = UTF8::clean($text);                                         // 1) clean invalid chars
-    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);   // 2) replace with $seperator
-    $text = strip_tags($text);                                          // 3) remove all other html-tags
-    $text = self::downcode($text, $language);                           // 4) use special language replacer
-    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);   // 5) replace with $seperator, again
+    // 1) clean invalid chars
+    if ($convertUtf8Specials) {
+      $text = UTF8::clean($text);
+    }
+
+    // 2) replace with $seperator
+    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);
+    // 3) remove all other html-tags
+    $text = strip_tags($text);
+    // 4) use special language replacer
+    $text = self::downcode($text, $language, $asciiOnlyForLanguage, '', $convertUtf8Specials);
+    // 5) replace with $seperator, again
+    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
@@ -1048,10 +1058,13 @@ class URLify
    *
    * @return string
    */
-  public static function downcode($text, $language = 'de', $asciiOnlyForLanguage = false, $substChr = '')
+  public static function downcode($text, $language = 'de', $asciiOnlyForLanguage = false, $substChr = '', $convertUtf8Specials = true)
   {
     self::init_downcode($language);
-    $text = UTF8::urldecode($text);
+
+    if ($convertUtf8Specials === true) {
+      $text = UTF8::urldecode($text);
+    }
 
     $searchArray = array();
     $replaceArray = array();
