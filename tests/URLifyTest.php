@@ -103,7 +103,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('OUaeou', URLify::filter('ÖÜäöü', 60, 'tr'));
     $this->assertEquals('hello-zs-privet', URLify::filter('hello žš, привет', 60, 'ru'));
     // test stripping and conversion of UTF-8 spaces
-    $this->assertEquals ('Xiang-Jing-Zhen-Ren-test-Mahito-Mukai', URLify::filter('向井　真人test　(Mahito Mukai)'));
+    $this->assertEquals('Xiang-Jing-Zhen-Ren-test-Mahito-Mukai', URLify::filter('向井　真人test　(Mahito Mukai)'));
   }
 
   public function testFilterAllLanguages()
