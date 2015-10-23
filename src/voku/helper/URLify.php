@@ -800,7 +800,7 @@ class URLify
   /**
    * Add new characters to the list. `$map` should be a hash.
    *
-   * @param Array $map
+   * @param array $map
    */
   public static function add_chars(array $map)
   {
@@ -814,7 +814,7 @@ class URLify
    * or an array of words.
    *
    * @param mixed   $words
-   * @param String  $language
+   * @param string  $language
    * @param boolean $merge (keep the previous (default) remove-words-array)
    */
   public static function remove_words($words, $language = 'de', $merge = true)
@@ -833,9 +833,9 @@ class URLify
   /**
    * return the "self::$remove_list[$language]" array
    *
-   * @param String $language
+   * @param string $language
    *
-   * @return Array
+   * @return array
    */
   private static function get_remove_list($language = 'de')
   {
@@ -861,17 +861,17 @@ class URLify
    *
    * e.g.: "Petty<br>theft" to "Petty-theft"
    *
-   * @param String  $text        the text you want to convert
-   * @param Int     $maxLength   max. length of the output string, set to -1 to disable it
-   * @param String  $language    the language you want to convert to
-   * @param Boolean $fileName    keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
-   * @param Boolean $removeWords remove some "words" -> set via "remove_words()"
-   * @param Boolean $strtolower  use strtolower() at the end
-   * @param String  $seperator   define a new seperator for the words
-   * @param Boolean $asciiOnlyForLanguage set to "true" if you only want to convert the language-maps
-   * @param Boolean $convertUtf8Specials convert special chars with portable-utf8 (e.g. \0, \xE9, %F6, ...)
+   * @param string  $text        the text you want to convert
+   * @param int     $maxLength   max. length of the output string, set to -1 to disable it
+   * @param string  $language    the language you want to convert to
+   * @param boolean $fileName    keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
+   * @param boolean $removeWords remove some "words" -> set via "remove_words()"
+   * @param boolean $strtolower  use strtolower() at the end
+   * @param string  $seperator   define a new seperator for the words
+   * @param boolean $asciiOnlyForLanguage set to "true" if you only want to convert the language-maps
+   * @param boolean $convertUtf8Specials convert special chars with portable-utf8 (e.g. \0, \xE9, %F6, ...)
    *
-   * @return String|boolean false on error
+   * @return string|boolean false on error
    */
   public static function filter($text, $maxLength = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-', $asciiOnlyForLanguage = false, $convertUtf8Specials = true)
   {
@@ -1050,8 +1050,8 @@ class URLify
    * $language specifies a priority for a specific language.
    * The latter is useful if languages have different rules for the same character.
    *
-   * @param String  $text
-   * @param String  $language
+   * @param string  $text
+   * @param string  $language
    * @param boolean $asciiOnlyForLanguage set to "true" if you only want to convert the language-maps
    *
    * @param string  $substChr
@@ -1145,9 +1145,9 @@ class URLify
   /**
    * Alias of `URLify::downcode()`.
    *
-   * @param $text
+   * @param string $text
    *
-   * @return String
+   * @return string
    */
   public static function transliterate($text)
   {
