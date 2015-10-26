@@ -37,8 +37,10 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         '<strong>Subject<BR class="test">from a<br style="clear:both;" />CMS</strong>' => 'Subject-from-a-CMS'
     );
 
-    foreach ($testArray as $before => $after) {
-      $this->assertEquals($after, URLify::filter($before), $before);
+    for ($i = 0; $i < 10; $i++) { // increase this value to test the performance
+      foreach ($testArray as $before => $after) {
+        $this->assertEquals($after, URLify::filter($before), $before);
+      }
     }
 
     // test static cache
@@ -218,7 +220,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     );
 
     foreach ($tests as $before => $after) {
-      $this->assertEquals($after, URLify::filter($before, 4, 'latin', false, true, true, '-'));
+      $this->assertEquals($after, URLify::filter($before, 4, 'latin', false, true, true, '-', false, true));
     }
 
     $tests = array(

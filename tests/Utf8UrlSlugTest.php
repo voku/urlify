@@ -22,7 +22,7 @@ class Utf8UrlSlugTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('testing', URLify::filter($str));
 
     $str = 'W%F6bse';
-    $this->assertEquals('Woebse', URLify::filter($str));
+    $this->assertEquals('Woebse', URLify::filter($str, 200, 'de', false, false, false, '-', false, true));
   }
 
   public function test_empty_str()

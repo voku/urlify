@@ -745,20 +745,8 @@ class URLify
    * @var array
    */
   private static $arrayToSeperator = array(
-      '/&quot;/',  // "
-      '/&amp;/',   // &
-      '/&lt;/',    // <
-      '/&gt;/',    // >
-      '/&ndash;/', // –
-      '/&mdash;/', // —
-      '/-/',
-      '/⁻/',
-      '/—/',
-      '/_/',
-      '/"/',
-      '/`/',
-      '/´/',
-      '/\'/',
+      '/&quot;|&amp;|&lt;|&gt;|&ndash;|&mdash;/',  // ", &, <, >, –, —
+      '[⁻|-|—|_|"|`|´|\']',
       '/\<br.*\>/iU',
   );
 
@@ -873,7 +861,7 @@ class URLify
    *
    * @return string|boolean false on error
    */
-  public static function filter($text, $maxLength = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-', $asciiOnlyForLanguage = false, $convertUtf8Specials = true)
+  public static function filter($text, $maxLength = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-', $asciiOnlyForLanguage = false, $convertUtf8Specials = false)
   {
     if (!$language) {
       return '';
