@@ -740,15 +740,11 @@ class URLify
   private static $map = array();
 
   /**
-   * a array of strings that will convert into the seperator-char - used by "URLify::filter()"
+   * a array of strings that will convert into the separator-char - used by "URLify::filter()"
    *
    * @var array
    */
-  private static $arrayToSeperator = array(
-      '/&quot;|&amp;|&lt;|&gt;|&ndash;|&mdash;/',  // ", &, <, >, –, —
-      '[⁻|-|—|_|"|`|´|\']',
-      '/\<br.*\>/iU',
-  );
+  private static $arrayToseparator = array();
 
   /**
    * The character list as a string.
@@ -772,17 +768,30 @@ class URLify
   private static $language = '';
 
   /**
-   * Add new strings the will be replaced with the seperator
+   * Add new strings the will be replaced with the separator
    *
    * @param array $array
    * @param bool  $append
    */
-  public static function add_array_to_seperator(array $array, $append = true)
+  public static function add_array_to_separator(array $array, $append = true)
   {
     if ($append === true) {
-      self::$arrayToSeperator = array_merge(self::$arrayToSeperator, $array);
+      self::$arrayToseparator = array_merge(self::$arrayToseparator, $array);
     }
-    self::$arrayToSeperator = $array;
+
+    self::$arrayToseparator = $array;
+  }
+
+  /**
+   * reset the arrayToseparator to the default values
+   */
+  public static function reset_array_to_separator()
+  {
+    self::$arrayToseparator = array(
+        '/&quot;|&amp;|&lt;|&gt;|&ndash;|&mdash;/i',  // ", &, <, >, –, —
+        '/⁻|-|—|_|"|`|´|\'/',
+        '/\<br.*\>/iU',
+    );
   }
 
   /**
@@ -845,31 +854,48 @@ class URLify
   }
 
   /**
+   * slug
+   *
+   * @param string $string
+   * @param string $language
+   * @param string $separator
+   * @param boolean $strToLower
+   *
+   * @return bool|string
+   */
+  public static function slug($string, $language = 'de', $separator = '-', $strToLower = false)
+  {
+    return self::filter($string, 200, $language, false, false, $strToLower, $separator, false, true);
+  }
+
+  /**
    * Convert a String to URL
    *
    * e.g.: "Petty<br>theft" to "Petty-theft"
    *
-   * @param string  $text        the text you want to convert
-   * @param int     $maxLength   max. length of the output string, set to -1 to disable it
-   * @param string  $language    the language you want to convert to
-   * @param boolean $fileName    keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
-   * @param boolean $removeWords remove some "words" -> set via "remove_words()"
-   * @param boolean $strtolower  use strtolower() at the end
-   * @param string  $seperator   define a new seperator for the words
+   * @param string  $string               the text you want to convert
+   * @param int     $maxLength            max. length of the output string, set to -1 to disable it
+   * @param string  $language             the language you want to convert to
+   * @param boolean $fileName             keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
+   * @param boolean $removeWords          remove some "words" -> set via "remove_words()"
+   * @param boolean $strToLower           use strtolower() at the end
+   * @param string  $separator            define a new separator for the words
    * @param boolean $asciiOnlyForLanguage set to "true" if you only want to convert the language-maps
-   * @param boolean $convertUtf8Specials convert special chars with portable-utf8 (e.g. \0, \xE9, %F6, ...)
+   * @param boolean $convertUtf8Specials  convert special chars with portable-utf8 (e.g. \0, \xE9, %F6, ...)
    *
    * @return string|boolean false on error
    */
-  public static function filter($text, $maxLength = 200, $language = 'de', $fileName = false, $removeWords = false, $strtolower = false, $seperator = '-', $asciiOnlyForLanguage = false, $convertUtf8Specials = false)
+  public static function filter($string, $maxLength = 200, $language = 'de', $fileName = false, $removeWords = false, $strToLower = false, $separator = '-', $asciiOnlyForLanguage = false, $convertUtf8Specials = false)
   {
     if (!$language) {
       return '';
     }
 
-    // seperator-fallback
-    if (!$seperator) {
-      $seperator = '-';
+    // separator-fallback
+    if (null === $separator) {
+      $separator = '';
+    } else if (!$separator) {
+      $separator = '-';
     }
 
     // set remove-array
@@ -877,22 +903,26 @@ class URLify
       self::reset_remove_list();
     }
 
+    if (0 === count(self::$arrayToseparator)) {
+      self::reset_array_to_separator();
+    }
+
     // get the remove-array
     $removeArray = self::get_remove_list($language);
 
     // 1) clean invalid chars
     if ($convertUtf8Specials) {
-      $text = UTF8::clean($text);
+      $string = UTF8::clean($string);
     }
 
-    // 2) replace with $seperator
-    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);
+    // 2) replace with $separator
+    $string = preg_replace(self::$arrayToseparator, $separator, $string);
     // 3) remove all other html-tags
-    $text = strip_tags($text);
+    $string = strip_tags($string);
     // 4) use special language replacer
-    $text = self::downcode($text, $language, $asciiOnlyForLanguage, '', $convertUtf8Specials);
-    // 5) replace with $seperator, again
-    $text = preg_replace(self::$arrayToSeperator, $seperator, $text);
+    $string = self::downcode($string, $language, $asciiOnlyForLanguage, '', $convertUtf8Specials);
+    // 5) replace with $separator, again
+    $string = preg_replace(self::$arrayToseparator, $separator, $string);
 
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
@@ -903,43 +933,43 @@ class URLify
 
     // keep the "." from e.g.: a file-extension?
     if ($fileName) {
-      $removePattern = '/[^' . $seperator . '.\-a-zA-Z0-9\s]/u';
+      $removePattern = '/[^' . $separator . '.\-a-zA-Z0-9\s]/u';
     } else {
-      $removePattern = '/[^' . $seperator . '\-a-zA-Z0-9\s]/u';
+      $removePattern = '/[^' . $separator . '\-a-zA-Z0-9\s]/u';
     }
 
-    $text = preg_replace(
+    $string = preg_replace(
         array(
-            '`[' . $seperator . ']+`',      // 6) remove double $seperator
-            '[^A-Za-z0-9]',                 // 5) only keep default-chars
-            $removePattern,                 // 4) remove unneeded chars
-            '/[' . $seperator . '\s]+/',    // 3) convert spaces to $seperator
-            '/^\s+|\s+$/',                  // 2) trim leading & trailing spaces
-            $removeWordsSearch,             // 1) remove some extras words
+            '`[' . ($separator ?: ' ') . ']+`',   // 6) remove double $separator
+            '[^A-Za-z0-9]',                       // 5) only keep default-chars
+            $removePattern,                       // 4) remove unneeded chars
+            '/[' . ($separator ?: ' ') . '\s]+/', // 3) convert spaces to $separator
+            '/^\s+|\s+$/',                        // 2) trim leading & trailing spaces
+            $removeWordsSearch,                   // 1) remove some extras words
         ),
         array(
-            $seperator,
+            $separator,
             '',
             '',
-            $seperator,
+            $separator,
             '',
             '',
         ),
-        $text
+        $string
     );
 
     // convert to lowercase
-    if ($strtolower === true) {
-      $text = strtolower($text);
+    if ($strToLower === true) {
+      $string = strtolower($string);
     }
 
     // "substr" only if "$length" is set
     if ($maxLength && $maxLength > 0) {
-      $text = (string)substr($text, 0, $maxLength);
+      $string = (string)substr($string, 0, $maxLength);
     }
 
-    // trim "$seperator" from beginning and end of the string
-    return trim($text, $seperator);
+    // trim "$separator" from beginning and end of the string
+    return trim($string, $separator);
   }
 
   /**
@@ -1038,25 +1068,26 @@ class URLify
    * $language specifies a priority for a specific language.
    * The latter is useful if languages have different rules for the same character.
    *
-   * @param string  $text
+   * @param string  $string
    * @param string  $language
    * @param boolean $asciiOnlyForLanguage set to "true" if you only want to convert the language-maps
+   * @param boolean $convertUtf8Specials  convert special chars with portable-utf8 (e.g. \0, \xE9, %F6, ...)
    *
    * @param string  $substChr
    *
    * @return string
    */
-  public static function downcode($text, $language = 'de', $asciiOnlyForLanguage = false, $substChr = '', $convertUtf8Specials = true)
+  public static function downcode($string, $language = 'de', $asciiOnlyForLanguage = false, $substChr = '', $convertUtf8Specials = true)
   {
     self::init_downcode($language);
 
     if ($convertUtf8Specials === true) {
-      $text = UTF8::urldecode($text);
+      $string = UTF8::urldecode($string);
     }
 
     $searchArray = array();
     $replaceArray = array();
-    if (preg_match_all(self::$regex, $text, $matches)) {
+    if (preg_match_all(self::$regex, $string, $matches)) {
       $matchesCounter = count($matches[0]);
 
       for ($i = 0; $i < $matchesCounter; $i++) {
@@ -1068,13 +1099,13 @@ class URLify
       }
     }
 
-    $text = str_replace($searchArray, $replaceArray, $text);
+    $string = str_replace($searchArray, $replaceArray, $string);
 
     // convert everything into ASCII
     if ($asciiOnlyForLanguage === true) {
-      return (string)$text;
+      return (string)$string;
     } else {
-      return UTF8::str_transliterate($text, $substChr);
+      return UTF8::str_transliterate($string, $substChr);
     }
   }
 
@@ -1133,13 +1164,13 @@ class URLify
   /**
    * Alias of `URLify::downcode()`.
    *
-   * @param string $text
+   * @param string $string
    *
    * @return string
    */
-  public static function transliterate($text)
+  public static function transliterate($string)
   {
-    return self::downcode($text);
+    return self::downcode($string);
   }
 
 }
