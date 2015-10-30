@@ -894,7 +894,7 @@ class URLify
     // separator-fallback
     if (null === $separator) {
       $separator = '';
-    } else if (!$separator) {
+    } elseif (!$separator) {
       $separator = '-';
     }
 
