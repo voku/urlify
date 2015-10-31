@@ -161,15 +161,22 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testRemoveWords()
   {
-    // append
     self::assertEquals('foo-bar', URLify::filter('foo bar', 60, 'de', false, true));
+
+    // append (array)
     URLify::remove_words(
         array(
             'foo',
             'bar'
-        ), 'de', true
+        ),
+        'de',
+        true
     );
     self::assertEquals('', URLify::filter('foo bar', 60, 'de', false, true));
+
+    // append (string)
+    URLify::remove_words('lall', 'de', true);
+    self::assertEquals('123', URLify::filter('foo bar lall 123 ', 60, 'de', false, true));
 
     // reset
     URLify::reset_remove_list();
