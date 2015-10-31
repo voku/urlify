@@ -20,6 +20,11 @@ Czech, Polish, and Latvian and many other via "str_transliterate".
 - Author: [jbroadway](http://github.com/jbroadway) / [voku](http://github.com/voku)
 - License: MIT
 
+## Install via "composer require"
+```shell
+composer require voku/urlify
+```
+
 ## Usage:
 
 namespace: "voku\helper\URLify"
