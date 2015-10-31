@@ -187,9 +187,14 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         array(
             'foo',
             'bar'
-        ), 'de', false
+        ),
+        'de',
+        false
     );
     self::assertEquals('', URLify::filter('foo bar', 60, 'de', false, true));
+
+    // reset
+    URLify::reset_remove_list();
   }
 
   public function testManyRoundsWithUnknownLanguageCode()
