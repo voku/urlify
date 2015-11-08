@@ -167,7 +167,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
   {
     self::assertEquals('foo-bar', URLify::filter('foo bar', 60, 'de', false, true));
 
-    // append (array)
+    // append (array) v1
     URLify::remove_words(
         array(
             'foo',
@@ -177,6 +177,17 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         true
     );
     self::assertEquals('', URLify::filter('foo bar', 60, 'de', false, true));
+
+    // append (array) v2
+    URLify::remove_words(
+        array(
+            'foo/bar',
+            '\n'
+        ),
+        'de',
+        true
+    );
+    self::assertEquals('lall-n', URLify::filter('foo / bar lall \n', 60, 'de', false, true));
 
     // append (string)
     URLify::remove_words('lall', 'de', true);
@@ -249,6 +260,17 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
     foreach ($tests as $before => $after) {
       self::assertEquals($after, URLify::filter($before, 100, 'de', false, true, true, '-'), $before);
+    }
+
+    $tests = array(
+        'Facebook bekämpft erstmals / Durchsuchungsbefehle' => 'facebook/bekaempft/erstmals/durchsuchungsbefehle',
+        '  -ABC-中文空白-  '                                  => 'abc/zhong/wen/kong/bai',
+        '    #  - ÖÄÜ- '                                   => 'oeaeue',
+        'öä \nü'                                             => 'oeae/nue'
+    );
+
+    foreach ($tests as $before => $after) {
+      self::assertEquals($after, URLify::filter($before, 100, 'de', false, true, true, '/'), $before);
     }
   }
 

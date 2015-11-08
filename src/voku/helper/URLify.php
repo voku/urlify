@@ -846,8 +846,14 @@ class URLify
         !isset(self::$remove_list[$language])
         ||
         !is_array(self::$remove_list[$language])
+        ||
+        empty(self::$remove_list[$language])
     ) {
       return array();
+    }
+
+    foreach (self::$remove_list[$language] as &$removeWord) {
+      $removeWord = preg_quote($removeWord, '/');
     }
 
     return self::$remove_list[$language];
@@ -898,6 +904,9 @@ class URLify
       $separator = '-';
     }
 
+    // escaped separator
+    $separatorEscaped = preg_quote($separator, '/');
+
     // set remove-array
     if (!isset(self::$remove_list[$language])) {
       self::reset_remove_list();
@@ -933,17 +942,17 @@ class URLify
 
     // keep the "." from e.g.: a file-extension?
     if ($fileName) {
-      $removePattern = '/[^' . $separator . '.\-a-zA-Z0-9\s]/u';
+      $removePattern = '/[^' . $separatorEscaped . '.\-a-zA-Z0-9\s]/u';
     } else {
-      $removePattern = '/[^' . $separator . '\-a-zA-Z0-9\s]/u';
+      $removePattern = '/[^' . $separatorEscaped . '\-a-zA-Z0-9\s]/u';
     }
 
     $string = preg_replace(
         array(
-            '`[' . ($separator ?: ' ') . ']+`',   // 6) remove double $separator
+            '/[' . ($separatorEscaped ?: ' ') . ']+/',   // 6) remove double $separator
             '[^A-Za-z0-9]',                       // 5) only keep default-chars
             $removePattern,                       // 4) remove unneeded chars
-            '/[' . ($separator ?: ' ') . '\s]+/', // 3) convert spaces to $separator
+            '/[' . ($separatorEscaped ?: ' ') . '\s]+/', // 3) convert spaces to $separator
             '/^\s+|\s+$/',                        // 2) trim leading & trailing spaces
             $removeWordsSearch,                   // 1) remove some extras words
         ),
