@@ -812,7 +812,7 @@ class URLify
    *
    * @param mixed   $words
    * @param string  $language
-   * @param boolean $merge (keep the previous (default) remove-words-array)
+   * @param boolean $merge keep the previous (default) remove-words-array
    */
   public static function remove_words($words, $language = 'de', $merge = true)
   {

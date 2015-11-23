@@ -9,7 +9,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
   {
     $testArray = array(
         '  J\'étudie le français  '    => '  J\'etudie le francais  ',
-        'Lo siento, no hablo español.' => 'Lo siento, no hablo espanol.'
+        'Lo siento, no hablo español.' => 'Lo siento, no hablo espanol.',
     );
 
     foreach ($testArray as $before => $after) {
@@ -19,6 +19,24 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
     self::assertEquals('F3PWS, 中文空白', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', true));
     self::assertEquals('F3PWS, Zhong Wen Kong Bai ', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', false));
+  }
+
+  public function testRemoveWordsDisable()
+  {
+    URLify::remove_words(array('foo', 'bar'));
+    self::assertEquals('foo-bar', URLify::filter('foo bar'));
+    URLify::reset_remove_list();
+  }
+
+  public function testRemoveWordsEnabled()
+  {
+    URLify::remove_words(array('foo', 'bar'));
+    self::assertEquals('', URLify::filter('foo bar', 10, 'de', false, true));
+    URLify::reset_remove_list();
+
+    URLify::remove_words(array('foo', 'bär'));
+    self::assertEquals('bar', URLify::filter('foo bar', 10, 'de', false, true));
+    URLify::reset_remove_list();
   }
 
   public function testDefaultFilter()
@@ -34,7 +52,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         '-ABC-中文空白'                                                                    => 'ABC-Zhong-Wen-Kong-Bai',
         ' '                                                                            => '',
         ''                                                                             => '',
-        '<strong>Subject<BR class="test">from a<br style="clear:both;" />CMS</strong>' => 'Subject-from-a-CMS'
+        '<strong>Subject<BR class="test">from a<br style="clear:both;" />CMS</strong>' => 'Subject-from-a-CMS',
     );
 
     for ($i = 0; $i < 10; $i++) { // increase this value to test the performance
@@ -140,7 +158,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     URLify::add_array_to_separator(
         array(
             '/®/',
-            '/tester/'
+            '/tester/',
         )
     );
     self::assertEquals('14-14-34-P', URLify::filter('¿ ® ¼ ¼ ¾ ¶'));
@@ -157,7 +175,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
             '®' => '(r)',
             '¼' => '1/4',
             '¾' => '3/4',
-            '¶' => 'p'
+            '¶' => 'p',
         )
     );
     self::assertEquals('? (r) 1/4 1/4 3/4 p', URLify::downcode('¿ ® ¼ ¼ ¾ ¶'));
@@ -171,7 +189,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     URLify::remove_words(
         array(
             'foo',
-            'bar'
+            'bar',
         ),
         'de',
         true
@@ -182,7 +200,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     URLify::remove_words(
         array(
             'foo/bar',
-            '\n'
+            '\n',
         ),
         'de',
         true
@@ -201,7 +219,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     URLify::remove_words(
         array(
             'foo',
-            'bar'
+            'bar',
         ),
         'de',
         false
@@ -232,7 +250,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         'öäü'            => 'oau',
         ''               => '',
         ' test test'     => 'test-test',
-        'أبز'            => 'abz'
+        'أبز'            => 'abz',
     );
 
     foreach ($tests as $before => $after) {
@@ -255,7 +273,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         'Facebook bekämpft erstmals Durchsuchungsbefehle' => 'facebook-bekaempft-erstmals-durchsuchungsbefehle',
         '  -ABC-中文空白-  '                                  => 'abc-zhong-wen-kong-bai',
         '      - ÖÄÜ- '                                   => 'oeaeue',
-        'öäü'                                             => 'oeaeue'
+        'öäü'                                             => 'oeaeue',
     );
 
     foreach ($tests as $before => $after) {
@@ -264,9 +282,9 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
     $tests = array(
         'Facebook bekämpft erstmals / Durchsuchungsbefehle' => 'facebook/bekaempft/erstmals/durchsuchungsbefehle',
-        '  -ABC-中文空白-  '                                  => 'abc/zhong/wen/kong/bai',
-        '    #  - ÖÄÜ- '                                   => 'oeaeue',
-        'öä \nü'                                             => 'oeae/nue'
+        '  -ABC-中文空白-  '                                    => 'abc/zhong/wen/kong/bai',
+        '    #  - ÖÄÜ- '                                    => 'oeaeue',
+        'öä \nü'                                            => 'oeae/nue',
     );
 
     foreach ($tests as $before => $after) {
