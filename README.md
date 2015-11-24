@@ -33,10 +33,10 @@ To generate slugs for URLs:
 ```php
 <?php
 
-echo URLify::filter (' J\'étudie le français ');
+echo URLify::filter(' J\'étudie le français ');
 // "J-etudie-le-francais"
 
-echo URLify::filter ('Lo siento, no hablo español.');
+echo URLify::filter('Lo siento, no hablo español.');
 // "Lo-siento-no-hablo-espanol"
 
 ?>
@@ -47,7 +47,7 @@ To generate slugs for file names:
 ```php
 <?php
 
-echo URLify::filter ('фото.jpg', 60, '', true);
+echo URLify::filter('фото.jpg', 60, '', true);
 // "foto.jpg"
 
 ?>
@@ -59,15 +59,15 @@ To simply transliterate characters:
 ```php
 <?php
 
-echo URLify::downcode ('J\'étudie le français');
+echo URLify::downcode('J\'étudie le français');
 // "J'etudie le francais"
 
-echo URLify::downcode ('Lo siento, no hablo español.');
+echo URLify::downcode('Lo siento, no hablo español.');
 // "Lo siento, no hablo espanol."
 
 /* Or use transliterate() alias: */
 
-echo URLify::transliterate ('Lo siento, no hablo español.');
+echo URLify::transliterate('Lo siento, no hablo español.');
 // "Lo siento, no hablo espanol."
 
 ?>
@@ -78,12 +78,12 @@ To extend the character list:
 ```php
 <?php
 
-URLify::add_chars (array (
+URLify::add_chars(array(
 	'¿' => '?', '®' => '(r)', '¼' => '1/4',
 	'¼' => '1/2', '¾' => '3/4', '¶' => 'P'
 ));
 
-echo URLify::downcode ('¿ ® ¼ ¼ ¾ ¶');
+echo URLify::downcode('¿ ® ¼ ¼ ¾ ¶');
 // "? (r) 1/2 1/2 3/4 P"
 
 ?>
@@ -94,10 +94,9 @@ To extend or replace the default replacing list:
 ```php
 <?php
 
-URLify::add_array_to_seperator(array (
+URLify::add_array_to_seperator(array(
 	"/®/"
-)
-);
+));
 
 echo URLify::filter('¿ ® ¼ ¼ ¾ ¶');
 // "14-14-34-P"
@@ -110,7 +109,7 @@ To extend the list of words to remove for one language:
 ```php
 <?php
 
-URLify::remove_words (array ('remove', 'these', 'too'), 'de');
+URLify::remove_words(array('remove', 'these', 'too'), 'de');
 
 ?>
 ```
@@ -120,10 +119,10 @@ To prioritize a certain language map:
 ```php
 <?php
 
-echo URLify::filter (' Ägypten und Österreich besitzen wie üblich ein Übermaß an ähnlich öligen Attachés ', 60, 'de');
+echo URLify::filter(' Ägypten und Österreich besitzen wie üblich ein Übermaß an ähnlich öligen Attachés ', 60, 'de');
 // "Aegypten-und-Oesterreich-besitzen-wie-ueblich-ein-Uebermass-aehnlich-oeligen-Attaches"
    
-echo URLify::filter ('Cağaloğlu, çalıştığı, müjde, lazım, mahkûm', 60, 'tr');
+echo URLify::filter('Cağaloğlu, çalıştığı, müjde, lazım, mahkûm', 60, 'tr');
 // "Cagaloglu-calistigi-mujde-lazim-mahkum"
 
 ?>
