@@ -16,6 +16,18 @@ class Utf8UrlSlugTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('testing-test', URLify::filter($str));
   }
 
+  public function test_multi()
+  {
+    $str = "川 đņ ōķ ôõ ö+ ÷ø ųú ûü ũū˙ ^ foo \0 \x1 \\";
+    $this->assertEquals('Chuan-djn-ok-oo-oe-o-uu-uue-uu-foo', URLify::filter($str));
+  }
+
+  public function test_xss()
+  {
+    $str = '<script>alert(\'lall\')</script><svg onload=alert(1)>';
+    $this->assertEquals('alert-lall', URLify::filter($str));
+  }
+
   public function test_invalid_char()
   {
     $str = "tes\xE9ting";
