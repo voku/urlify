@@ -4,7 +4,9 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/voku/urlify/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/voku/urlify/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/741def77-3945-4692-a2da-a4feadfb2928/mini.png)](https://insight.sensiolabs.com/projects/741def77-3945-4692-a2da-a4feadfb2928)
 [![Dependency Status](https://www.versioneye.com/php/voku:urlify/dev-master/badge.svg)](https://www.versioneye.com/php/voku:urlify/dev-master)
-[![Latest Stable Version](https://poser.pugx.org/voku/urlify/v/stable)](https://packagist.org/packages/voku/urlify) [![Total Downloads](https://poser.pugx.org/voku/urlify/downloads)](https://packagist.org/packages/voku/urlify) [![Latest Unstable Version](https://poser.pugx.org/voku/urlify/v/unstable)](https://packagist.org/packages/voku/urlify) [![License](https://poser.pugx.org/voku/urlify/license)](https://packagist.org/packages/voku/urlify)
+[![Latest Stable Version](https://poser.pugx.org/voku/urlify/v/stable)](https://packagist.org/packages/voku/urlify) [![Total Downloads](https://poser.pugx.org/voku/urlify/downloads)](https://packagist.org/packages/voku/urlify) [![Latest Unstable Version](https://poser.pugx.org/voku/urlify/v/unstable)](https://packagist.org/packages/voku/urlify)
+[![PHP 7 ready](http://php7ready.timesplinter.ch/voku/urlify/badge.svg)](https://travis-ci.org/voku/urlify)
+[![License](https://poser.pugx.org/voku/urlify/license)](https://packagist.org/packages/voku/urlify)
 
 # URLify for PHP
 
