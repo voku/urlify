@@ -49,7 +49,7 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
         }, $inputStrings
     );
 
-    self::assertSame($expectedSlugs, $slugs);
+    self::assertSame($expectedSlugs, $slugs, 'tested-file: ' . $fileName);
   }
 
   public function testSlugifyOptions()
