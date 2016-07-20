@@ -62,6 +62,7 @@ class URLify
         'Ö' => 'O',
         'Ő' => 'O',
         'Ø' => 'O',
+        'Œ' => 'OE',
         'Ș' => 'S',
         'Ț' => 'T',
         'Ù' => 'U',
@@ -98,6 +99,7 @@ class URLify
         'ö' => 'o',
         'ő' => 'o',
         'ø' => 'o',
+        'œ' => 'oe',
         'ș' => 's',
         'ț' => 't',
         'ù' => 'u',
@@ -1099,6 +1101,7 @@ class URLify
     if (preg_match_all(self::$regex, $string, $matches)) {
       $matchesCounter = count($matches[0]);
 
+      /** @noinspection ForeachInvariantsInspection */
       for ($i = 0; $i < $matchesCounter; $i++) {
         $char = $matches[0][$i];
         if (isset(self::$map[$char])) {
