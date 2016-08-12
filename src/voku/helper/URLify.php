@@ -864,9 +864,9 @@ class URLify
   /**
    * slug
    *
-   * @param string $string
-   * @param string $language
-   * @param string $separator
+   * @param string  $string
+   * @param string  $language
+   * @param string  $separator
    * @param boolean $strToLower
    *
    * @return bool|string
@@ -1079,16 +1079,15 @@ class URLify
    * $language specifies a priority for a specific language.
    * The latter is useful if languages have different rules for the same character.
    *
-   * @param string  $string
-   * @param string  $language
-   * @param boolean $asciiOnlyForLanguage set to "true" if you only want to convert the language-maps
-   * @param boolean $convertUtf8Specials  convert special chars with portable-utf8 (e.g. \0, \xE9, %F6, ...)
-   *
-   * @param string  $substChr
+   * @param string  $string               The input string.
+   * @param string  $language             Your primary language.
+   * @param boolean $asciiOnlyForLanguage Set to "true" if you only want to convert the language-maps.
+   * @param boolean $convertUtf8Specials  Convert special chars with portable-utf8 (e.g. \0, \xE9, %F6, ...).
+   * @param string  $unknown              Character use if character unknown. (default is ?)
    *
    * @return string
    */
-  public static function downcode($string, $language = 'de', $asciiOnlyForLanguage = false, $substChr = '', $convertUtf8Specials = true)
+  public static function downcode($string, $language = 'de', $asciiOnlyForLanguage = false, $unknown = '', $convertUtf8Specials = true)
   {
     self::init_downcode($language);
 
@@ -1117,7 +1116,7 @@ class URLify
     if ($asciiOnlyForLanguage === true) {
       return (string)$string;
     } else {
-      return UTF8::str_transliterate($string, $substChr);
+      return UTF8::to_ascii($string, $unknown);
     }
   }
 

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class SeoSluggerTest
+ */
 class SeoSluggerTest extends BaseSluggerTest
 {
   public function setUp()
@@ -7,6 +10,9 @@ class SeoSluggerTest extends BaseSluggerTest
     parent::setUp();
   }
 
+  /**
+   * @return array
+   */
   public function provideSlugFileNames()
   {
     return array(

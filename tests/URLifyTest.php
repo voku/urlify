@@ -21,7 +21,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     }
 
     self::assertSame('F3PWS, 中文空白', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', true));
-    self::assertSame('F3PWS, Zhong Wen Kong Bai ', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', false));
+    self::assertSame('F3PWS, zhong wen kong bai', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', false));
   }
 
   public function testRemoveWordsDisable()
@@ -48,11 +48,11 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         '  J\'étudie le français  '                                                    => 'J-etudie-le-francais',
         'Lo siento, no hablo español.'                                                 => 'Lo-siento-no-hablo-espanol',
         '—ΦΞΠΏΣ—Test—'                                                                 => 'F3PWS-Test',
-        '大般若經'                                                                         => 'Da-Ban-Ruo-Jing',
-        'ياكرهي لتويتر'                                                                => 'ykrhy-ltoytr',
+        '大般若經'                                                                         => 'da-ban-ruo-jing',
+        'ياكرهي لتويتر'                                                                => 'yakrhy-ltoytr',
         "test\xe2\x80\x99öäü"                                                          => 'test-oeaeue',
         'Ɓtest'                                                                        => 'Btest',
-        '-ABC-中文空白'                                                                    => 'ABC-Zhong-Wen-Kong-Bai',
+        '-ABC-中文空白'                                                                    => 'ABC-zhong-wen-kong-bai',
         ' '                                                                            => '',
         ''                                                                             => '',
         '<strong>Subject<BR class="test">from a<br style="clear:both;" />CMS</strong>' => 'Subject-from-a-CMS',
@@ -100,12 +100,12 @@ class URLifyTest extends PHPUnit_Framework_TestCase
   public function testFilterFile()
   {
     $testArray = array(
-        'test-Da-Ban-Ruo-Jing-.txt'             => 'test-大般若經.txt',
+        'test-da-ban-ruo-jing.txt'             => 'test-大般若經.txt',
         'foto.jpg'                              => 'фото.jpg',
         'Foto.jpg'                              => 'Фото.jpg',
         'oeaeue-test'                           => 'öäü  - test',
-        'shdgshdg.png'                          => 'שדגשדג.png',
-        'cr-aaaaaeaaeOOOOOe141234SSucdthu-.jpg' => '—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–.jpg',
+        'sdgsdg.png'                            => 'שדגשדג.png',
+        'cR-aaaaaeaaeOOOOOe-14-12-34SSucdthu-.jpg' => '—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–.jpg',
         '000-c-c.txt'                           => '000—©—©.txt',
         ''                                      => ' ',
     );
@@ -130,33 +130,33 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     self::assertSame('OUaeou', URLify::filter('ÖÜäöü', 60, 'tr'));
     self::assertSame('hello-zs-privet', URLify::filter('hello žš, привет', 60, 'ru'));
     // test stripping and conversion of UTF-8 spaces
-    self::assertSame('Xiang-Jing-Zhen-Ren-test-Mahito-Mukai', URLify::filter('向井　真人test　(Mahito Mukai)'));
+    self::assertSame('xiang-jing-zhen-rentest-Mahito-Mukai', URLify::filter('向井　真人test　(Mahito Mukai)'));
   }
 
   public function testFilterAllLanguages()
   {
-    self::assertSame('Dj-sh-l-cr-aaaaaeaaeOOOOOe141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'de'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'latin'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'latin_symbols'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'el'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'tr'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ru'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'uk'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'cs'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'pl'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ro'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'lv'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'lt'));
-    self::assertSame('D-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'vn'));
-    self::assertSame('D-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ar'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'sr'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'az'));
-    self::assertSame('Dj-sh-l-cr-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'other'));
+    self::assertSame('Dj-sh-l-cR-aaaaaeaaeOOOOOe-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'de'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'latin'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'latin_symbols'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'el'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'tr'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ru'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'uk'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'cs'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'pl'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ro'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'lv'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'lt'));
+    self::assertSame('D-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'vn'));
+    self::assertSame('D-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ar'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'sr'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'az'));
+    self::assertSame('Dj-sh-l-cR-aaaaaaaeOOOOO-14-12-34SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'other'));
   }
 
   public function testAddArrayToSeparator()
   {
-    self::assertSame('r-14-14-34-test-P', URLify::filter('¿ ® ¼ ¼ ¾ test ¶'));
+    self::assertSame('R-14-14-34-test-P', URLify::filter('¿ ® ¼ ¼ ¾ test ¶'));
 
     URLify::add_array_to_separator(
         array(
@@ -170,7 +170,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testAddChars()
   {
-    self::assertSame('? (r) 1/4 1/4 3/4 P', URLify::downcode('¿ ® ¼ ¼ ¾ ¶', 'latin', false, '?'));
+    self::assertSame('? (R)  1/4  1/4  3/4 P', URLify::downcode('¿ ® ¼ ¼ ¾ ¶', 'latin', false, '?'));
 
     URLify::add_chars(
         array(

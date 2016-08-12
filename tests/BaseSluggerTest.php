@@ -2,6 +2,9 @@
 
 use voku\helper\URLify;
 
+/**
+ * Class BaseSluggerTest
+ */
 abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
 {
   /**
@@ -36,16 +39,17 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
 
   /**
    * @dataProvider provideSlugFileNames
+   *
+   * @param $fileName
    */
   public function testDefaultSlugify($fileName)
   {
     $inputStrings = file($this->inputFixturesDir . DIRECTORY_SEPARATOR  . $fileName, FILE_IGNORE_NEW_LINES);
     $expectedSlugs = file($this->expectedFixturesDir . DIRECTORY_SEPARATOR  . $fileName, FILE_IGNORE_NEW_LINES);
 
-    $slugger = $this->slugger;
     $slugs = array_map(
-        function ($string) use ($slugger) {
-          return $slugger->slug($string, 'de', '-', true);
+        function ($string) {
+          return URLify::slug($string, 'de', '-', true);
         }, $inputStrings
     );
 
@@ -62,6 +66,9 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
 
   /**
    * @dataProvider provideSlugEdgeCases
+   *
+   * @param $string
+   * @param $expectedSlug
    */
   public function testSlugifyEdgeCases($string, $expectedSlug)
   {
@@ -70,6 +77,9 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
     self::assertSame($expectedSlug, $slug);
   }
 
+  /**
+   * @return array
+   */
   public function provideSlugEdgeCases()
   {
     return array(

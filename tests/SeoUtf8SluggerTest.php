@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class SeoUtf8SluggerTest
+ */
 class SeoUtf8SluggerTest extends BaseSluggerTest
 {
   public function setUp()
@@ -7,6 +10,9 @@ class SeoUtf8SluggerTest extends BaseSluggerTest
     parent::setUp();
   }
 
+  /**
+   * @return array
+   */
   public function provideSlugFileNames()
   {
     return array(
