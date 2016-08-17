@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Class SluggerTest
- */
 class SluggerTest extends BaseSluggerTest
 {
   public function setUp()
@@ -10,9 +7,6 @@ class SluggerTest extends BaseSluggerTest
     parent::setUp();
   }
 
-  /**
-   * @return array
-   */
   public function provideSlugFileNames()
   {
     return array(
@@ -20,9 +14,6 @@ class SluggerTest extends BaseSluggerTest
     );
   }
 
-  /**
-   * @return array
-   */
   public function provideSlugFileNamesWithNull()
   {
     return array(

@@ -19,7 +19,7 @@
   ],
   "require": {
     "php": ">=5.3",
-    "voku/portable-utf8": "~3.0"
+    "voku/portable-utf8": "~2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0"
