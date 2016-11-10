@@ -8,9 +8,9 @@ namespace voku\helper;
  * - https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js
  * - https://github.com/voku/portable-utf8
  *
- * Handles symbols from Latin languages, German, Greek, Turkish, Bulgarian, Russian,
- * Ukrainian, Czech, Polish, Romanian, Latvian, Lithuanian, Vietnamese, Arabic,
- * Serbian, Azerbaijani and many other via "str_transliterate".
+ * Handles symbols from latin languages, Arabic, Azerbaijani, Czech, German, Greek, Latvian, Lithuanian, Persian,
+ * Polish, Romanian, Bulgarian, Russian, Serbian, Turkish, Ukrainian and Vietnamese
+ * and many other via "str_transliterate".
  *
  * Usage:
  *
@@ -611,6 +611,41 @@ class URLify
         'ه' => 'h',
         'و' => 'o',
         'ي' => 'y',
+        'ا' => 'a',
+        'إ' => 'a',
+        'آ' => 'a',
+        'ؤ' => 'o',
+        'ئ' => 'y',
+        'ء' => 'aa',
+        '٠' => '0',
+        '١' => '1',
+        '٢' => '2',
+        '٣' => '3',
+        '٤' => '4',
+        '٥' => '5',
+        '٦' => '6',
+        '٧' => '7',
+        '٨' => '8',
+        '٩' => '9',
+    ),
+    // Persian
+    'fa'            => array(
+        'گ' => 'g',
+        'ژ' => 'j',
+        'پ' => 'p',
+        'چ' => 'ch',
+        'ی' => 'y',
+        'ک' => 'k',
+        '۰' => '0',
+        '۱' => '1',
+        '۲' => '2',
+        '۳' => '3',
+        '۴' => '4',
+        '۵' => '5',
+        '۶' => '6',
+        '۷' => '7',
+        '۸' => '8',
+        '۹' => '9',
     ),
     // Serbian
     'sr'            => array(

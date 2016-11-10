@@ -17,8 +17,9 @@ A PHP port of URLify.js from the Django project + str_transliterate from "Portab
 - https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js
 - https://github.com/voku/portable-utf8
 
-Handles symbols from Latin languages, Greek, Turkish, Russian, Ukrainian,
-Czech, Polish, and Latvian and many other via "str_transliterate".
+Handles symbols from latin languages, Arabic, Azerbaijani, Czech, German, Greek, Latvian, Lithuanian, Persian,
+Polish, Romanian, Bulgarian, Russian, Serbian, Turkish, Ukrainian and Vietnamese
+and many other via "str_transliterate".
 
 - Author: [jbroadway](http://github.com/jbroadway) / [voku](http://github.com/voku)
 - License: MIT
