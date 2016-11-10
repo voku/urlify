@@ -1,12 +1,21 @@
 <?php
 
+/**
+ * Class Utf8SluggerTest
+ */
 class Utf8SluggerTest extends BaseSluggerTest
 {
+  /**
+   * set-up
+   */
   public function setUp()
   {
     parent::setUp();
   }
 
+  /**
+   * @return array
+   */
   public function provideSlugFileNames()
   {
     return array(

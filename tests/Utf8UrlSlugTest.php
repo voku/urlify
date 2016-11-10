@@ -2,6 +2,9 @@
 
 use voku\helper\URLify;
 
+/**
+ * Class Utf8UrlSlugTest
+ */
 class Utf8UrlSlugTest extends PHPUnit_Framework_TestCase
 {
   public function test_utf8()

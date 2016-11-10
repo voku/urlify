@@ -2,6 +2,9 @@
 
 use voku\helper\URLify;
 
+/**
+ * Class BaseSluggerTest
+ */
 abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
 {
   /**
@@ -36,6 +39,8 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
 
   /**
    * @dataProvider provideSlugFileNames
+   *
+   * @param $fileName
    */
   public function testDefaultSlugify($fileName)
   {
@@ -45,13 +50,14 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
     $slugger = $this->slugger;
     $slugs = array_map(
         function ($string) use ($slugger) {
+          /** @noinspection StaticInvocationViaThisInspection */
           return $slugger->slug($string, 'de', '-', true);
         }, $inputStrings
     );
 
     if (version_compare(PHP_VERSION, '5.4.0', '<')) {
-      // TODO: for php 5.3
-    } else {;
+      self::markTestSkipped('TODO: not working with PHP < 5.4');
+    } else {
       self::assertSame($expectedSlugs, $slugs, 'tested-file: ' . $fileName);
     }
   }
@@ -66,6 +72,9 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
 
   /**
    * @dataProvider provideSlugEdgeCases
+   *
+   * @param $string
+   * @param $expectedSlug
    */
   public function testSlugifyEdgeCases($string, $expectedSlug)
   {
@@ -74,6 +83,9 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
     self::assertSame($expectedSlug, $slug);
   }
 
+  /**
+   * @return array
+   */
   public function provideSlugEdgeCases()
   {
     return array(

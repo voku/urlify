@@ -11,8 +11,12 @@ class URLifyTest extends PHPUnit_Framework_TestCase
   public function testDowncode()
   {
     $testArray = array(
-        '  J\'étudie le français  '    => '  J\'etudie le francais  ',
-        'Lo siento, no hablo español.' => 'Lo siento, no hablo espanol.',
+        '  J\'étudie le français  '                                                        => '  J\'etudie le francais  ',
+        'Lo siento, no hablo español.'                                                     => 'Lo siento, no hablo espanol.',
+        '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                                          => '$1 -> %1 -> oeaeue -> F3PWS -> Zhong Wen Kong Bai  ->  ',
+        'זאת השפה העברית.‏'                                                                => 'zt hshph h`bryt.',
+        '𐭠 𐭡 𐭢 𐭣 𐭤 𐭥 𐭦 𐭧 𐭨 𐭩 𐭪 𐭫 𐭬 𐭭 𐭮 𐭯 𐭰 𐭱 𐭲 𐭸 𐭹 𐭺 𐭻 𐭼 𐭽 𐭾 𐭿' => '                          ',
+        'أحبك'                                                                             => 'ahbk',
     );
 
     foreach ($testArray as $before => $after) {
@@ -274,14 +278,43 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     }
 
     $tests = array(
-        'Facebook bekämpft erstmals Durchsuchungsbefehle' => 'facebook-bekaempft-erstmals-durchsuchungsbefehle',
-        '  -ABC-中文空白-  '                                  => 'abc-zhong-wen-kong-bai',
-        '      - ÖÄÜ- '                                   => 'oeaeue',
-        'öäü'                                             => 'oeaeue',
+        'Facebook bekämpft erstmals Durchsuchungsbefehle'                                  => 'facebook-bekaempft-erstmals-durchsuchungsbefehle',
+        '  -ABC-中文空白-  '                                                                   => 'abc-zhong-wen-kong-bai',
+        '      - ÖÄÜ- '                                                                    => 'oeaeue',
+        'öäü'                                                                              => 'oeaeue',
+        '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                                          => '1-1-oeaeue-f3pws-zhong-wen-kong-bai',
+        'זאת השפה העברית.‏'                                                                => 'zt-hshph-h-bryt',
+        '𐭠 𐭡 𐭢 𐭣 𐭤 𐭥 𐭦 𐭧 𐭨 𐭩 𐭪 𐭫 𐭬 𐭭 𐭮 𐭯 𐭰 𐭱 𐭲 𐭸 𐭹 𐭺 𐭻 𐭼 𐭽 𐭾 𐭿' => '',
+        'أحبك'                                                                             => 'ahbk',
     );
 
     foreach ($tests as $before => $after) {
       self::assertSame($after, URLify::filter($before, 100, 'de', false, true, true, '-'), $before);
+    }
+
+    $invalidTest = array(
+      // Min/max overlong
+      "\xC0\x80a"                 => 'Overlong representation of U+0000 | 1',
+      "\xE0\x80\x80a"             => 'Overlong representation of U+0000 | 2',
+      "\xF0\x80\x80\x80a"         => 'Overlong representation of U+0000 | 3',
+      "\xF8\x80\x80\x80\x80a"     => 'Overlong representation of U+0000 | 4',
+      "\xFC\x80\x80\x80\x80\x80a" => 'Overlong representation of U+0000 | 5',
+      "\xC1\xBFa"                 => 'Overlong representation of U+007F | 6',
+      "\xE0\x9F\xBFa"             => 'Overlong representation of U+07FF | 7',
+      "\xF0\x8F\xBF\xBFa"         => 'Overlong representation of U+FFFF | 8',
+      "a\xDF"                     => 'Incomplete two byte sequence (missing final byte) | 9',
+      "a\xEF\xBF"                 => 'Incomplete three byte sequence (missing final byte) | 10',
+      "a\xF4\xBF\xBF"             => 'Incomplete four byte sequence (missing final byte) | 11',
+      // Min/max continuation bytes
+      "a\x80"                     => 'Lone 80 continuation byte | 12',
+      "a\xBF"                     => 'Lone BF continuation byte | 13',
+      // Invalid bytes (these can never occur)
+      "a\xFE"                     => 'Invalid FE byte | 14',
+      "a\xFF"                     => 'Invalid FF byte | 15',
+    );
+
+    foreach ($invalidTest as $test => $note) {
+      self::assertSame('a', URLify::filter($test), $note);
     }
 
     $tests = array(
