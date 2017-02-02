@@ -51,7 +51,7 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
     $slugs = array_map(
         function ($string) use ($slugger) {
           /** @noinspection StaticInvocationViaThisInspection */
-          return $slugger->slug($string, 'de', '-', true);
+          return $slugger->slug($string, 'en', '-', true);
         }, $inputStrings
     );
 
@@ -68,6 +68,14 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
     $output = URLify::slug($input, 'de', '_', true);
 
     self::assertSame('a_a_a_a_a', $output);
+  }
+
+  public function testSlugifyOptionsV2()
+  {
+    $input = ' a+A+ - a+A_a _ ♥';
+    $output = URLify::slug($input, 'ar', '_', true);
+
+    self::assertSame('a_a_a_a_a_hb', $output);
   }
 
   /**

@@ -1,10 +1,10 @@
-
+dollar-percent-and
 0123456789
-atabcdefghijklmno
+at-abcdefghijklmno
 pqrstuvwxyz
 abcdefghijklmno
 pqrstuvwxyz
-akrilss-segtz
+akr-currency-ilss-segtz
 degar-ilvsegtngzng
 aaaaaeaaeiceeeeiii
 djnokoooexouuuueuuss

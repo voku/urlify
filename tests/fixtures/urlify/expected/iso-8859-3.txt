@@ -1,10 +1,10 @@
-
+dollar-percent-and
 0123456789
-atabcdefghijklmno
+at-abcdefghijklmno
 pqrstuvwxyz
 abcdefghijklmno
 pqrstuvwxyz
-hvpshss-isgjz
+hv-pound-currency-hss-isgjz
 degh23-uhisgj12z
 aaaaeccceeeeiiii
 nooogoexguuuueusss

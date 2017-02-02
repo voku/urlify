@@ -1,10 +1,10 @@
-
+dollar-percent-and
 0123456789
-atabcdefghijklmno
+at-abcdefghijklmno
 pqrstuvwxyz
 abcdefghijklmno
 pqrstuvwxyz
-cpsyss-ca-r
+c-pound-currency-yen-ss-c-a-r
 deg-23-up1o-141234
 aaaaaeaaeceeeeiiii
 dnoooooexouuuueythss
