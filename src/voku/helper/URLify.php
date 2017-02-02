@@ -406,7 +406,7 @@ class URLify
         'Ž' => 'Z',
     ),
     // Polish
-    'pl'            => array (
+    'pl'            => array(
         '=' => ' równy ',
         '%' => ' procent ',
         '∑' => ' suma ',
