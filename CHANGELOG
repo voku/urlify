@@ -1,3 +1,11 @@
+v2.1.0
+
+- optimized displaying from "Symbols" and "Currencies"
+
+v2.0.0
+
+- use "UTF8"-vendor v3
+
 v1.2.2
 
 - optimized performance via static-cache for the cache-key
