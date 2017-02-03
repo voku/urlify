@@ -1303,7 +1303,7 @@ class URLify
    */
   protected static function expandString($string, $language = 'de')
   {
-    $string = self::expandCurrencies($string);
+    $string = self::expandCurrencies($string, $language);
     $string = self::expandSymbols($string, $language);
 
     return $string;
@@ -1313,11 +1313,36 @@ class URLify
    * and yens that the given string may include.
    *
    * @param string $string
+   * @param string $language
    *
    * @return mixed
    */
-  private static function expandCurrencies($string)
+  private static function expandCurrencies($string, $language = 'de')
   {
+    if ($language == 'de') {
+      return preg_replace(
+          array(
+              '/(?:\s|^)(\d+)(?:\ )*€(?:\s|$)/',
+              '/(?:\s|^)\$(?:\ )*(\d+)(?:\s|$)/',
+              '/(?:\s|^)\£(?:\ )*(\d+)(?:\s|$)/',
+              '/(?:\s|^)\¥(?:\ )*(\d+)(?:\s|$)/',
+              '/(?:\s|^)(\d+)[\.|,](\d+)(?:\ )*€(?:\s|$)/',
+              '/(?:\s|^)\$(?:\ )*(\d+)[\.|,](\d+)(?:\s|$)/',
+              '/(?:\s|^)£(?:\ )*(\d+)[\.|,](\d+)(?:\s|$)/',
+          ),
+          array(
+              ' \1 Euro ',
+              ' \1 Dollar ',
+              ' \1 Pound ',
+              ' \1 Yen ',
+              ' \1 Euro \2 Cent ',
+              ' \1 Dollar \2 Cent ',
+              ' \1 Pound \2 Pence ',
+          ),
+          $string
+      );
+    }
+
     return preg_replace(
         array(
             '/(?:\s|^)1(?:\ )*€(?:\s|$)/',

@@ -14,7 +14,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         '  J\'étudie le français  '                                                        => '  J\'etudie le francais  ',
         'Lo siento, no hablo español.'                                                     => 'Lo siento, no hablo espanol.',
         '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                                          => ' 1 Dollar -> Prozent 1 -> oeaeue -> F3PWS -> Zhong Wen Kong Bai  ->  ',
-        ' 22.99 € oder $ 19 | 1 $ | $ 1 = foobar'                                         => ' 22 Euros 99 Cents oder 19 Dollars | 1  Dollar  | 1 Dollar gleich foobar',
+        ' 22.99 € oder $ 19 | 1 $ | $ 1 = foobar'                                         => ' 22 Euro 99 Cent oder 19 Dollar | 1  Dollar  | 1 Dollar gleich foobar',
         'זאת השפה העברית.‏'                                                                => 'zt hshph h`bryt.',
         '𐭠 𐭡 𐭢 𐭣 𐭤 𐭥 𐭦 𐭧 𐭨 𐭩 𐭪 𐭫 𐭬 𐭭 𐭮 𐭯 𐭰 𐭱 𐭲 𐭸 𐭹 𐭺 𐭻 𐭼 𐭽 𐭾 𐭿' => '                          ',
         'أحبك'                                                                             => 'ahbk',
