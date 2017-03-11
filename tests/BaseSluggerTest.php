@@ -58,6 +58,10 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
     if (version_compare(PHP_VERSION, '5.4.0', '<')) {
       self::markTestSkipped('TODO: not working with PHP < 5.4');
     } else {
+      foreach ($expectedSlugs as $key => $expectedSlugValue) {
+        self::assertSame($expectedSlugs[$key], $slugs[$key], 'tested-file: ' . $fileName . ' | ' . $slugs[$key]);
+      }
+
       self::assertSame($expectedSlugs, $slugs, 'tested-file: ' . $fileName);
     }
   }

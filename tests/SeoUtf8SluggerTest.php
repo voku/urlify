@@ -20,6 +20,8 @@ class SeoUtf8SluggerTest extends BaseSluggerTest
   {
     return array(
         array('strings-2.txt'),
+        array('sample-utf-8-bom.txt'),
+        array('sample-unicode-chart.txt'),
     );
   }
 }

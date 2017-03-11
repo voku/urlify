@@ -1139,7 +1139,7 @@ class URLify
 
     // 1) clean invalid chars
     if ($convertUtf8Specials) {
-      $string = UTF8::clean($string);
+      $string = UTF8::clean($string, true, true, true, true);
     }
 
     // 2) replace with $separator
