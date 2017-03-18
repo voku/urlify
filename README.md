@@ -20,7 +20,7 @@ A PHP port of URLify.js from the Django project + str_transliterate from "Portab
 Handles symbols from many languages via an matching-array and others via "str_transliterate".
 
 - Author: [jbroadway](http://github.com/jbroadway) / [voku](http://github.com/voku)
-- License: MIT
+- License: BSD-3-Clause
 
 ## Install via "composer require"
 
