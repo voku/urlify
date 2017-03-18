@@ -65,4 +65,10 @@ class Utf8UrlSlugTest extends PHPUnit_Framework_TestCase
     $str = '<p class="label-key" title="2014-03-12 13:06:53Z"><b>3   years ago !!!!</b></p>';
     $this->assertSame('3-years-ago', URLify::filter($str));
   }
+
+  public function test_chinese()
+  {
+    $str = '活动日起';
+    $this->assertSame('Huo-Dong-Ri-Qi', URLify::filter($str));
+  }
 }
