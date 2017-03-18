@@ -4,7 +4,7 @@ at-abcdefghijklmno
 pqrstuvwxyz
 abcdefghijklmno
 pqrstuvwxyz
-c-pound-currency-yen-ss-c-a-r
+cent-pound-currency-yen-ss-c-a-r
 deg-23-up1o-141234
 aaaaaeaaeceeeeiiii
 dnoooooexouuuueythss

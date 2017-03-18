@@ -1,5 +1,5 @@
-bulgarian-zhltata-dyulya-beshe-shastliva-che-puht-kojto-cfna-zamrzna-kato-gon
-croatian-gojazni-djacic-s-biciklom-drzi-hmelj-i-finu-vatu-u-dzepu-nosnje
+bulgarian-zltata-dyulya-bese-shastliva-ce-puht-kojto-cfna-zamrzna-kato-gon
+croatian-gojazni-dacic-s-biciklom-drzi-hmelj-i-finu-vatu-u-dzepu-nosnje
 czech-prilis-zlutoucky-kun-upel-dabelske-kody
 danish-hoj-bly-gom-vandt-fraek-sexquiz-pa-wc
 english-the-quick-brown-fox-jumps-over-the-lazy-dog
@@ -17,10 +17,10 @@ norwegian-var-saere-zulu-fra-badeoya-spilte-jo-whist-og-quickstep-i-min-taxi
 polish-pchnac-w-te-lodz-jeza-lub-osiem-skrzyn-fig
 portuguese-luis-argueia-a-julia-que-bracoes-fe-cha-oxido-por-zangao-eram-palavras-do-portugues
 romanian-muzicologa-in-bej-vand-whisky-si-tequila-pret-fix
-russian-sesh-zhe-eshyo-etih-myagkih-francuzskih-bulok-da-vypej-chayu
-sami-vuol-ruota-gedjggiid-leat-mangga-luosa-ja-cuovzza
+russian-ses-ze-eshyo-etih-myagkih-francuzskih-bulok-da-vypej-cayu
+sami-vuol-ruota-gedggiid-leat-mangga-luosa-ja-cuovzza
 slovak-stary-kon-na-hrbe-knih-zuje-tisko-povaednute-ruze-na-stlpe-sa-datel-uci-kvakat-novu-odu-o-zivote
 spanish-benjamin-pidio-una-bebida-de-kiwi-y-fresa-noe-sin-vergueenza-la-mas-exquisita-champana-del-menu
 swedish-flygande-baeckasiner-soeka-strax-hwila-pa-mjuka-tuvor
 turkish-pijamali-hasta-yagiz-sofoere-cabucak-guevendi
-ukrainian-chuyesh-yih-docyu-ga-kumedna-zh-ti-proshajsya-bez-golfiv
+ukrainian-cuyes-yih-docyu-ga-kumedna-z-ti-proshajsya-bez-golfiv

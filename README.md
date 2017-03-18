@@ -17,14 +17,13 @@ A PHP port of URLify.js from the Django project + str_transliterate from "Portab
 - https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js
 - https://github.com/voku/portable-utf8
 
-Handles symbols from latin languages, Arabic, Azerbaijani, Czech, German, Greek, Latvian, Lithuanian, Persian,
-Polish, Romanian, Bulgarian, Russian, Serbian, Turkish, Ukrainian and Vietnamese
-and many other via "str_transliterate".
+Handles symbols from many languages via an matching-array and others via "str_transliterate".
 
 - Author: [jbroadway](http://github.com/jbroadway) / [voku](http://github.com/voku)
 - License: MIT
 
 ## Install via "composer require"
+
 ```shell
 composer require voku/urlify
 ```
@@ -33,7 +32,7 @@ composer require voku/urlify
 
 namespace: "voku\helper\URLify"
 
-To generate slugs for URLs:
+#### To generate slugs for URLs:
 
 ```php
 echo URLify::filter(' J\'étudie le français ');
@@ -43,15 +42,14 @@ echo URLify::filter('Lo siento, no hablo español.');
 // "Lo-siento-no-hablo-espanol"
 ```
 
-To generate slugs for file names:
+#### To generate slugs for file names:
 
 ```php
 echo URLify::filter('фото.jpg', 60, '', true);
 // "foto.jpg"
 ```
 
-
-To simply transliterate characters:
+#### To simply transliterate characters:
 
 ```php
 echo URLify::downcode('J\'étudie le français');
@@ -66,7 +64,7 @@ echo URLify::transliterate('Lo siento, no hablo español.');
 // "Lo siento, no hablo espanol."
 ```
 
-To extend the character list:
+#### To extend the character list:
 
 ```php
 URLify::add_chars(array(
@@ -78,7 +76,7 @@ echo URLify::downcode('¿ ® ¼ ¼ ¾ ¶');
 // "? (r) 1/2 1/2 3/4 P"
 ```
 
-To extend or replace the default replacing list:
+#### To extend or replace the default replacing list:
 
 ```php
 URLify::add_array_to_seperator(array(
@@ -89,13 +87,13 @@ echo URLify::filter('¿ ® ¼ ¼ ¾ ¶');
 // "14-14-34-P"
 ```
 
-To extend the list of words to remove for one language:
+#### To extend the list of words to remove for one language:
 
 ```php
 URLify::remove_words(array('remove', 'these', 'too'), 'de');
 ```
 
-To prioritize a certain language map:
+#### To prioritize a certain language map:
 
 ```php
 echo URLify::filter(' Ägypten und Österreich besitzen wie üblich ein Übermaß an ähnlich öligen Attachés ', 60, 'de');
@@ -105,3 +103,37 @@ echo URLify::filter('Cağaloğlu, çalıştığı, müjde, lazım, mahkûm', 60,
 // "Cagaloglu-calistigi-mujde-lazim-mahkum"
 ```
 Please note that the "ü" is transliterated to "ue" in the first case, whereas it results in a simple "u" in the latter.
+
+## Available languages
+
+- Arabic: 'ar'
+- Austrian (German): 'de_at' 
+- Austrian (French): 'fr_at'
+- Azerbaijani: 'az'
+- Bulgarian: 'bg'
+- Burmese: 'by'
+- Croatian: 'hr'
+- Czech: 'cs'
+- Danish: 'da'
+- English: 'en'
+- Esperanto: 'eo'
+- Estonian: 'et'
+- Finnish: 'fi'
+- French: 'fr'
+- Georgian: 'ka'
+- German: 'de'
+- Greek: 'el'    
+- Hindi: 'hi'
+- Latvian: 'lv'
+- Lithuanian: 'lt'
+- Norwegian: 'no'
+- Polish: 'pl'
+- Romanian: 'ro'
+- Russian: 'ru'
+- Serbian: 'sr'
+- Swedish: 'sv'
+- Switzerland (German): 'de_ch' 
+- Switzerland (French): 'fr_ch' 
+- Turkish: 'tr'
+- Ukrainian: 'uk'
+- Vietnamese: 'vn'
