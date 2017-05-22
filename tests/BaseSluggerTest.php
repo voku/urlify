@@ -66,22 +66,6 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
     }
   }
 
-  public function testSlugifyOptions()
-  {
-    $input = ' a+A+ - a+A_a _';
-    $output = URLify::slug($input, 'de', '_', true);
-
-    self::assertSame('a_a_a_a_a', $output);
-  }
-
-  public function testSlugifyOptionsV2()
-  {
-    $input = ' a+A+ - a+A_a _ ♥';
-    $output = URLify::slug($input, 'ar', '_', true);
-
-    self::assertSame('a_a_a_a_a_hb', $output);
-  }
-
   /**
    * @dataProvider provideSlugEdgeCases
    *

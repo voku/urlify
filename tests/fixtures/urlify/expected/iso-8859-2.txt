@@ -1,4 +1,4 @@
-dollar-percent-and
+dollar-percent-and-plus
 0123456789
 at-abcdefghijklmno
 pqrstuvwxyz

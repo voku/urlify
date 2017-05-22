@@ -7,6 +7,21 @@ use voku\helper\URLify;
  */
 class URLifyTest extends PHPUnit_Framework_TestCase
 {
+  public function testSlugifyOptions()
+  {
+    $input = ' a+A+ - a+A_a _';
+    $output = URLify::slug($input, 'de', '_', true);
+
+    self::assertSame('a_plus_a_plus_a_plus_a_a', $output);
+  }
+
+  public function testSlugifyOptionsV2()
+  {
+    $input = ' a+A+ - a+A_a _ ♥';
+    $output = URLify::slug($input, 'ar', '_', true);
+
+    self::assertSame('a_zy_d_a_zy_d_a_zy_d_a_a_hb', $output);
+  }
 
   public function testDowncode()
   {
@@ -284,10 +299,10 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
     $tests = array(
         'Facebook bekämpft erstmals Durchsuchungsbefehle'                                  => 'facebook-bekaempft-erstmals-durchsuchungsbefehle',
-        '  -ABC-中文空白-  '                                                                   => 'abc-zhong-wen-kong-bai',
+        '  -ABC-中文空白-  '                                                                   => 'abc-zhong-kong-bai',
         '      - ÖÄÜ- '                                                                    => 'oeaeue',
         'öäü'                                                                              => 'oeaeue',
-        '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                                          => '1-dollar-prozent-1-oeaeue-f3pws-zhong-wen-kong-bai',
+        '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                                          => '1-dollar-prozent-1-oeaeue-f3pws-zhong-kong-bai',
         'זאת השפה העברית.‏'                                                                => 'zt-hshph-h-bryt',
         '𐭠 𐭡 𐭢 𐭣 𐭤 𐭥 𐭦 𐭧 𐭨 𐭩 𐭪 𐭫 𐭬 𐭭 𐭮 𐭯 𐭰 𐭱 𐭲 𐭸 𐭹 𐭺 𐭻 𐭼 𐭽 𐭾 𐭿' => '',
         'أحبك'                                                                             => 'ahbk',
@@ -322,6 +337,21 @@ class URLifyTest extends PHPUnit_Framework_TestCase
       self::assertSame('a', URLify::filter($test), $note);
     }
 
+    // ---
+
+    $tests = array(
+        'Facebook bekämpft erstmals / Durchsuchungsbefehle' => 'facebook/bekaempft/erstmals/durchsuchungsbefehle',
+        '  -ABC-中文空白-  '                                    => 'abc/zhong/kong/bai',
+        '    #  - ÖÄÜ- '                                    => 'oeaeue',
+        'öä \nü'                                            => 'oeae/nue',
+    );
+
+    foreach ($tests as $before => $after) {
+      self::assertSame($after, URLify::filter($before, 100, 'de', false, true, true, '/'), $before);
+    }
+
+    // ---
+
     $tests = array(
         'Facebook bekämpft erstmals / Durchsuchungsbefehle' => 'facebook/bekaempft/erstmals/durchsuchungsbefehle',
         '  -ABC-中文空白-  '                                    => 'abc/zhong/wen/kong/bai',
@@ -330,7 +360,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     );
 
     foreach ($tests as $before => $after) {
-      self::assertSame($after, URLify::filter($before, 100, 'de', false, true, true, '/'), $before);
+      self::assertSame($after, URLify::filter($before, 100, 'ru', false, true, true, '/'), $before);
     }
   }
 

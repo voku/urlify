@@ -256,7 +256,7 @@ class URLify
         'Ğ' => 'G',
     ),
     // Bulgarian
-    'bg' => array(
+    'bg'            => array(
         '='  => ' равен ',
         '%'  => ' на сто ',
         '∑'  => ' сума ',
@@ -331,7 +331,7 @@ class URLify
         'ьо' => 'io',
     ),
     // Hungarian
-    'hu' => array(
+    'hu'            => array(
         '=' => ' Egyenlő ',
         '%' => ' Százalék ',
         '∑' => ' összeg ',
@@ -361,131 +361,131 @@ class URLify
         'ű' => 'u',
     ),
     // Burmese
-    'by' => array(
-            '='     => ' တန်းတူညီမျှ ',
-            '%'     => ' ရာခိုင်နှုန်းက ',
-            '∑'     => ' လဒ် ',
-            '∆'     => ' မြစ်ဝကျွန်းပေါ် ',
-            '∞'     => ' အဆုံးမဲ့ ',
-            '♥'     => ' မေတ္တာ ',
-            '&'     => ' နဲ့ ',
-            '+'     => ' အပေါင်း ',
-            //
-            'က'     => 'k',
-            'ခ'     => 'kh',
-            'ဂ'     => 'g',
-            'ဃ'     => 'ga',
-            'င'     => 'ng',
-            'စ'     => 's',
-            'ဆ'     => 'sa',
-            'ဇ'     => 'z',
-            'စျ'    => 'za',
-            'ည'     => 'ny',
-            'ဋ'     => 't',
-            'ဌ'     => 'ta',
-            'ဍ'     => 'd',
-            'ဎ'     => 'da',
-            'ဏ'     => 'na',
-            'တ'     => 't',
-            'ထ'     => 'ta',
-            'ဒ'     => 'd',
-            'ဓ'     => 'da',
-            'န'     => 'n',
-            'ပ'     => 'p',
-            'ဖ'     => 'pa',
-            'ဗ'     => 'b',
-            'ဘ'     => 'ba',
-            'မ'     => 'm',
-            'ယ'     => 'y',
-            'ရ'     => 'ya',
-            'လ'     => 'l',
-            'ဝ'     => 'w',
-            'သ'     => 'th',
-            'ဟ'     => 'h',
-            'ဠ'     => 'la',
-            'အ'     => 'a',
-            'ြ'     => 'y',
-            'ျ'     => 'ya',
-            'ွ'     => 'w',
-            'ြွ'    => 'yw',
-            'ျွ'    => 'ywa',
-            'ှ'     => 'h',
-            'ဧ'     => 'e',
-            '၏'     => '-e',
-            'ဣ'     => 'i',
-            'ဤ'     => '-i',
-            'ဉ'     => 'u',
-            'ဦ'     => '-u',
-            'ဩ'     => 'aw',
-            'သြော'  => 'aw',
-            'ဪ'     => 'aw',
-            '၍'     => 'ywae',
-            '၌'     => 'hnaik',
-            '၀'     => '0',
-            '၁'     => '1',
-            '၂'     => '2',
-            '၃'     => '3',
-            '၄'     => '4',
-            '၅'     => '5',
-            '၆'     => '6',
-            '၇'     => '7',
-            '၈'     => '8',
-            '၉'     => '9',
-            '္'     => '',
-            '့'     => '',
-            'း'     => '',
-            'ာ'     => 'a',
-            'ါ'     => 'a',
-            'ေ'     => 'e',
-            'ဲ'     => 'e',
-            'ိ'     => 'i',
-            'ီ'     => 'i',
-            'ို'    => 'o',
-            'ု'     => 'u',
-            'ူ'     => 'u',
-            'ေါင်'  => 'aung',
-            'ော'    => 'aw',
-            'ော်'   => 'aw',
-            'ေါ'    => 'aw',
-            'ေါ်'   => 'aw',
-            '်'     => 'at',
-            'က်'    => 'et',
-            'ိုက်'  => 'aik',
-            'ောက်'  => 'auk',
-            'င်'    => 'in',
-            'ိုင်'  => 'aing',
-            'ောင်'  => 'aung',
-            'စ်'    => 'it',
-            'ည်'    => 'i',
-            'တ်'    => 'at',
-            'ိတ်'   => 'eik',
-            'ုတ်'   => 'ok',
-            'ွတ်'   => 'ut',
-            'ေတ်'   => 'it',
-            'ဒ်'    => 'd',
-            'ိုဒ်'  => 'ok',
-            'ုဒ်'   => 'ait',
-            'န်'    => 'an',
-            'ာန်'   => 'an',
-            'ိန်'   => 'ein',
-            'ုန်'   => 'on',
-            'ွန်'   => 'un',
-            'ပ်'    => 'at',
-            'ိပ်'   => 'eik',
-            'ုပ်'   => 'ok',
-            'ွပ်'   => 'ut',
-            'န်ုပ်' => 'nub',
-            'မ်'    => 'an',
-            'ိမ်'   => 'ein',
-            'ုမ်'   => 'on',
-            'ွမ်'   => 'un',
-            'ယ်'    => 'e',
-            'ိုလ်'  => 'ol',
-            'ဉ်'    => 'in',
-            'ံ'     => 'an',
-            'ိံ'    => 'ein',
-            'ုံ'    => 'on',
-        ),
+    'by'            => array(
+        '='     => ' တန်းတူညီမျှ ',
+        '%'     => ' ရာခိုင်နှုန်းက ',
+        '∑'     => ' လဒ် ',
+        '∆'     => ' မြစ်ဝကျွန်းပေါ် ',
+        '∞'     => ' အဆုံးမဲ့ ',
+        '♥'     => ' မေတ္တာ ',
+        '&'     => ' နဲ့ ',
+        '+'     => ' အပေါင်း ',
+        //
+        'က'     => 'k',
+        'ခ'     => 'kh',
+        'ဂ'     => 'g',
+        'ဃ'     => 'ga',
+        'င'     => 'ng',
+        'စ'     => 's',
+        'ဆ'     => 'sa',
+        'ဇ'     => 'z',
+        'စျ'    => 'za',
+        'ည'     => 'ny',
+        'ဋ'     => 't',
+        'ဌ'     => 'ta',
+        'ဍ'     => 'd',
+        'ဎ'     => 'da',
+        'ဏ'     => 'na',
+        'တ'     => 't',
+        'ထ'     => 'ta',
+        'ဒ'     => 'd',
+        'ဓ'     => 'da',
+        'န'     => 'n',
+        'ပ'     => 'p',
+        'ဖ'     => 'pa',
+        'ဗ'     => 'b',
+        'ဘ'     => 'ba',
+        'မ'     => 'm',
+        'ယ'     => 'y',
+        'ရ'     => 'ya',
+        'လ'     => 'l',
+        'ဝ'     => 'w',
+        'သ'     => 'th',
+        'ဟ'     => 'h',
+        'ဠ'     => 'la',
+        'အ'     => 'a',
+        'ြ'     => 'y',
+        'ျ'     => 'ya',
+        'ွ'     => 'w',
+        'ြွ'    => 'yw',
+        'ျွ'    => 'ywa',
+        'ှ'     => 'h',
+        'ဧ'     => 'e',
+        '၏'     => '-e',
+        'ဣ'     => 'i',
+        'ဤ'     => '-i',
+        'ဉ'     => 'u',
+        'ဦ'     => '-u',
+        'ဩ'     => 'aw',
+        'သြော'  => 'aw',
+        'ဪ'     => 'aw',
+        '၍'     => 'ywae',
+        '၌'     => 'hnaik',
+        '၀'     => '0',
+        '၁'     => '1',
+        '၂'     => '2',
+        '၃'     => '3',
+        '၄'     => '4',
+        '၅'     => '5',
+        '၆'     => '6',
+        '၇'     => '7',
+        '၈'     => '8',
+        '၉'     => '9',
+        '္'     => '',
+        '့'     => '',
+        'း'     => '',
+        'ာ'     => 'a',
+        'ါ'     => 'a',
+        'ေ'     => 'e',
+        'ဲ'     => 'e',
+        'ိ'     => 'i',
+        'ီ'     => 'i',
+        'ို'    => 'o',
+        'ု'     => 'u',
+        'ူ'     => 'u',
+        'ေါင်'  => 'aung',
+        'ော'    => 'aw',
+        'ော်'   => 'aw',
+        'ေါ'    => 'aw',
+        'ေါ်'   => 'aw',
+        '်'     => 'at',
+        'က်'    => 'et',
+        'ိုက်'  => 'aik',
+        'ောက်'  => 'auk',
+        'င်'    => 'in',
+        'ိုင်'  => 'aing',
+        'ောင်'  => 'aung',
+        'စ်'    => 'it',
+        'ည်'    => 'i',
+        'တ်'    => 'at',
+        'ိတ်'   => 'eik',
+        'ုတ်'   => 'ok',
+        'ွတ်'   => 'ut',
+        'ေတ်'   => 'it',
+        'ဒ်'    => 'd',
+        'ိုဒ်'  => 'ok',
+        'ုဒ်'   => 'ait',
+        'န်'    => 'an',
+        'ာန်'   => 'an',
+        'ိန်'   => 'ein',
+        'ုန်'   => 'on',
+        'ွန်'   => 'un',
+        'ပ်'    => 'at',
+        'ိပ်'   => 'eik',
+        'ုပ်'   => 'ok',
+        'ွပ်'   => 'ut',
+        'န်ုပ်' => 'nub',
+        'မ်'    => 'an',
+        'ိမ်'   => 'ein',
+        'ုမ်'   => 'on',
+        'ွမ်'   => 'un',
+        'ယ်'    => 'e',
+        'ိုလ်'  => 'ol',
+        'ဉ်'    => 'in',
+        'ံ'     => 'an',
+        'ိံ'    => 'ein',
+        'ုံ'    => 'on',
+    ),
     // Croatian
     'hr'            =>
         array(
@@ -906,7 +906,7 @@ class URLify
         'å' => 'aa',
     ),
     // Vietnamese
-    'vn'            => array(
+    'vi'            => array(
         '=' => ' công bằng ',
         '%' => ' phần trăm ',
         '∑' => ' tổng số ',
@@ -1599,7 +1599,7 @@ class URLify
   /**
    * The character map.
    *
-   * @var array
+   * @var string[]
    */
   private static $map = array();
 
@@ -1609,13 +1609,6 @@ class URLify
    * @var array
    */
   private static $arrayToSeparator = array();
-
-  /**
-   * The character list as a string.
-   *
-   * @var string
-   */
-  private static $chars = '';
 
   /**
    * The character list as a regular expression.
@@ -1654,7 +1647,7 @@ class URLify
     self::$arrayToSeparator = array(
         '/&quot;|&amp;|&lt;|&gt;|&ndash;|&mdash;/i',  // ", &, <, >, –, —
         '/⁻|-|—|_|"|`|´|\'/',
-        '/\<br.*\>/iU',
+        "#/\r\n|\r|\n|<br.*/?>#isU",
     );
   }
 
@@ -1666,8 +1659,8 @@ class URLify
   public static function add_chars(array $map)
   {
     self::$maps[] = $map;
+    self::$regex = '';
     self::$map = array();
-    self::$chars = '';
   }
 
   /**
@@ -1679,8 +1672,12 @@ class URLify
    */
   public static function remove_words($words, $language = 'de', $merge = true)
   {
-    if (is_array($words) !== true) {
+    if (is_array($words) === false) {
       $words = array($words);
+    }
+
+    foreach ($words as $removeWordKey => $removeWord) {
+      $words[$removeWordKey] = preg_quote($removeWord, '/');
     }
 
     if ($merge === true) {
@@ -1706,7 +1703,7 @@ class URLify
 
     // set remove-array
     if (!isset(self::$remove_list[$language])) {
-      self::reset_remove_list();
+      self::reset_remove_list($language);
     }
 
     // check for array
@@ -1718,10 +1715,6 @@ class URLify
         empty(self::$remove_list[$language])
     ) {
       return array();
-    }
-
-    foreach (self::$remove_list[$language] as &$removeWord) {
-      $removeWord = preg_quote($removeWord, '/');
     }
 
     return self::$remove_list[$language];
@@ -1825,6 +1818,7 @@ class URLify
             '/[' . ($separatorEscaped ?: ' ') . '\s]+/',                          // 3) convert spaces to $separator
             '/^\s+|\s+$/',                                                        // 2) trim leading & trailing spaces
             $removeWordsSearch,                                                   // 1) remove some extras words
+            '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 0) remove double $separator's
         ),
         array(
             $separator,
@@ -1833,6 +1827,7 @@ class URLify
             $separator,
             '',
             '',
+            $separator,
         ),
         $string
     );
@@ -1853,205 +1848,34 @@ class URLify
 
   /**
    * reset the word-remove-array
+   *
+   * @param string $language
    */
-  public static function reset_remove_list()
+  public static function reset_remove_list($language = 'de')
   {
-    self::$remove_list = array(
-      // English
-      'en'    => array(
-          'a',
-          'an',
-          'as',
-          'at',
-          'before',
-          'but',
-          'by',
-          'for',
-          'from',
-          'is',
-          'in',
-          'into',
-          'like',
-          'of',
-          'off',
-          'on',
-          'onto',
-          'per',
-          'since',
-          'than',
-          'the',
-          'this',
-          'that',
-          'to',
-          'up',
-          'via',
-          'with',
-      ),
-      // German
-      'de'    => array(
-          'ein',
-          'eine',
-          'wie',
-          'an',
-          'vor',
-          'aber',
-          'von',
-          'für',
-          'ist',
-          'in',
-          'von',
-          'auf',
-          'pro',
-          'da',
-          'als',
-          'der',
-          'die',
-          'das',
-          'dass',
-          'zu',
-          'mit',
-      ),
-      // Austrian (German)
-      'de_at' => array(
-          'ein',
-          'eine',
-          'wie',
-          'an',
-          'vor',
-          'aber',
-          'von',
-          'für',
-          'ist',
-          'in',
-          'von',
-          'auf',
-          'pro',
-          'da',
-          'als',
-          'der',
-          'die',
-          'das',
-          'dass',
-          'zu',
-          'mit',
-      ),
-      // Switzerland (German)
-      'de_ch' => array(
-          'ein',
-          'eine',
-          'wie',
-          'an',
-          'vor',
-          'aber',
-          'von',
-          'für',
-          'ist',
-          'in',
-          'von',
-          'auf',
-          'pro',
-          'da',
-          'als',
-          'der',
-          'die',
-          'das',
-          'dass',
-          'zu',
-          'mit',
-      ),
-      // French
-      'fr'    => array(
-          'a',
-          'of',
-          'in',
-          'on',
-          'aa',
-          'as',
-          'le',
-          'les',
-          'la',
-          'ce',
-          'to',
-      ),
-      // Austrian (French)
-      'fr_at' => array(
-          'a',
-          'of',
-          'in',
-          'on',
-          'aa',
-          'as',
-          'le',
-          'les',
-          'la',
-          'ce',
-          'to',
-      ),
-      // Switzerland (French)
-      'fr_ch' => array(
-          'a',
-          'of',
-          'in',
-          'on',
-          'aa',
-          'as',
-          'le',
-          'les',
-          'la',
-          'ce',
-          'to',
-      ),
-      // Hungarian
-      'hu'    => array(),
-      // Greek
-      'el'    => array(),
-      // Estonian
-      'et'    => array(),
-      // Esperanto
-      'eo'    => array(),
-      // Hindi
-      'hi'    => array(),
-      // Swedish
-      'sv'    => array(),
-      // Turkish
-      'tr'    => array(),
-      // Bulgarian
-      'bg'    => array(),
-      // Burmese
-      'by'    => array(),
-      // Croatian
-      'hr'    => array(),
-      // Danish
-      'da'    => array(),
-      // Finnish
-      'fi'    => array(),
-      // Georgian
-      'ka'    => array(),
-      // Russian
-      'ru'    => array(),
-      // Ukrainian
-      'uk'    => array(),
-      // Czech
-      'cs'    => array(),
-      // Polish
-      'pl'    => array(),
-      // Romanian
-      'ro'    => array(),
-      // Latvian
-      'lv'    => array(),
-      // Lithuanian
-      'lt'    => array(),
-      // Norwegian
-      'no'    => array(),
-      // Vietnamese
-      'vn'    => array(),
-      // Arabic
-      'ar'    => array(),
-      // Serbian
-      'sr'    => array(),
-      // Azerbaijani
-      'az'    => array(),
-    );
+    if (
+        $language === 'de_ch' // Switzerland (German)
+        ||
+        $language === 'de_at' // Austrian (German)
+    ) {
+      $language = 'de';
+    }
+
+    if (
+        $language === 'fr_ch' // Switzerland (French)
+        ||
+        $language === 'fr_at' // Austrian (French)
+    ) {
+      $language = 'fr';
+    }
+
+    $stopWords = new StopWords();
+
+    try {
+      self::$remove_list[$language] = $stopWords->getStopWordsFromLanguage($language);
+    } catch (StopWordsLanguageNotExists $e) {
+      self::$remove_list[$language] = array();
+    }
   }
 
   /**
@@ -2074,6 +1898,7 @@ class URLify
 
     return $string;
   }
+
   /**
    * Expands the numeric currencies in euros, dollars, pounds
    * and yens that the given string may include.
@@ -2085,7 +1910,7 @@ class URLify
    */
   private static function expandCurrencies($string, $language = 'de')
   {
-    if ($language == 'de') {
+    if ($language === 'de') {
       return preg_replace(
           array(
               '/(?:\s|^)(\d+)(?:\ )*€(?:\s|$)/',
@@ -2143,6 +1968,7 @@ class URLify
         $string
     );
   }
+
   /**
    * Expands the special symbols that the given string may include, such as '@', '.', '#' and '%'.
    *
@@ -2199,15 +2025,20 @@ class URLify
     self::init_downcode($language);
 
     if ($convertUtf8Specials === true) {
-      // INFO: "UTF8::to_utf8()" will be used by "UTF8::to_ascii()"
-      $string = UTF8::urldecode($string);
+      // INFO: "UTF8::to_utf8()" will be already used by "UTF8::to_ascii()"
+      $string = UTF8::rawurldecode($string);
     }
 
     $string = self::expandString($string, $language);
 
     $searchArray = array();
     $replaceArray = array();
-    if (preg_match_all(self::$regex, $string, $matches)) {
+
+    if (
+        self::$regex
+        &&
+        preg_match_all(self::$regex, $string, $matches)
+    ) {
       $matchesCounter = count($matches[0]);
 
       /** @noinspection ForeachInvariantsInspection */
@@ -2218,9 +2049,9 @@ class URLify
           $replaceArray[] = self::$map[$char];
         }
       }
-    }
 
-    $string = str_replace($searchArray, $replaceArray, $string);
+      $string = str_replace($searchArray, $replaceArray, $string);
+    }
 
     if ($convertToAsciiOnlyViaLanguageMaps === true) {
       return (string)$string;
@@ -2244,19 +2075,15 @@ class URLify
 
     // check if we already created the regex for this lang
     if (
-        $language === self::$language
+        self::$language === $language
         &&
-        count(self::$map) > 0
+        self::$regex
     ) {
       return true;
     }
 
     // is a specific map associated with $language?
-    if (
-        isset(self::$maps[$language])
-        &&
-        is_array(self::$maps[$language])
-    ) {
+    if (isset(self::$maps[$language])) {
       // move this map to end. This means it will have priority over others
       $m = self::$maps[$language];
       unset(self::$maps[$language]);
@@ -2266,16 +2093,18 @@ class URLify
     // reset static vars
     self::$language = $language;
     self::$map = array();
-    self::$chars = '';
 
+    $chars = '';
     foreach (self::$maps as $map) {
       foreach ($map as $orig => $conv) {
         self::$map[$orig] = $conv;
-        self::$chars .= $orig;
+        $chars .= $orig;
       }
     }
 
-    self::$regex = '/[' . self::$chars . ']/u';
+    if ($chars !== '') {
+      self::$regex = '/[' . $chars . ']/u';
+    }
 
     return true;
   }
