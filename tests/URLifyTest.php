@@ -193,14 +193,14 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     self::assertSame('14-14-34-P-abc', URLify::filter('? ¿ >-< &amp; ® ¼ ¼ ¾ ¶ <br> ; ! abc'));
     URLify::reset_array_to_separator();
 
-    // replace
+    // merge
 
     URLify::add_array_to_separator(
         array(
             '/®/',
             '/tester/',
         ),
-        true
+        false
     );
     self::assertSame('und-amp-14-14-34-P-abc', URLify::filter('? ¿ >-< &amp; ® ¼ ¼ ¾ ¶ <br> ; ! abc'));
     URLify::reset_array_to_separator();

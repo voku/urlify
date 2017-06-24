@@ -1627,12 +1627,12 @@ class URLify
   /**
    * Add new strings the will be replaced with the separator.
    *
-   * @param array $array
-   * @param bool  $replace
+   * @param array $array <p>An array of things that should replaced by the separator.</p>
+   * @param bool  $merge <p>Keep the previous (default) array-to-separator array.</p>
    */
-  public static function add_array_to_separator(array $array, $replace = false)
+  public static function add_array_to_separator(array $array, $merge = true)
   {
-    if ($replace === false) {
+    if ($merge === true) {
       self::$arrayToSeparator = array_merge(self::$arrayToSeparator, $array);
     } else {
       self::$arrayToSeparator = $array;
@@ -1666,9 +1666,9 @@ class URLify
   /**
    * Append words to the remove list. Accepts either single words or an array of words.
    *
-   * @param mixed   $words
-   * @param string  $language
-   * @param boolean $merge <p>Keep the previous (default) remove-words-array</p>
+   * @param string|string[] $words
+   * @param string          $language
+   * @param boolean         $merge <p>Keep the previous (default) remove-words array.</p>
    */
   public static function remove_words($words, $language = 'de', $merge = true)
   {
@@ -1676,6 +1676,7 @@ class URLify
       $words = array($words);
     }
 
+    /** @noinspection ForeachSourceInspection */
     foreach ($words as $removeWordKey => $removeWord) {
       $words[$removeWordKey] = preg_quote($removeWord, '/');
     }
