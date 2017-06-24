@@ -1792,7 +1792,7 @@ class URLify
     }
 
     // 2) remove apostrophes which are not used as quotes around a string
-    $string = preg_replace("/(\w)'(\w)/", '${1}${2}', $string);
+    $string = preg_replace("/(\w)'(\w)/", '$1$2', $string);
 
     // 3) replace with $separator
     $string = preg_replace(self::$arrayToSeparator, $separator, $string);
