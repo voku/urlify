@@ -8,18 +8,18 @@ latin-vitrum-edere-possum-mihi-non-nocet
 old-french-je-puis-mangier-del-voirre-ne-me-nuit
 french-je-peux-manger-du-verre-ca-ne-me-fait-pas-mal
 provencal-occitan-podi-manjar-de-veire-me-nafraria-pas
-quebecois-j-peux-manger-d-la-vitre-ca-m-fa-pas-mal
+quebecois-jpeux-manger-dla-vitre-ca-mfa-pas-mal
 walloon-dji-pou-magni-do-vere-coula-m-freut-nen-ma
 champenois-needed
 lorrain-needed
-picard-ch-peux-mingi-du-verre-cha-m-foe-mie-n-ma
+picard-chpeux-mingi-du-verre-cha-mfoe-mie-nma
 corsicancorsu-needed
 jerriais-needed
-kreyol-ayisyen-haiti-mwen-kap-manje-ve-li-pa-blese-m
+kreyol-ayisyen-haiti-mwen-kap-manje-ve-li-pa-blesem
 basque-kristala-jan-dezaket-ez-dit-minik-ematen
 catalan-catala-puc-menjar-vidre-que-no-em-fa-mal
 spanish-puedo-comer-vidrio-no-me-hace-dano
-aragones-puedo-minchar-beire-no-me-n-fa-mal
+aragones-puedo-minchar-beire-no-men-fa-mal
 aranes-needed
 mallorquin-needed
 galician-eu-podo-xantar-cristais-e-non-cortarme
@@ -30,8 +30,8 @@ papiamentu-ami-por-kome-glas-anto-e-no-ta-hasimi-dano
 italian-posso-mangiare-il-vetro-e-non-mi-fa-male
 milanese-son-bon-de-magna-el-veder-el-me-fa-minga-mal
 roman-me-posso-magna-er-vetro-e-nun-me-fa-male
-napoletano-m-pozz-magna-o-vetr-e-nun-m-fa-mal
-venetian-mi-posso-magnare-el-vetro-no-l-me-fa-mae
+napoletano-m-pozz-magna-ovetr-e-nun-m-fa-mal
+venetian-mi-posso-magnare-el-vetro-nol-me-fa-mae
 zeneise-genovese-posso-mangia-o-veddro-e-o-no-me-fa-ma
 sicilian-puotsu-mangiari-u-vitru-nun-mi-fa-mali
 campinadese-sardinia-needed
@@ -43,7 +43,7 @@ esperanto-mi-povas-mangi-vitron-gi-ne-damagas-min
 pictish-needed
 breton-needed
 cornish-my-a-yl-dybry-gweder-hag-ef-ny-wra-ow-ankenya
-welsh-dw-i-n-gallu-bwyta-gwydr-dyw-e-ddim-yn-gwneud-dolur-i-mi
+welsh-dw-in-gallu-bwyta-gwydr-dyw-e-ddim-yn-gwneud-dolur-i-mi
 manx-gaelic-foddym-gee-glonney-agh-cha-jean-eh-gortaghey-mee
 old-irish-ogham-coniccim-iti-nglano-nimgena
 old-irish-latin-coniccim-ithi-nglano-nimgena
@@ -53,7 +53,7 @@ scottish-gaelic-s-urrainn-dhomh-gloinne-ithe-cha-ghoirtich-i-mi
 anglo-saxon-runes-icmagglaseotacnondhitneheacrmiacthme
 anglo-saxon-latin-ic-maeg-glaes-eotan-ond-hit-ne-hearmiad-me
 middle-english-ich-canne-glas-eten-and-hit-hirtith-me-nouyt
-english-i-can-eat-glass-and-it-doesn-t-hurt-me
+english-i-can-eat-glass-and-it-doesnt-hurt-me
 english-ipa-ai-kaen-it-glas-aend-it-daz-nat-het-mi-received-pronunciation
 english-braille-i-can-eat-glass-and-it-doesnt-hurt-me
 jamaican-mi-kian-niam-glas-han-i-neba-hot-mi
@@ -79,7 +79,7 @@ ruhrdeutsch-ich-kann-glas-verkasematuckeln-ohne-dattet-mich-wat-jucken-tut
 langenfelder-platt-isch-kann-jlaas-kimmeln-uuhne-datt-mich-datt-weh-daeaed
 lausitzer-mundart-lusatian-ich-koann-gloos-assn-und-doas-dudd-merr-ni-wii
 odenwaelderisch-iech-konn-glaasch-voschbachteln-ohne-dass-es-mir-ebbs-daun-doun-dud
-saechsisch-saxon-sch-kann-glos-essn-ohne-dass-sch-mer-wehtue
+saechsisch-saxon-sch-kann-glos-essn-ohne-dasssch-mer-wehtue
 pfaelzisch-isch-konn-glass-fresse-ohne-dasses-mer-ebbes-ausmache-dud
 schwaebisch-swabian-i-ka-glas-fraessa-ond-des-macht-mr-nix
 deutsch-voralberg-i-ka-glas-eassa-ohne-dass-mar-weh-tuat
@@ -93,7 +93,7 @@ suomi-finnish-voin-syoedae-lasia-se-ei-vahingoita-minua
 sami-northern-sahtan-borrat-lasa-dat-ii-leat-bavccas
 erzian-mon-yarsan-sulikado-dy-zyyan-ejstenze-a-uli
 northern-karelian-mie-voin-syvvae-lasie-ta-minla-ei-ole-kipie
-southern-karelian-minae-voin-syvvae-st-oklua-dai-minule-ei-ole-kibie
+southern-karelian-minae-voin-syvvae-stoklua-dai-minule-ei-ole-kibie
 vepsian-needed
 votian-needed
 livonian-needed
@@ -147,7 +147,7 @@ lingala-nakoki-koliya-biteni-bya-milungi-ekosala-ngai-mabe-te
 kiswahili-naweza-kula-bilauri-na-sikunyui
 malay-saya-boleh-makan-kaca-dan-ia-tidak-mencederakan-saya
 tagalog-kaya-kong-kumain-nang-bubog-at-hindi-ako-masaktan
-chamorro-sina-yo-chumocho-krestat-ti-ha-na-lalamen-yo
+chamorro-sina-yo-chumocho-krestat-ti-ha-nalalamen-yo
 fijian-au-rawa-ni-kana-iloilo-ia-au-sega-ni-vakacacani-kina
 javanese-aku-isa-mangan-beling-tanpa-lara
 burmese-kywntea-kywnm-myksanuingthny-lkyaeang-taikhuikmhu-myahipa-9
@@ -175,5 +175,5 @@ navajo-tseso-yishaago-biinishghah-doo-doo-shil-neezgai-da
 cherokee-and-cree-chickasaw-cree-micmac-ojibwa-lakota-nahuatl-quechua-aymara-and-other-american-languages-needed
 garifuna-needed
 gullah-needed
-lojban-mi-kakne-le-nu-citka-le-blaci-iku-i-le-se-go-i-na-xrani-mi
+lojban-mi-kakne-le-nu-citka-le-blaci-ikui-le-se-goi-na-xrani-mi
 nordicg-ljoer-ye-caudran-creneth-y-jor-cwran

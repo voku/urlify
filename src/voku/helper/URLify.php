@@ -1628,15 +1628,15 @@ class URLify
    * Add new strings the will be replaced with the separator.
    *
    * @param array $array
-   * @param bool  $append
+   * @param bool  $replace
    */
-  public static function add_array_to_separator(array $array, $append = true)
+  public static function add_array_to_separator(array $array, $replace = false)
   {
-    if ($append === true) {
+    if ($replace === false) {
       self::$arrayToSeparator = array_merge(self::$arrayToSeparator, $array);
+    } else {
+      self::$arrayToSeparator = $array;
     }
-
-    self::$arrayToSeparator = $array;
   }
 
   /**
@@ -1788,35 +1788,37 @@ class URLify
     if ($convertUtf8Specials) {
       $string = UTF8::clean($string, true, true, true, true);
     }
-
-    // 2) replace with $separator
+    // 2) remove apostrophes which are not used as quotes around a string
+    $string = preg_replace('/(\\w)\'(\\w)/', '${1}${2}', $string);
+    // 3) replace with $separator
     $string = preg_replace(self::$arrayToSeparator, $separator, $string);
-    // 3) remove all other html-tags
+    // 4) remove all other html-tags
     $string = strip_tags($string);
-    // 4) use special language replacer
+    // 5) use special language replacer
     $string = self::downcode($string, $language, $convertToAsciiOnlyViaLanguageMaps, '', $convertUtf8Specials);
-    // 5) replace with $separator, again
+    // 6) replace with $separator, again
     $string = preg_replace(self::$arrayToSeparator, $separator, $string);
 
-    $removeWordsSearch = '//';
     // remove all these words from the string before urlifying
     if ($removeWords === true) {
       $removeWordsSearch = '/\b(?:' . implode('|', self::get_remove_list($language)) . ')\b/i';
+    } else {
+      $removeWordsSearch = '//';
     }
 
-    $removePatternAddOn = '';
     // keep the "." from e.g.: a file-extension?
     if ($fileName) {
       $removePatternAddOn = '.';
+    } else {
+      $removePatternAddOn = '';
     }
 
     $string = preg_replace(
         array(
-            '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 6) remove double $separator's
-            '[^A-Za-z0-9]',                                                       // 5) keep only ASCII-chars
-            '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u', // 4) remove un-needed chars
-            '/[' . ($separatorEscaped ?: ' ') . '\s]+/',                          // 3) convert spaces to $separator
-            '/^\s+|\s+$/',                                                        // 2) trim leading & trailing spaces
+            '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 5) remove double $separator's
+            '[^A-Za-z0-9]',                                                       // 4) keep only ASCII-chars
+            '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u', // 3) remove un-needed chars
+            '/[' . ($separatorEscaped ?: ' ') . '\s]+/',                          // 2) convert spaces to $separator
             $removeWordsSearch,                                                   // 1) remove some extras words
             '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 0) remove double $separator's
         ),
@@ -1825,7 +1827,6 @@ class URLify
             '',
             '',
             $separator,
-            '',
             '',
             $separator,
         ),

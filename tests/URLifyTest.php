@@ -65,13 +65,13 @@ class URLifyTest extends PHPUnit_Framework_TestCase
   public function testDefaultFilter()
   {
     $testArray = array(
-        '  J\'étudie le français  '                                                    => 'J-etudie-le-francais',
+        '  J\'étudie le français  '                                                    => 'Jetudie-le-francais',
         'Lo siento, no hablo español.'                                                 => 'Lo-siento-no-hablo-espanol',
         '—ΦΞΠΏΣ—Test—'                                                                 => 'F3PWS-Test',
         '大般若經'                                                                         => 'Da-Ban-Ruo-Jing',
         'ياكرهي لتويتر'                                                                => 'yakrhy-ltoytr',
         'ساعت ۲۵'                                                                      => 'saaat-25',
-        "test\xe2\x80\x99öäü"                                                          => 'test-oeaeue',
+        "test\xe2\x80\x99öäü"                                                          => 'testoeaeue',
         'Ɓtest'                                                                        => 'Btest',
         '-ABC-中文空白'                                                                    => 'ABC-Zhong-Wen-Kong-Bai',
         ' '                                                                            => '',
@@ -79,6 +79,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         '1 ₣ || ä#ü'                                                                   => '1-french-franc-aeue',
         '∆ € $ Þ λ  I am A web Develópêr'                                              => 'Unterschied-Euro-Dollar-TH-l-I-am-A-web-Developer',
         '<strong>Subject<BR class="test">from a<br style="clear:both;" />CMS</strong>' => 'Subject-from-a-CMS',
+        'that it\'s \'eleven\' \'o\'clock\''                                           => 'that-its-eleven-oclock',
     );
 
     for ($i = 0; $i < 10; $i++) { // increase this value to test the performance
@@ -150,7 +151,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     self::assertSame('aeoeueaeoeue der', URLify::filter('ÄÖÜäöü-der', 60, 'de', false, false, true, ' '));
     self::assertSame('aeoeueaeoeue#der', URLify::filter('####ÄÖÜäöü-der', 60, 'de', false, false, true, '#'));
     self::assertSame('AeOeUeaeoeue', URLify::filter('ÄÖÜäöü-der-die-das', 60, 'de', false, true));
-    self::assertSame('Bobby-McFerrin-Don-t-worry-be-happy', URLify::filter('Bobby McFerrin — Don\'t worry be happy', 600, 'en'));
+    self::assertSame('Bobby-McFerrin-Dont-worry-be-happy', URLify::filter('Bobby McFerrin — Don\'t worry be happy', 600, 'en'));
     self::assertSame('OUaeou', URLify::filter('ÖÜäöü', 60, 'tr'));
     self::assertSame('hello-zs-privet', URLify::filter('hello žš, привет', 60, 'ru'));
 
@@ -189,7 +190,19 @@ class URLifyTest extends PHPUnit_Framework_TestCase
             '/tester/',
         )
     );
-    self::assertSame('14-14-34-P', URLify::filter('¿ ® ¼ ¼ ¾ ¶'));
+    self::assertSame('14-14-34-P-abc', URLify::filter('? ¿ >-< &amp; ® ¼ ¼ ¾ ¶ <br> ; ! abc'));
+    URLify::reset_array_to_separator();
+
+    // replace
+
+    URLify::add_array_to_separator(
+        array(
+            '/®/',
+            '/tester/',
+        ),
+        true
+    );
+    self::assertSame('und-amp-14-14-34-P-abc', URLify::filter('? ¿ >-< &amp; ® ¼ ¼ ¾ ¶ <br> ; ! abc'));
     URLify::reset_array_to_separator();
   }
 
