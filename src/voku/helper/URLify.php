@@ -1781,6 +1781,7 @@ class URLify
     // escaped separator
     $separatorEscaped = preg_quote($separator, '/');
 
+    // use defaults, if there are no values
     if (0 === count(self::$arrayToSeparator)) {
       self::reset_array_to_separator();
     }
@@ -1789,14 +1790,19 @@ class URLify
     if ($convertUtf8Specials) {
       $string = UTF8::clean($string, true, true, true, true);
     }
+
     // 2) remove apostrophes which are not used as quotes around a string
-    $string = preg_replace('/(\\w)\'(\\w)/', '${1}${2}', $string);
+    $string = preg_replace("/(\w)'(\w)/", '${1}${2}', $string);
+
     // 3) replace with $separator
     $string = preg_replace(self::$arrayToSeparator, $separator, $string);
+
     // 4) remove all other html-tags
     $string = strip_tags($string);
+
     // 5) use special language replacer
     $string = self::downcode($string, $language, $convertToAsciiOnlyViaLanguageMaps, '', $convertUtf8Specials);
+
     // 6) replace with $separator, again
     $string = preg_replace(self::$arrayToSeparator, $separator, $string);
 
@@ -1816,12 +1822,12 @@ class URLify
 
     $string = preg_replace(
         array(
-            '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 5) remove double $separator's
-            '[^A-Za-z0-9]',                                                       // 4) keep only ASCII-chars
-            '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u', // 3) remove un-needed chars
-            '/[' . ($separatorEscaped ?: ' ') . '\s]+/',                          // 2) convert spaces to $separator
-            $removeWordsSearch,                                                   // 1) remove some extras words
-            '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 0) remove double $separator's
+            '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 6) remove double $separator's
+            '[^A-Za-z0-9]',                                                       // 5) keep only ASCII-chars
+            '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u', // 4) remove un-needed chars
+            '/[' . ($separatorEscaped ?: ' ') . '\s]+/',                          // 3) convert spaces to $separator
+            $removeWordsSearch,                                                   // 2) remove some extras words
+            '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 1) remove double $separator's
         ),
         array(
             $separator,
