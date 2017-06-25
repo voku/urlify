@@ -1790,27 +1790,27 @@ class URLify
     if ($convertUtf8Specials) {
       $string = UTF8::clean($string, true, true, true, true);
     }
-
     // 2) remove apostrophes which are not used as quotes around a string
-    $string = preg_replace("/(\w)'(\w)/", '$1$2', $string);
-
+    $stringTmp = preg_replace("/(\w)'(\w)/u", '${1}${2}', $string);
+    if ($stringTmp !== null) {
+      $string = $stringTmp;
+    }
     // 3) replace with $separator
     $string = preg_replace(self::$arrayToSeparator, $separator, $string);
-
     // 4) remove all other html-tags
     $string = strip_tags($string);
-
     // 5) use special language replacer
     $string = self::downcode($string, $language, $convertToAsciiOnlyViaLanguageMaps, '', $convertUtf8Specials);
-
     // 6) replace with $separator, again
     $string = preg_replace(self::$arrayToSeparator, $separator, $string);
 
     // remove all these words from the string before urlifying
+    $removeWordsSearch = '//';
     if ($removeWords === true) {
-      $removeWordsSearch = '/\b(?:' . implode('|', self::get_remove_list($language)) . ')\b/i';
-    } else {
-      $removeWordsSearch = '//';
+      $removeList = self::get_remove_list($language);
+      if (count($removeList) > 0) {
+        $removeWordsSearch = '/\b(?:' . implode('|', self::get_remove_list($language)) . ')\b/i';
+      }
     }
 
     // keep the "." from e.g.: a file-extension?
@@ -1822,16 +1822,12 @@ class URLify
 
     $string = preg_replace(
         array(
-            '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 6) remove double $separator's
-            '[^A-Za-z0-9]',                                                       // 5) keep only ASCII-chars
-            '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u', // 4) remove un-needed chars
-            '/[' . ($separatorEscaped ?: ' ') . '\s]+/',                          // 3) convert spaces to $separator
-            $removeWordsSearch,                                                   // 2) remove some extras words
-            '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 1) remove double $separator's
+            '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u', // 1) remove un-needed chars
+            '/[\s]+/',                                                            // 2) convert spaces to $separator
+            $removeWordsSearch,                                                   // 3) remove some extras words
+            '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 4) remove double $separator's
         ),
         array(
-            $separator,
-            '',
             '',
             $separator,
             '',
