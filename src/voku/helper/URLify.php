@@ -1742,7 +1742,8 @@ class URLify
    * e.g.: "Petty<br>theft" to "Petty-theft"
    *
    * @param string  $string                            <p>The text you want to convert.</p>
-   * @param int     $maxLength                         <p>Max. length of the output string, set to "0" (zero) to disable it</p>
+   * @param int     $maxLength                         <p>Max. length of the output string, set to "0" (zero) to
+   *                                                   disable it</p>
    * @param string  $language                          <p>The language you want to convert to.</p>
    * @param boolean $fileName                          <p>
    *                                                   Keep the "." from the extension e.g.: "imaäe.jpg" => "image.jpg"
