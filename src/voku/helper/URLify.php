@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace voku\helper;
 
 /**
@@ -23,9 +25,9 @@ class URLify
    *
    * @var array
    */
-  public static $maps = array(
+  public static $maps = [
     // Greek
-    'el'            => array(
+    'el'            => [
         '='  => ' ίσος ',
         '%'  => ' τοις εκατό ',
         '∑'  => ' άθροισμα ',
@@ -145,9 +147,9 @@ class URLify
         'υί' => 'i',
         'ϐ'  => 'v',
         'ϑ'  => 'th',
-    ),
+    ],
     // Hindi
-    'hi'            => array(
+    'hi'            => [
         '='  => ' समान ',
         '%'  => ' प्रतिशत ',
         '∑'  => ' योग ',
@@ -221,18 +223,18 @@ class URLify
         'य'  => 'Ya',
         'य़' => 'Yi',
         'ज़' => 'Za',
-    ),
+    ],
     // Swedish
-    'sv'            => array(
+    'sv'            => [
         'Ä' => 'A',
         'Å' => 'a',
         'Ö' => 'O',
         'ä' => 'a',
         'å' => 'a',
         'ö' => 'o',
-    ),
+    ],
     // Turkish
-    'tr'            => array(
+    'tr'            => [
         '=' => ' eşit ',
         '%' => ' yüzde ',
         '∑' => ' Toplam ',
@@ -254,9 +256,9 @@ class URLify
         'Ö' => 'O',
         'ğ' => 'g',
         'Ğ' => 'G',
-    ),
+    ],
     // Bulgarian
-    'bg'            => array(
+    'bg'            => [
         '='  => ' равен ',
         '%'  => ' на сто ',
         '∑'  => ' сума ',
@@ -329,9 +331,9 @@ class URLify
         'ия' => 'ia',
         'йо' => 'iо',
         'ьо' => 'io',
-    ),
+    ],
     // Hungarian
-    'hu'            => array(
+    'hu'            => [
         '=' => ' Egyenlő ',
         '%' => ' Százalék ',
         '∑' => ' összeg ',
@@ -359,9 +361,9 @@ class URLify
         'ú' => 'u',
         'ü' => 'u',
         'ű' => 'u',
-    ),
+    ],
     // Burmese
-    'by'            => array(
+    'by'            => [
         '='     => ' တန်းတူညီမျှ ',
         '%'     => ' ရာခိုင်နှုန်းက ',
         '∑'     => ' လဒ် ',
@@ -485,10 +487,10 @@ class URLify
         'ံ'     => 'an',
         'ိံ'    => 'ein',
         'ုံ'    => 'on',
-    ),
+    ],
     // Croatian
     'hr'            =>
-        array(
+        [
             '=' => ' Jednaki ',
             '%' => ' Posto ',
             '∑' => ' zbroj ',
@@ -508,9 +510,9 @@ class URLify
             'ž' => 'z',
             'š' => 's',
             'đ' => 'dj',
-        ),
+        ],
     // Finnish
-    'fi'            => array(
+    'fi'            => [
         '=' => ' Sama ',
         '%' => ' Prosenttia ',
         '∑' => ' sum ',
@@ -524,9 +526,9 @@ class URLify
         'Ö' => 'O',
         'ä' => 'a',
         'ö' => 'o',
-    ),
+    ],
     // Georgian
-    'ka'            => array(
+    'ka'            => [
         '=' => ' თანასწორი ',
         '%' => ' პროცენტი ',
         '∑' => ' თანხა ',
@@ -569,9 +571,9 @@ class URLify
         'ხ' => 'kh',
         'ჯ' => 'j',
         'ჰ' => 'h',
-    ),
+    ],
     // Russian
-    'ru'            => array(
+    'ru'            => [
         '=' => ' равный ',
         '%' => ' процент ',
         '∑' => ' сумма ',
@@ -648,9 +650,9 @@ class URLify
         'Ю' => 'Yu',
         'Я' => 'Ya',
         '№' => '',
-    ),
+    ],
     // Ukrainian
-    'uk'            => array(
+    'uk'            => [
         '=' => ' рівний ',
         '%' => ' відсотків ',
         '∑' => ' сума ',
@@ -668,9 +670,9 @@ class URLify
         'і' => 'i',
         'ї' => 'yi',
         'ґ' => 'g',
-    ),
+    ],
     // Czech
-    'cs'            => array(
+    'cs'            => [
         '=' => ' rovnat se ',
         '%' => ' procento ',
         '∑' => ' součet ',
@@ -698,9 +700,9 @@ class URLify
         'Ť' => 'T',
         'Ů' => 'U',
         'Ž' => 'Z',
-    ),
+    ],
     // Danish
-    'da'            => array(
+    'da'            => [
         '=' => ' Lige ',
         '%' => ' Prozent ',
         '∑' => ' sum ',
@@ -718,9 +720,9 @@ class URLify
         'å' => 'aa',
         'É' => 'E',
         'é' => 'e',
-    ),
+    ],
     // Polish
-    'pl'            => array(
+    'pl'            => [
         '=' => ' równy ',
         '%' => ' procent ',
         '∑' => ' suma ',
@@ -748,9 +750,9 @@ class URLify
         'Ś' => 'S',
         'Ź' => 'Z',
         'Ż' => 'Z',
-    ),
+    ],
     // Romanian
-    'ro'            => array(
+    'ro'            => [
         '=' => ' egal ',
         '%' => ' la sută ',
         '∑' => ' sumă ',
@@ -774,9 +776,9 @@ class URLify
         'ţ' => 't',
         'Ţ' => 'T',
         'Ț' => 'T',
-    ),
+    ],
     // Esperanto
-    'eo'            => array(
+    'eo'            => [
         '=' => ' Egalaj ',
         '%' => ' Procento ',
         '∑' => ' sumo ',
@@ -798,9 +800,9 @@ class URLify
         'Ĵ' => 'JX',
         'Ŝ' => 'SX',
         'Ŭ' => 'UX',
-    ),
+    ],
     // Estonian
-    'et'            => array(
+    'et'            => [
         '=' => ' Võrdsed ',
         '%' => ' Protsenti ',
         '∑' => ' summa ',
@@ -822,9 +824,9 @@ class URLify
         'ä' => 'a',
         'ö' => 'o',
         'ü' => 'u',
-    ),
+    ],
     // Latvian
-    'lv'            => array(
+    'lv'            => [
         '=' => ' vienāds ',
         '%' => ' procents ',
         '∑' => ' summa ',
@@ -856,9 +858,9 @@ class URLify
         'Š' => 'S',
         'Ū' => 'u',
         'Ž' => 'Z',
-    ),
+    ],
     // Lithuanian
-    'lt'            => array(
+    'lt'            => [
         '=' => ' lygus ',
         '%' => ' procentų ',
         '∑' => ' suma ',
@@ -886,9 +888,9 @@ class URLify
         'Ų' => 'U',
         'Ū' => 'U',
         'Ž' => 'Z',
-    ),
+    ],
     // Norwegian
-    'no'            => array(
+    'no'            => [
         '=' => ' Lik ',
         '%' => ' Prosent ',
         '∑' => ' sum ',
@@ -904,9 +906,9 @@ class URLify
         'æ' => 'ae',
         'ø' => 'oe',
         'å' => 'aa',
-    ),
+    ],
     // Vietnamese
-    'vi'            => array(
+    'vi'            => [
         '=' => ' công bằng ',
         '%' => ' phần trăm ',
         '∑' => ' tổng số ',
@@ -1050,9 +1052,9 @@ class URLify
         'ỵ' => 'y',
         'Đ' => 'D',
         'đ' => 'd',
-    ),
+    ],
     // Arabic
-    'ar'            => array(
+    'ar'            => [
         '=' => ' متساوي ',
         '%' => ' نسبه مئويه ',
         '∑' => ' مجموع ',
@@ -1106,9 +1108,9 @@ class URLify
         '٧' => '7',
         '٨' => '8',
         '٩' => '9',
-    ),
+    ],
     // Persian
-    'fa'            => array(
+    'fa'            => [
         '=' => ' برابر ',
         '%' => ' در صد ',
         '∑' => ' مجموع ',
@@ -1134,9 +1136,9 @@ class URLify
         '۷' => '7',
         '۸' => '8',
         '۹' => '9',
-    ),
+    ],
     // Serbian
-    'sr'            => array(
+    'sr'            => [
         '=' => ' једнак ',
         '%' => ' проценат ',
         '∑' => ' збир ',
@@ -1218,9 +1220,9 @@ class URLify
         'Ž' => 'Z',
         'Ć' => 'C',
         'Č' => 'C',
-    ),
+    ],
     // Azerbaijani
-    'az'            => array(
+    'az'            => [
         '=' => ' bərabər ',
         '%' => ' faiz ',
         '∑' => ' məbləğ ',
@@ -1244,9 +1246,9 @@ class URLify
         'Ö' => 'O',
         'Ş' => 'S',
         'Ü' => 'U',
-    ),
+    ],
     // French
-    'fr'            => array(
+    'fr'            => [
         '=' => ' Égal ',
         '%' => ' Pourcentage ',
         '∑' => ' somme ',
@@ -1256,9 +1258,9 @@ class URLify
         '&' => ' Et ',
         '+' => ' Plus ',
         //
-    ),
+    ],
     // Austrian (French)
-    'fr_at'         => array(
+    'fr_at'         => [
         '=' => ' Égal ',
         '%' => ' Pourcentage ',
         '∑' => ' somme ',
@@ -1270,9 +1272,9 @@ class URLify
         //
         'ß' => 'sz',
         'ẞ' => 'SZ',
-    ),
+    ],
     // Switzerland (French)
-    'fr_ch'         => array(
+    'fr_ch'         => [
         '=' => ' Égal ',
         '%' => ' Pourcentage ',
         '∑' => ' somme ',
@@ -1284,9 +1286,9 @@ class URLify
         //
         'ß' => 'ss',
         'ẞ' => 'SS',
-    ),
+    ],
     // German
-    'de'            => array(
+    'de'            => [
         '=' => ' gleich ',
         '%' => ' Prozent ',
         '∑' => ' gesamt ',
@@ -1304,9 +1306,9 @@ class URLify
         'ü' => 'ue',
         'ß' => 'ss',
         'ẞ' => 'SS',
-    ),
+    ],
     // Austrian (German)
-    'de_at'         => array(
+    'de_at'         => [
         '=' => ' gleich ',
         '%' => ' Prozent ',
         '∑' => ' gesamt ',
@@ -1324,9 +1326,9 @@ class URLify
         'ä' => 'ae',
         'ö' => 'oe',
         'ü' => 'ue',
-    ),
+    ],
     // Switzerland (German)
-    'de_ch'         => array(
+    'de_ch'         => [
         '=' => ' gleich ',
         '%' => ' Prozent ',
         '∑' => ' gesamt ',
@@ -1344,9 +1346,9 @@ class URLify
         'ü' => 'ue',
         'ß' => 'ss',
         'ẞ' => 'SS',
-    ),
+    ],
     // English
-    'en'            => array(
+    'en'            => [
         '=' => ' equal ',
         '%' => ' percent ',
         '∑' => ' sum ',
@@ -1356,8 +1358,8 @@ class URLify
         '&' => ' and ',
         '+' => ' plus ',
         //
-    ),
-    'latin'         => array(
+    ],
+    'latin'         => [
         '¹' => '1',
         '²' => '2',
         '³' => '3',
@@ -1540,9 +1542,9 @@ class URLify
         'ý' => 'y',
         'ÿ' => 'y',
         'ŷ' => 'y',
-    ),
+    ],
     // currency
-    'currency'      => array(
+    'currency'      => [
         '€' => ' Euro ',
         '$' => ' Dollar ',
         '₢' => ' rruzeiro ',
@@ -1573,8 +1575,8 @@ class URLify
         '₠' => ' ecu ',
         '¤' => ' currency ',
         '฿' => ' baht ',
-    ),
-    'latin_symbols' => array(
+    ],
+    'latin_symbols' => [
         '©' => ' (c) ',
         '®' => ' (r) ',
         '@' => ' (at) ',
@@ -1586,29 +1588,29 @@ class URLify
         '♥' => '♥',
         '&' => '&',
         '+' => '+',
-    ),
-  );
+    ],
+  ];
 
   /**
    * List of words to remove from URLs.
    *
    * @var array
    */
-  public static $remove_list = array();
+  public static $remove_list = [];
 
   /**
    * The character map.
    *
    * @var string[]
    */
-  private static $map = array();
+  private static $map = [];
 
   /**
    * An array of strings that will convert into the separator-char - used by "URLify::filter()".
    *
    * @var array
    */
-  private static $arrayToSeparator = array();
+  private static $arrayToSeparator = [];
 
   /**
    * The character list as a regular expression.
@@ -1630,7 +1632,7 @@ class URLify
    * @param array $array <p>An array of things that should replaced by the separator.</p>
    * @param bool  $merge <p>Keep the previous (default) array-to-separator array.</p>
    */
-  public static function add_array_to_separator(array $array, $merge = true)
+  public static function add_array_to_separator(array $array, bool $merge = true)
   {
     if ($merge === true) {
       self::$arrayToSeparator = array_merge(self::$arrayToSeparator, $array);
@@ -1644,11 +1646,11 @@ class URLify
    */
   public static function reset_array_to_separator()
   {
-    self::$arrayToSeparator = array(
+    self::$arrayToSeparator = [
         '/&quot;|&amp;|&lt;|&gt;|&ndash;|&mdash;/i',  // ", &, <, >, –, —
         '/⁻|-|—|_|"|`|´|\'/',
         "#/\r\n|\r|\n|<br.*/?>#isU",
-    );
+    ];
   }
 
   /**
@@ -1660,7 +1662,7 @@ class URLify
   {
     self::$maps[] = $map;
     self::$regex = '';
-    self::$map = array();
+    self::$map = [];
   }
 
   /**
@@ -1670,10 +1672,10 @@ class URLify
    * @param string          $language
    * @param boolean         $merge <p>Keep the previous (default) remove-words array.</p>
    */
-  public static function remove_words($words, $language = 'de', $merge = true)
+  public static function remove_words($words, string $language = 'de', bool $merge = true)
   {
-    if (is_array($words) === false) {
-      $words = array($words);
+    if (\is_array($words) === false) {
+      $words = [$words];
     }
 
     /** @noinspection ForeachSourceInspection */
@@ -1695,11 +1697,11 @@ class URLify
    *
    * @return array
    */
-  private static function get_remove_list($language = 'de')
+  private static function get_remove_list(string $language = 'de'): array
   {
     // check for language
     if (!$language) {
-      return array();
+      return [];
     }
 
     // set remove-array
@@ -1711,11 +1713,11 @@ class URLify
     if (
         !isset(self::$remove_list[$language])
         ||
-        !is_array(self::$remove_list[$language])
+        !\is_array(self::$remove_list[$language])
         ||
         empty(self::$remove_list[$language])
     ) {
-      return array();
+      return [];
     }
 
     return self::$remove_list[$language];
@@ -1729,9 +1731,9 @@ class URLify
    * @param string  $separator
    * @param boolean $strToLower
    *
-   * @return bool|string
+   * @return string
    */
-  public static function slug($string, $language = 'de', $separator = '-', $strToLower = false)
+  public static function slug(string $string, string $language = 'de', string $separator = '-', bool $strToLower = false): string
   {
     return self::filter($string, 200, $language, false, false, $strToLower, $separator, false, true);
   }
@@ -1764,9 +1766,9 @@ class URLify
    *                                                   \xE9, %F6, ...).
    *                                                   </p>
    *
-   * @return string|false false on error
+   * @return string
    */
-  public static function filter($string, $maxLength = 200, $language = 'de', $fileName = false, $removeWords = false, $strToLower = false, $separator = '-', $convertToAsciiOnlyViaLanguageMaps = false, $convertUtf8Specials = false)
+  public static function filter(string $string, int $maxLength = 200, string $language = 'de', bool $fileName = false, bool $removeWords = false, bool $strToLower = false, string $separator = '-', bool $convertToAsciiOnlyViaLanguageMaps = false, bool $convertUtf8Specials = false): string
   {
     if (!$language) {
       return '';
@@ -1783,7 +1785,7 @@ class URLify
     $separatorEscaped = preg_quote($separator, '/');
 
     // use defaults, if there are no values
-    if (0 === count(self::$arrayToSeparator)) {
+    if (0 === \count(self::$arrayToSeparator)) {
       self::reset_array_to_separator();
     }
 
@@ -1794,22 +1796,22 @@ class URLify
     // 2) remove apostrophes which are not used as quotes around a string
     $stringTmp = preg_replace("/(\w)'(\w)/u", '${1}${2}', $string);
     if ($stringTmp !== null) {
-      $string = $stringTmp;
+      $string = (string)$stringTmp;
     }
     // 3) replace with $separator
-    $string = preg_replace(self::$arrayToSeparator, $separator, $string);
+    $string = (string)preg_replace(self::$arrayToSeparator, $separator, $string);
     // 4) remove all other html-tags
     $string = strip_tags($string);
     // 5) use special language replacer
     $string = self::downcode($string, $language, $convertToAsciiOnlyViaLanguageMaps, '', $convertUtf8Specials);
     // 6) replace with $separator, again
-    $string = preg_replace(self::$arrayToSeparator, $separator, $string);
+    $string = (string)preg_replace(self::$arrayToSeparator, $separator, $string);
 
     // remove all these words from the string before urlifying
     $removeWordsSearch = '//';
     if ($removeWords === true) {
       $removeList = self::get_remove_list($language);
-      if (count($removeList) > 0) {
+      if (\count($removeList) > 0) {
         $removeWordsSearch = '/\b(?:' . implode('|', self::get_remove_list($language)) . ')\b/i';
       }
     }
@@ -1821,19 +1823,19 @@ class URLify
       $removePatternAddOn = '';
     }
 
-    $string = preg_replace(
-        array(
+    $string = (string)preg_replace(
+        [
             '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u', // 1) remove un-needed chars
             '/[\s]+/',                                                            // 2) convert spaces to $separator
             $removeWordsSearch,                                                   // 3) remove some extras words
             '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 4) remove double $separator's
-        ),
-        array(
+        ],
+        [
             '',
             $separator,
             '',
             $separator,
-        ),
+        ],
         $string
     );
 
@@ -1856,7 +1858,7 @@ class URLify
    *
    * @param string $language
    */
-  public static function reset_remove_list($language = 'de')
+  public static function reset_remove_list(string $language = 'de')
   {
     if (
         $language === 'de_ch' // Switzerland (German)
@@ -1879,7 +1881,7 @@ class URLify
     try {
       self::$remove_list[$language] = $stopWords->getStopWordsFromLanguage($language);
     } catch (StopWordsLanguageNotExists $e) {
-      self::$remove_list[$language] = array();
+      self::$remove_list[$language] = [];
     }
   }
 
@@ -1896,7 +1898,7 @@ class URLify
    *
    * @return string The result of expanding the string
    */
-  protected static function expandString($string, $language = 'de')
+  protected static function expandString(string $string, string $language = 'de'): string
   {
     $string = self::expandCurrencies($string, $language);
     $string = self::expandSymbols($string, $language);
@@ -1911,13 +1913,13 @@ class URLify
    * @param string $string
    * @param string $language
    *
-   * @return mixed
+   * @return string
    */
-  private static function expandCurrencies($string, $language = 'de')
+  private static function expandCurrencies(string $string, string $language = 'de'): string
   {
     if ($language === 'de') {
-      return preg_replace(
-          array(
+      return (string)preg_replace(
+          [
               '/(?:\s|^)(\d+)(?:\ )*€(?:\s|$)/',
               '/(?:\s|^)\$(?:\ )*(\d+)(?:\s|$)/',
               '/(?:\s|^)\£(?:\ )*(\d+)(?:\s|$)/',
@@ -1925,8 +1927,8 @@ class URLify
               '/(?:\s|^)(\d+)[\.|,](\d+)(?:\ )*€(?:\s|$)/',
               '/(?:\s|^)\$(?:\ )*(\d+)[\.|,](\d+)(?:\s|$)/',
               '/(?:\s|^)£(?:\ )*(\d+)[\.|,](\d+)(?:\s|$)/',
-          ),
-          array(
+          ],
+          [
               ' \1 Euro ',
               ' \1 Dollar ',
               ' \1 Pound ',
@@ -1934,13 +1936,13 @@ class URLify
               ' \1 Euro \2 Cent ',
               ' \1 Dollar \2 Cent ',
               ' \1 Pound \2 Pence ',
-          ),
+          ],
           $string
       );
     }
 
-    return preg_replace(
-        array(
+    return (string)preg_replace(
+        [
             '/(?:\s|^)1(?:\ )*€(?:\s|$)/',
             '/(?:\s|^)(\d+)(?:\ )*€(?:\s|$)/',
             '/(?:\s|^)\$(?:\ )*1(?:\s|$)/',
@@ -1954,8 +1956,8 @@ class URLify
             '/(?:\s|^)\$(?:\ )*(\d+)[\.|,](\d+)(?:\s|$)/',
             '/(?:\s|^)1[\.|,](\d+)(?:\ )*£(?:\s|$)/',
             '/(?:\s|^)£(?:\ )*(\d+)[\.|,](\d+)(?:\s|$)/',
-        ),
-        array(
+        ],
+        [
             ' 1 Euro ',
             ' \1 Euros ',
             ' 1 Dollar ',
@@ -1969,7 +1971,7 @@ class URLify
             ' \1 Dollars \2 Cents ',
             ' 1 Pounds \1 Pence ',
             ' \1 Pounds \2 Pence ',
-        ),
+        ],
         $string
     );
   }
@@ -1980,27 +1982,27 @@ class URLify
    * @param string $string
    * @param string $language
    *
-   * @return mixed
+   * @return string
    */
-  private static function expandSymbols($string, $language = 'de')
+  private static function expandSymbols(string $string, string $language = 'de'): string
   {
-    return preg_replace(
-        array(
+    return (string)preg_replace(
+        [
             '/\s*©\s*/',
             '/\s*®\s*/',
             '/\s*@\s*/',
             '/\s*&\s*/',
             '/\s*%\s*/',
             '/(\s*=\s*)/',
-        ),
-        array(
+        ],
+        [
             self::$maps['latin_symbols']['©'],
             self::$maps['latin_symbols']['®'],
             self::$maps['latin_symbols']['@'],
-            isset(self::$maps[$language]['&']) ? self::$maps[$language]['&'] : '&',
-            isset(self::$maps[$language]['%']) ? self::$maps[$language]['%'] : '%',
-            isset(self::$maps[$language]['=']) ? self::$maps[$language]['='] : '=',
-        ),
+            self::$maps[$language]['&'] ?? '&',
+            self::$maps[$language]['%'] ?? '%',
+            self::$maps[$language]['='] ?? '=',
+        ],
         $string
     );
   }
@@ -2025,7 +2027,7 @@ class URLify
    *
    * @return string
    */
-  public static function downcode($string, $language = 'de', $convertToAsciiOnlyViaLanguageMaps = false, $unknown = '', $convertUtf8Specials = true)
+  public static function downcode(string $string, string $language = 'de', bool $convertToAsciiOnlyViaLanguageMaps = false, string $unknown = '', bool $convertUtf8Specials = true): string
   {
     self::init_downcode($language);
 
@@ -2036,15 +2038,15 @@ class URLify
 
     $string = self::expandString($string, $language);
 
-    $searchArray = array();
-    $replaceArray = array();
+    $searchArray = [];
+    $replaceArray = [];
 
     if (
         self::$regex
         &&
         preg_match_all(self::$regex, $string, $matches)
     ) {
-      $matchesCounter = count($matches[0]);
+      $matchesCounter = \count($matches[0]);
 
       /** @noinspection ForeachInvariantsInspection */
       for ($i = 0; $i < $matchesCounter; $i++) {
@@ -2072,7 +2074,7 @@ class URLify
    *
    * @return bool
    */
-  private static function init_downcode($language = 'de')
+  private static function init_downcode(string $language = 'de'): bool
   {
     if (!$language) {
       return false;
@@ -2097,7 +2099,7 @@ class URLify
 
     // reset static vars
     self::$language = $language;
-    self::$map = array();
+    self::$map = [];
 
     $chars = '';
     foreach (self::$maps as $map) {
@@ -2121,7 +2123,7 @@ class URLify
    *
    * @return string
    */
-  public static function transliterate($string)
+  public static function transliterate(string $string): string
   {
     return self::downcode($string);
   }

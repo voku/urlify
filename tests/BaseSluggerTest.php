@@ -5,7 +5,7 @@ use voku\helper\URLify;
 /**
  * Class BaseSluggerTest
  */
-abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
+abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
 {
   /**
    * @var string
@@ -44,26 +44,23 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
    */
   public function testDefaultSlugify($fileName)
   {
-    $inputStrings = file($this->inputFixturesDir . DIRECTORY_SEPARATOR  . $fileName, FILE_IGNORE_NEW_LINES);
-    $expectedSlugs = file($this->expectedFixturesDir . DIRECTORY_SEPARATOR  . $fileName, FILE_IGNORE_NEW_LINES);
+    $inputStrings = file($this->inputFixturesDir . DIRECTORY_SEPARATOR . $fileName, FILE_IGNORE_NEW_LINES);
+    $expectedSlugs = file($this->expectedFixturesDir . DIRECTORY_SEPARATOR . $fileName, FILE_IGNORE_NEW_LINES);
 
     $slugger = $this->slugger;
     $slugs = array_map(
         function ($string) use ($slugger) {
           /** @noinspection StaticInvocationViaThisInspection */
+          /** @noinspection PhpStaticAsDynamicMethodCallInspection */
           return $slugger->slug($string, 'en', '-', true);
         }, $inputStrings
     );
 
-    if (version_compare(PHP_VERSION, '5.4.0', '<')) {
-      self::markTestSkipped('TODO: not working with PHP < 5.4');
-    } else {
-      foreach ($expectedSlugs as $key => $expectedSlugValue) {
-        self::assertSame($expectedSlugs[$key], $slugs[$key], 'tested-file: ' . $fileName . ' | ' . $slugs[$key]);
-      }
-
-      self::assertSame($expectedSlugs, $slugs, 'tested-file: ' . $fileName);
+    foreach ($expectedSlugs as $key => $expectedSlugValue) {
+      self::assertSame($expectedSlugs[$key], $slugs[$key], 'tested-file: ' . $fileName . ' | ' . $slugs[$key]);
     }
+
+    self::assertSame($expectedSlugs, $slugs, 'tested-file: ' . $fileName);
   }
 
   /**
@@ -82,30 +79,30 @@ abstract class BaseSluggerTest extends \PHPUnit_Framework_TestCase
   /**
    * @return array
    */
-  public function provideSlugEdgeCases()
+  public function provideSlugEdgeCases(): array
   {
-    return array(
-        array('', ''),
-        array('    ', ''),
-        array('-', ''),
-        array('-A', 'a'),
-        array('A-', 'a'),
-        array('-----', ''),
-        array('-a-A-A-a-', 'a-a-a-a'),
-        array('A-a-A-a-A-a', 'a-a-a-a-a-a'),
-        array(' -- ', ''),
-        array('a--A', 'a-a'),
-        array('a- -A', 'a-a'),
-        array('a-&nbsp;-A', 'a-a'),
-        array('a-' . html_entity_decode('&nbsp;') . '-A', 'a-a'),
-        array('a - ' . html_entity_decode('&nbsp;') . ' -A', 'a-a'),
-        array(' - - ', ''),
-        array(' -A- ', 'a'),
-        array(' - A - ', 'a'),
-        array(null, ''),
-        array(true, '1'),
-        array(false, ''),
-        array(1, '1'),
-    );
+    return [
+        ['', ''],
+        ['    ', ''],
+        ['-', ''],
+        ['-A', 'a'],
+        ['A-', 'a'],
+        ['-----', ''],
+        ['-a-A-A-a-', 'a-a-a-a'],
+        ['A-a-A-a-A-a', 'a-a-a-a-a-a'],
+        [' -- ', ''],
+        ['a--A', 'a-a'],
+        ['a- -A', 'a-a'],
+        ['a-&nbsp;-A', 'a-a'],
+        ['a-' . html_entity_decode('&nbsp;') . '-A', 'a-a'],
+        ['a - ' . html_entity_decode('&nbsp;') . ' -A', 'a-a'],
+        [' - - ', ''],
+        [' -A- ', 'a'],
+        [' - A - ', 'a'],
+        ["\0", ''],
+        [true, '1'],
+        [false, ''],
+        [1, '1'],
+    ];
   }
 }

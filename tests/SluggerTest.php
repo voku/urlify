@@ -16,23 +16,23 @@ class SluggerTest extends BaseSluggerTest
   /**
    * @return array
    */
-  public function provideSlugFileNames()
+  public function provideSlugFileNames(): array
   {
-    return array(
-        array('strings-3.txt'),
-    );
+    return [
+        ['strings-3.txt'],
+    ];
   }
 
   /**
    * @return array
    */
-  public function provideSlugFileNamesWithNull()
+  public function provideSlugFileNamesWithNull(): array
   {
-    return array(
-        array('iso-8859-1-1.txt'),
-        array('iso-8859-2-1.txt'),
-        array('iso-8859-3-1.txt'),
-        array('iso-8859-4-1.txt'),
-    );
+    return [
+        ['iso-8859-1-1.txt'],
+        ['iso-8859-2-1.txt'],
+        ['iso-8859-3-1.txt'],
+        ['iso-8859-4-1.txt'],
+    ];
   }
 }

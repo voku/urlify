@@ -5,7 +5,7 @@ use voku\helper\URLify;
 /**
  * Class URLifyTest
  */
-class URLifyTest extends PHPUnit_Framework_TestCase
+class URLifyTest extends \PHPUnit\Framework\TestCase
 {
   public function testSlugifyOptions()
   {
@@ -25,15 +25,15 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testDowncode()
   {
-    $testArray = array(
+    $testArray = [
         '  J\'étudie le français  '                                                        => '  J\'etudie le francais  ',
         'Lo siento, no hablo español.'                                                     => 'Lo siento, no hablo espanol.',
         '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                                          => ' 1 Dollar -> Prozent 1 -> oeaeue -> F3PWS -> Zhong Wen Kong Bai  ->  ',
-        ' 22.99 € oder $ 19 | 1 $ | $ 1 = foobar'                                         => ' 22 Euro 99 Cent oder 19 Dollar | 1  Dollar  | 1 Dollar gleich foobar',
+        ' 22.99 € oder $ 19 | 1 $ | $ 1 = foobar'                                          => ' 22 Euro 99 Cent oder 19 Dollar | 1  Dollar  | 1 Dollar gleich foobar',
         'זאת השפה העברית.‏'                                                                => 'zt hshph h`bryt.',
         '𐭠 𐭡 𐭢 𐭣 𐭤 𐭥 𐭦 𐭧 𐭨 𐭩 𐭪 𐭫 𐭬 𐭭 𐭮 𐭯 𐭰 𐭱 𐭲 𐭸 𐭹 𐭺 𐭻 𐭼 𐭽 𐭾 𐭿' => '                          ',
         'أحبك'                                                                             => 'ahbk',
-    );
+    ];
 
     foreach ($testArray as $before => $after) {
       self::assertSame($after, URLify::downcode($before), $before);
@@ -46,25 +46,25 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testRemoveWordsDisable()
   {
-    URLify::remove_words(array('foo', 'bar'));
+    URLify::remove_words(['foo', 'bar']);
     self::assertSame('foo-bar', URLify::filter('foo bar'));
     URLify::reset_remove_list();
   }
 
   public function testRemoveWordsEnabled()
   {
-    URLify::remove_words(array('foo', 'bar'));
+    URLify::remove_words(['foo', 'bar']);
     self::assertSame('', URLify::filter('foo bar', 10, 'de', false, true));
     URLify::reset_remove_list();
 
-    URLify::remove_words(array('foo', 'bär'));
+    URLify::remove_words(['foo', 'bär']);
     self::assertSame('bar', URLify::filter('foo bar', 10, 'de', false, true));
     URLify::reset_remove_list();
   }
 
   public function testDefaultFilter()
   {
-    $testArray = array(
+    $testArray = [
         '  J\'étudie le français  '                                                    => 'Jetudie-le-francais',
         'Lo siento, no hablo español.'                                                 => 'Lo-siento-no-hablo-espanol',
         '—ΦΞΠΏΣ—Test—'                                                                 => 'F3PWS-Test',
@@ -80,7 +80,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         '∆ € $ Þ λ  I am A web Develópêr'                                              => 'Unterschied-Euro-Dollar-TH-l-I-am-A-web-Developer',
         '<strong>Subject<BR class="test">from a<br style="clear:both;" />CMS</strong>' => 'Subject-from-a-CMS',
         'that it\'s \'eleven\' \'o\'clock\''                                           => 'that-its-eleven-oclock',
-    );
+    ];
 
     for ($i = 0; $i < 10; $i++) { // increase this value to test the performance
       foreach ($testArray as $before => $after) {
@@ -102,17 +102,17 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     self::assertSame('foo_bar', URLify::filter('_foo_bar_', -1, 'de', false, false, false, '_'));
 
 
-    // test null "separator"
-    self::assertSame('foobar', URLify::filter('_foo_bar_', -1, 'de', false, false, false, null));
+    // test default "separator"
+    self::assertSame('foo-bar', URLify::filter('_foo_bar_', -1, 'de', false, false, false));
   }
 
   public function testFilterLanguage()
   {
-    $testArray = array(
-        'abz'        => array('أبز' => 'ar'),
-        ''           => array('' => 'ar'),
-        'testoeaeue' => array('testöäü' => 'ar'),
-    );
+    $testArray = [
+        'abz'        => ['أبز' => 'ar'],
+        ''           => ['' => 'ar'],
+        'testoeaeue' => ['testöäü' => 'ar'],
+    ];
 
     foreach ($testArray as $after => $beforeArray) {
       foreach ($beforeArray as $before => $lang) {
@@ -123,17 +123,17 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testFilterFile()
   {
-    $testArray = array(
-        'test-eDa-Ban-Ruo-Jing-.txt'            => "test-\xe9\x00\x0é大般若經.txt",
-        'test-Da-Ban-Ruo-Jing-.txt'             => 'test-大般若經.txt',
-        'foto.jpg'                              => 'фото.jpg',
-        'Foto.jpg'                              => 'Фото.jpg',
-        'oeaeue-test'                           => 'öäü  - test',
-        'shdgshdg.png'                          => 'שדגשדג.png',
+    $testArray = [
+        'test-eDa-Ban-Ruo-Jing-.txt'             => "test-\xe9\x00\x0é大般若經.txt",
+        'test-Da-Ban-Ruo-Jing-.txt'              => 'test-大般若經.txt',
+        'foto.jpg'                               => 'фото.jpg',
+        'Foto.jpg'                               => 'Фото.jpg',
+        'oeaeue-test'                            => 'öäü  - test',
+        'shdgshdg.png'                           => 'שדגשדג.png',
         'c-r-aaaaaeaaeOOOOOe141234SSucdthu-.jpg' => '—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–.jpg',
         '000-c-c-.txt'                           => '000—©—©.txt',
-        ''                                      => ' ',
-    );
+        ''                                       => ' ',
+    ];
 
     foreach ($testArray as $after => $before) {
       self::assertSame($after, URLify::filter($before, 60, 'de', true, false, false, '-', false, true), $before);
@@ -185,10 +185,10 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     self::assertSame('r-14-14-34-test-P', URLify::filter('¿ ® ¼ ¼ ¾ test ¶'));
 
     URLify::add_array_to_separator(
-        array(
+        [
             '/®/',
             '/tester/',
-        )
+        ]
     );
     self::assertSame('14-14-34-P-abc', URLify::filter('? ¿ >-< &amp; ® ¼ ¼ ¾ ¶ <br> ; ! abc'));
     URLify::reset_array_to_separator();
@@ -196,10 +196,10 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     // merge
 
     URLify::add_array_to_separator(
-        array(
+        [
             '/®/',
             '/tester/',
-        ),
+        ],
         false
     );
     self::assertSame('und-amp-14-14-34-P-abc', URLify::filter('? ¿ >-< &amp; ® ¼ ¼ ¾ ¶ <br> ; ! abc'));
@@ -211,13 +211,13 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     self::assertSame('? (r) 1/4 1/4 3/4 P', URLify::downcode('¿ ® ¼ ¼ ¾ ¶', 'latin', false, '?'));
 
     URLify::add_chars(
-        array(
+        [
             '¿' => '?',
             '®' => '(r)',
             '¼' => '1/4',
             '¾' => '3/4',
             '¶' => 'p',
-        )
+        ]
     );
     self::assertSame('? (r) 1/4 1/4 3/4 p', URLify::downcode('¿ ® ¼ ¼ ¾ ¶'));
   }
@@ -228,10 +228,10 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
     // append (array) v1
     URLify::remove_words(
-        array(
+        [
             'foo',
             'bar',
-        ),
+        ],
         'de',
         true
     );
@@ -239,10 +239,10 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
     // append (array) v2
     URLify::remove_words(
-        array(
+        [
             'foo/bar',
             '\n',
-        ),
+        ],
         'de',
         true
     );
@@ -258,10 +258,10 @@ class URLifyTest extends PHPUnit_Framework_TestCase
     // replace
     self::assertSame('foo-bar', URLify::filter('foo bar', 60, 'de', false, true));
     URLify::remove_words(
-        array(
+        [
             'foo',
             'bar',
-        ),
+        ],
         'de',
         false
     );
@@ -273,7 +273,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testManyRoundsWithUnknownLanguageCode()
   {
-    $result = array();
+    $result = [];
     for ($i = 0; $i < 100; $i++) {
       $result[] = URLify::downcode('Lo siento, no hablo español.', $i);
     }
@@ -285,32 +285,32 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
   public function testUrlSlug()
   {
-    $tests = array(
+    $tests = [
         '  -ABC-中文空白-  ' => 'abc-zhong-wen-kong-bai',
         '      - ÖÄÜ- '  => 'oau',
         'öäü'            => 'oau',
         ''               => '',
         ' test test'     => 'test-test',
         'أبز'            => 'abz',
-    );
+    ];
 
     foreach ($tests as $before => $after) {
       self::assertSame($after, URLify::filter($before, 100, 'latin', false, true, true, '-'), 'tested: ' . $before);
     }
 
-    $tests = array(
+    $tests = [
         '  -ABC-中文空白-  ' => 'abc',
         '      - ÖÄÜ- '  => 'oau',
         '  öäüabc'       => 'oau',
         ' DÃ¼sseldorf'   => 'dus',
         'Abcdef'         => 'abcd',
-    );
+    ];
 
     foreach ($tests as $before => $after) {
       self::assertSame($after, URLify::filter($before, 4, 'latin', false, true, true, '-', false, true), $before);
     }
 
-    $tests = array(
+    $tests = [
         'Facebook bekämpft erstmals Durchsuchungsbefehle'                                  => 'facebook-bekaempft-erstmals-durchsuchungsbefehle',
         '  -ABC-中文空白-  '                                                                   => 'abc-zhong-kong-bai',
         '      - ÖÄÜ- '                                                                    => 'oeaeue',
@@ -319,13 +319,13 @@ class URLifyTest extends PHPUnit_Framework_TestCase
         'זאת השפה העברית.‏'                                                                => 'zt-hshph-h-bryt',
         '𐭠 𐭡 𐭢 𐭣 𐭤 𐭥 𐭦 𐭧 𐭨 𐭩 𐭪 𐭫 𐭬 𐭭 𐭮 𐭯 𐭰 𐭱 𐭲 𐭸 𐭹 𐭺 𐭻 𐭼 𐭽 𐭾 𐭿' => '',
         'أحبك'                                                                             => 'ahbk',
-    );
+    ];
 
     foreach ($tests as $before => $after) {
       self::assertSame($after, URLify::filter($before, 100, 'de', false, true, true, '-'), $before);
     }
 
-    $invalidTest = array(
+    $invalidTest = [
       // Min/max overlong
       "\xC0\x80a"                 => 'Overlong representation of U+0000 | 1',
       "\xE0\x80\x80a"             => 'Overlong representation of U+0000 | 2',
@@ -344,7 +344,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
       // Invalid bytes (these can never occur)
       "a\xFE"                     => 'Invalid FE byte | 14',
       "a\xFF"                     => 'Invalid FF byte | 15',
-    );
+    ];
 
     foreach ($invalidTest as $test => $note) {
       self::assertSame('a', URLify::filter($test), $note);
@@ -352,12 +352,12 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
     // ---
 
-    $tests = array(
+    $tests = [
         'Facebook bekämpft erstmals / Durchsuchungsbefehle' => 'facebook/bekaempft/erstmals/durchsuchungsbefehle',
         '  -ABC-中文空白-  '                                    => 'abc/zhong/kong/bai',
         '    #  - ÖÄÜ- '                                    => 'oeaeue',
         'öä \nü'                                            => 'oeae/nue',
-    );
+    ];
 
     foreach ($tests as $before => $after) {
       self::assertSame($after, URLify::filter($before, 100, 'de', false, true, true, '/'), $before);
@@ -365,12 +365,12 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
     // ---
 
-    $tests = array(
+    $tests = [
         'Facebook bekämpft erstmals / Durchsuchungsbefehle' => 'facebook/bekaempft/erstmals/durchsuchungsbefehle',
         '  -ABC-中文空白-  '                                    => 'abc/zhong/wen/kong/bai',
         '    #  - ÖÄÜ- '                                    => 'oeaeue',
         'öä \nü'                                            => 'oeae/nue',
-    );
+    ];
 
     foreach ($tests as $before => $after) {
       self::assertSame($after, URLify::filter($before, 100, 'ru', false, true, true, '/'), $before);
@@ -384,13 +384,13 @@ class URLifyTest extends PHPUnit_Framework_TestCase
 
     $test = new URLify();
 
-    $removeArray = $this->invokeMethod($test, 'get_remove_list', array('de'));
-    self::assertSame(true, is_array($removeArray));
-    self::assertSame(true, in_array('ein', $removeArray, true));
+    $removeArray = $this->invokeMethod($test, 'get_remove_list', ['de']);
+    self::assertTrue(is_array($removeArray));
+    self::assertTrue(in_array('ein', $removeArray, true));
 
-    $removeArray = $this->invokeMethod($test, 'get_remove_list', array(''));
-    self::assertSame(true, is_array($removeArray));
-    self::assertSame(false, in_array('ein', $removeArray, true));
+    $removeArray = $this->invokeMethod($test, 'get_remove_list', ['']);
+    self::assertTrue(is_array($removeArray));
+    self::assertFalse(in_array('ein', $removeArray, true));
   }
 
   /**
@@ -402,7 +402,7 @@ class URLifyTest extends PHPUnit_Framework_TestCase
    *
    * @return mixed Method return.
    */
-  public function invokeMethod(&$object, $methodName, array $parameters = array())
+  public function invokeMethod(&$object, $methodName, array $parameters = [])
   {
     $reflection = new \ReflectionClass(get_class($object));
     $method = $reflection->getMethod($methodName);

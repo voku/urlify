@@ -16,11 +16,11 @@ class SeoSluggerTest extends BaseSluggerTest
   /**
    * @return array
    */
-  public function provideSlugFileNames()
+  public function provideSlugFileNames(): array
   {
-    return array(
-        array('strings-1.txt'),
-        array('pangrams-1.txt'),
-    );
+    return [
+        ['strings-1.txt'],
+        ['pangrams-1.txt'],
+    ];
   }
 }

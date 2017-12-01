@@ -16,12 +16,12 @@ class SeoUtf8SluggerTest extends BaseSluggerTest
   /**
    * @return array
    */
-  public function provideSlugFileNames()
+  public function provideSlugFileNames(): array
   {
-    return array(
-        array('strings-2.txt'),
-        array('sample-utf-8-bom.txt'),
-        array('sample-unicode-chart.txt'),
-    );
+    return [
+        ['strings-2.txt'],
+        ['sample-utf-8-bom.txt'],
+        ['sample-unicode-chart.txt'],
+    ];
   }
 }

@@ -1,12 +1,6 @@
-dist: precise
-
 language: php
 
 sudo: false
-
-php:
-  - hhvm
-  - nightly
 
 git:
   depth: 2
@@ -17,13 +11,7 @@ cache:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - php: hhvm
   include:
-    - php: 5.3
-    - php: 5.4
-    - php: 5.5
-    - php: 5.6
     - php: 7.0
     - php: 7.1
     - php: 7.2
