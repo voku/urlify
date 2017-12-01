@@ -1770,14 +1770,12 @@ class URLify
    */
   public static function filter(string $string, int $maxLength = 200, string $language = 'de', bool $fileName = false, bool $removeWords = false, bool $strToLower = false, string $separator = '-', bool $convertToAsciiOnlyViaLanguageMaps = false, bool $convertUtf8Specials = false): string
   {
-    if (!$language) {
+    if (!$language || !$string) {
       return '';
     }
 
     // separator-fallback
-    if (null === $separator) {
-      $separator = '';
-    } elseif (!$separator) {
+    if (!$separator) {
       $separator = '-';
     }
 
