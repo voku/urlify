@@ -4,7 +4,8 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/voku/urlify/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/voku/urlify/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/741def77-3945-4692-a2da-a4feadfb2928/mini.png)](https://insight.sensiolabs.com/projects/741def77-3945-4692-a2da-a4feadfb2928)
 [![Dependency Status](https://www.versioneye.com/php/voku:urlify/dev-master/badge.svg)](https://www.versioneye.com/php/voku:urlify/dev-master)
-[![Latest Stable Version](https://poser.pugx.org/voku/urlify/v/stable)](https://packagist.org/packages/voku/urlify) 
+[![Latest Stable Version](https://poser.pugx.org/voku/urlify/v/stable)](https://packagist.org/packages/voku/urlify) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fvoku%2Furlify.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fvoku%2Furlify?ref=badge_shield)
+
 [![Total Downloads](https://poser.pugx.org/voku/urlify/downloads)](https://packagist.org/packages/voku/urlify) 
 [![Latest Unstable Version](https://poser.pugx.org/voku/urlify/v/unstable)](https://packagist.org/packages/voku/urlify)
 [![PHP 7 ready](http://php7ready.timesplinter.ch/voku/urlify/badge.svg)](https://travis-ci.org/voku/urlify)
@@ -138,3 +139,7 @@ Please note that the "ü" is transliterated to "ue" in the first case, whereas i
 - Turkish: 'tr'
 - Ukrainian: 'uk'
 - Vietnamese: 'vn'
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fvoku%2Furlify.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fvoku%2Furlify?ref=badge_large)
