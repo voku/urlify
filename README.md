@@ -1,26 +1,23 @@
 [![Build Status](https://travis-ci.org/voku/urlify.png?branch=master)](https://travis-ci.org/voku/urlify)
 [![Coverage Status](https://coveralls.io/repos/github/voku/urlify/badge.svg?branch=master)](https://coveralls.io/github/voku/urlify?branch=master)
-[![codecov.io](http://codecov.io/github/voku/urlify/coverage.svg?branch=master)](http://codecov.io/github/voku/urlify?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/voku/urlify/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/voku/urlify/?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/741def77-3945-4692-a2da-a4feadfb2928/mini.png)](https://insight.sensiolabs.com/projects/741def77-3945-4692-a2da-a4feadfb2928)
-[![Dependency Status](https://www.versioneye.com/php/voku:urlify/dev-master/badge.svg)](https://www.versioneye.com/php/voku:urlify/dev-master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9904d596b8514891a38cb3b569cd4d95)](https://www.codacy.com/app/voku/urlify)
 [![Latest Stable Version](https://poser.pugx.org/voku/urlify/v/stable)](https://packagist.org/packages/voku/urlify) 
 [![Total Downloads](https://poser.pugx.org/voku/urlify/downloads)](https://packagist.org/packages/voku/urlify) 
-[![Latest Unstable Version](https://poser.pugx.org/voku/urlify/v/unstable)](https://packagist.org/packages/voku/urlify)
-[![PHP 7 ready](http://php7ready.timesplinter.ch/voku/urlify/badge.svg)](https://travis-ci.org/voku/urlify)
 [![License](https://poser.pugx.org/voku/urlify/license)](https://packagist.org/packages/voku/urlify)
+[![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.me/moelleken)
+[![Donate to this project using Patreon](https://img.shields.io/badge/patreon-donate-yellow.svg)](https://www.patreon.com/voku)
 
-# URLify for PHP
+# :link: URLify
 
-A PHP port of URLify.js from the Django project + str_transliterate from "Portable UTF-8".
+## Description
+
+Convert any string into an valid and readable string for usage in the url.
+
+This is a PHP port of "URLify.js" from the Django project + fallback via "Portable UTF-8".
+We handles symbols from many languages via an matching-array and others via "UTF8::to_ascii()".
 
 - https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js
 - https://github.com/voku/portable-utf8
-
-Handles symbols from many languages via an matching-array and others via "str_transliterate".
-
-- Author: [jbroadway](http://github.com/jbroadway) / [voku](http://github.com/voku)
-- License: BSD-3-Clause
 
 ## Install via "composer require"
 
@@ -125,6 +122,7 @@ Please note that the "ü" is transliterated to "ue" in the first case, whereas i
 - Greek: 'el' 
 - Hindi: 'hi'
 - Hungarian: 'hu'
+- Kazakh: 'kk'
 - Latvian: 'lv'
 - Lithuanian: 'lt'
 - Norwegian: 'no'
@@ -132,9 +130,26 @@ Please note that the "ü" is transliterated to "ue" in the first case, whereas i
 - Romanian: 'ro'
 - Russian: 'ru'
 - Serbian: 'sr'
+- Slovak: 'sk'
 - Swedish: 'sv'
 - Switzerland (German): 'de_ch' 
 - Switzerland (French): 'fr_ch' 
 - Turkish: 'tr'
 - Ukrainian: 'uk'
 - Vietnamese: 'vn'
+
+## Support
+
+For support and donations please visit [Github](https://github.com/voku/urlify/) | [Issues](https://github.com/voku/urlify/issues) | [PayPal](https://paypal.me/moelleken) | [Patreon](https://www.patreon.com/voku).
+
+For status updates and release announcements please visit [Releases](https://github.com/voku/urlify/releases) | [Twitter](https://twitter.com/suckup_de) | [Patreon](https://www.patreon.com/voku/posts).
+
+For professional support please contact [me](https://about.me/voku).
+
+## Thanks
+
+- Thanks to [GitHub](https://github.com) (Microsoft) for hosting the code and a good infrastructure including Issues-Managment, etc.
+- Thanks to [IntelliJ](https://www.jetbrains.com) as they make the best IDEs for PHP and they gave me an open source license for PhpStorm!
+- Thanks to [Travis CI](https://travis-ci.com/) for being the most awesome, easiest continous integration tool out there!
+- Thanks to [StyleCI](https://styleci.io/) for the simple but powerfull code style check.
+- Thanks to [PHPStan](https://github.com/phpstan/phpstan) && [Psalm](https://github.com/vimeo/psalm) for relly great Static analysis tools and for discover bugs in the code!

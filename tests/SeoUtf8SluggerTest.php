@@ -1,27 +1,23 @@
 <?php
 
+namespace voku\tests;
+
 /**
  * Class SeoUtf8SluggerTest
+ *
+ * @internal
  */
-class SeoUtf8SluggerTest extends BaseSluggerTest
+final class SeoUtf8SluggerTest extends BaseSluggerTest
 {
-  /**
-   * set-up
-   */
-  public function setUp()
-  {
-    parent::setUp();
-  }
-
-  /**
-   * @return array
-   */
-  public function provideSlugFileNames(): array
-  {
-    return [
-        ['strings-2.txt'],
-        ['sample-utf-8-bom.txt'],
-        ['sample-unicode-chart.txt'],
-    ];
-  }
+    /**
+     * @return array
+     */
+    public function provideSlugFileNames(): array
+    {
+        return [
+            ['strings-2.txt'],
+            ['sample-utf-8-bom.txt'],
+            ['sample-unicode-chart.txt'],
+        ];
+    }
 }
