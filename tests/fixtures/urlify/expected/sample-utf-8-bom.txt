@@ -91,7 +91,7 @@ plautdietsch-needed
 hungarian-meg-tudom-enni-az-ueveget-nem-lesz-tole-bajom
 suomi-finnish-voin-syoedae-lasia-se-ei-vahingoita-minua
 sami-northern-sahtan-borrat-lasa-dat-ii-leat-bavccas
-erzian-mon-yarsan-sulikado-dy-zyyan-ejstenze-a-uli
+erzian-mon-yarsan-sulikado-dy-zyyan-eistenze-a-uli
 northern-karelian-mie-voin-syvvae-lasie-ta-minla-ei-ole-kipie
 southern-karelian-minae-voin-syvvae-stoklua-dai-minule-ei-ole-kibie
 vepsian-needed
@@ -156,7 +156,7 @@ vietnamese-nom-4-xie-shi-e-shui-jing-kong-hai-yi
 khmer-khnyumqaacnyumknyckpaan-tooygmaanpnyhaar
 lao-kh-nykineikwaidodnythiimnbmaidedayhkh-nyechb
 thai-chankinkracchkaid-aetmanaimthamaihchanecchb
-mongolian-cyrillic-bi-sil-idej-cadna-nadad-hortoj-bis
+mongolian-cyrillic-bi-sil-idei-cadna-nadad-hortoi-bis
 mongolian-classic-5-bi-sili-ideyu-chidana-nadur-qouradai-bisi
 dzongkha-needed
 nepali-ma-kaaanca-khaaana-sakachhauu-ra-malaaii-kaehai-naii-haunana
