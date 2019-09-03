@@ -51,13 +51,13 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
 
         $slugger = $this->slugger;
         $slugs = \array_map(
-        static function ($string) use ($slugger) {
-            /** @noinspection StaticInvocationViaThisInspection */
-            /** @noinspection PhpStaticAsDynamicMethodCallInspection */
-            return $slugger->slug($string, 'en', '-', true);
-        },
-        $inputStrings
-    );
+            static function ($string) use ($slugger) {
+                /** @noinspection StaticInvocationViaThisInspection */
+                /** @noinspection PhpStaticAsDynamicMethodCallInspection */
+                return $slugger->slug($string, 'en', '-', true);
+            },
+            $inputStrings
+        );
 
         foreach ($expectedSlugs as $key => $expectedSlugValue) {
             static::assertSame($expectedSlugs[$key], $slugs[$key], 'tested-file: ' . $fileName . ' | ' . $slugs[$key]);

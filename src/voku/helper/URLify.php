@@ -1756,7 +1756,12 @@ class URLify
         }
 
         if ($merge === true) {
-            self::$remove_list[$language] = \array_merge(self::get_remove_list($language), $words);
+            self::$remove_list[$language] = \array_unique(
+                \array_merge(
+                    self::get_remove_list($language),
+                    $words
+                )
+            );
         } else {
             self::$remove_list[$language] = $words;
         }
@@ -1772,9 +1777,23 @@ class URLify
      *
      * @return string
      */
-    public static function slug(string $string, string $language = 'de', string $separator = '-', bool $strToLower = false): string
-    {
-        return self::filter($string, 200, $language, false, false, $strToLower, $separator, false, true);
+    public static function slug(
+        string $string,
+        string $language = 'de',
+        string $separator = '-',
+        bool $strToLower = false
+    ): string {
+        return self::filter(
+            $string,
+            200,
+            $language,
+            false,
+            false,
+            $strToLower,
+            $separator,
+            false,
+            true
+        );
     }
 
     /**
@@ -1846,9 +1865,11 @@ class URLify
             $string = (string) $stringTmp;
         }
         // 3) replace with $separator
-        $string = (string) \preg_replace(self::$arrayToSeparator, $separator, $string);
+        // +
         // 4) remove all other html-tags
-        $string = \strip_tags($string);
+        $string = \strip_tags(
+            (string) \preg_replace(self::$arrayToSeparator, $separator, $string)
+        );
         // 5) use special language replacer
         $string = self::downcode($string, $language, $convertToAsciiOnlyViaLanguageMaps, '', $convertUtf8Specials);
         // 6) replace with $separator, again
@@ -1859,7 +1880,7 @@ class URLify
         if ($removeWords === true) {
             $removeList = self::get_remove_list($language);
             if (\count($removeList) > 0) {
-                $removeWordsSearch = '/\b(?:' . \implode('|', self::get_remove_list($language)) . ')\b/i';
+                $removeWordsSearch = '/\b(?:' . \implode('|', $removeList) . ')\b/ui';
             }
         }
 
@@ -1872,11 +1893,16 @@ class URLify
 
         $string = (string) \preg_replace(
             [
-                '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u', // 1) remove un-needed chars
-                '/[\s]+/',                                                            // 2) convert spaces to $separator
-                $removeWordsSearch,                                                   // 3) remove some extras words
-                '/[' . ($separatorEscaped ?: ' ') . ']+/',                            // 4) remove double $separator's
-                '/[' . ($separatorEscaped ?: ' ') . ']+$/',                           // 5) remove $separator at the end
+                '/[^' . $separatorEscaped . $removePatternAddOn . '\-a-zA-Z0-9\s]/u',
+                // 1) remove un-needed chars
+                '/[\s]+/u',
+                // 2) convert spaces to $separator
+                $removeWordsSearch,
+                // 3) remove some extras words
+                '/[' . ($separatorEscaped ?: ' ') . ']+/u',
+                // 4) remove double $separator's
+                '/[' . ($separatorEscaped ?: ' ') . ']+$/u',
+                // 5) remove $separator at the end
             ],
             [
                 '',
@@ -2079,13 +2105,13 @@ class URLify
         if ($language === 'de') {
             return (string) \preg_replace(
                 [
-                    '/(?:\s|^)(\d+)(?:\ )*€(?:\s|$)/',
-                    '/(?:\s|^)\$(?:\ )*(\d+)(?:\s|$)/',
-                    '/(?:\s|^)\£(?:\ )*(\d+)(?:\s|$)/',
-                    '/(?:\s|^)\¥(?:\ )*(\d+)(?:\s|$)/',
-                    '/(?:\s|^)(\d+)[\.|,](\d+)(?:\ )*€(?:\s|$)/',
-                    '/(?:\s|^)\$(?:\ )*(\d+)[\.|,](\d+)(?:\s|$)/',
-                    '/(?:\s|^)£(?:\ )*(\d+)[\.|,](\d+)(?:\s|$)/',
+                    '/(?:\s|^)(\d+)(?: )*€(?:\s|$)/',
+                    '/(?:\s|^)\$(?: )*(\d+)(?:\s|$)/',
+                    '/(?:\s|^)£(?: )*(\d+)(?:\s|$)/',
+                    '/(?:\s|^)¥(?: )*(\d+)(?:\s|$)/',
+                    '/(?:\s|^)(\d+)[.|,](\d+)(?: )*€(?:\s|$)/',
+                    '/(?:\s|^)\$(?: )*(\d+)[.|,](\d+)(?:\s|$)/',
+                    '/(?:\s|^)£(?: )*(\d+)[.|,](\d+)(?:\s|$)/',
                 ],
                 [
                     ' \1 Euro ',
@@ -2102,19 +2128,19 @@ class URLify
 
         return (string) \preg_replace(
             [
-                '/(?:\s|^)1(?:\ )*€(?:\s|$)/',
-                '/(?:\s|^)(\d+)(?:\ )*€(?:\s|$)/',
-                '/(?:\s|^)\$(?:\ )*1(?:\s|$)/',
-                '/(?:\s|^)\$(?:\ )*(\d+)(?:\s|$)/',
-                '/(?:\s|^)\£(?:\ )*1(?:\s|$)/',
-                '/(?:\s|^)\£(?:\ )*(\d+)(?:\s|$)/',
-                '/(?:\s|^)\¥(?:\ )*(\d+)(?:\s|$)/',
-                '/(?:\s|^)1[\.|,](\d+)(?:\ )*€(?:\s|$)/',
-                '/(?:\s|^)(\d+)[\.|,](\d+)(?:\ )*€(?:\s|$)/',
-                '/(?:\s|^)1[\.|,](\d+)(?:\ )*$(?:\s|$)/',
-                '/(?:\s|^)\$(?:\ )*(\d+)[\.|,](\d+)(?:\s|$)/',
-                '/(?:\s|^)1[\.|,](\d+)(?:\ )*£(?:\s|$)/',
-                '/(?:\s|^)£(?:\ )*(\d+)[\.|,](\d+)(?:\s|$)/',
+                '/(?:\s|^)1(?: )*€(?:\s|$)/',
+                '/(?:\s|^)(\d+)(?: )*€(?:\s|$)/',
+                '/(?:\s|^)\$(?: )*1(?:\s|$)/',
+                '/(?:\s|^)\$(?: )*(\d+)(?:\s|$)/',
+                '/(?:\s|^)£(?: )*1(?:\s|$)/',
+                '/(?:\s|^)£(?: )*(\d+)(?:\s|$)/',
+                '/(?:\s|^)¥(?: )*(\d+)(?:\s|$)/',
+                '/(?:\s|^)1[.|,](\d+)(?: )*€(?:\s|$)/',
+                '/(?:\s|^)(\d+)[.|,](\d+)(?: )*€(?:\s|$)/',
+                '/(?:\s|^)1[.|,](\d+)(?: )*$(?:\s|$)/',
+                '/(?:\s|^)\$(?: )*(\d+)[.|,](\d+)(?:\s|$)/',
+                '/(?:\s|^)1[.|,](\d+)(?: )*£(?:\s|$)/',
+                '/(?:\s|^)£(?: )*(\d+)[.|,](\d+)(?:\s|$)/',
             ],
             [
                 ' 1 Euro ',
@@ -2209,7 +2235,7 @@ class URLify
         }
 
         if ($chars !== '') {
-            self::$regex = '/[' . $chars . ']/u';
+            self::$regex = '/[' . \preg_quote($chars, '/') . ']/u';
         }
 
         return true;

@@ -187,23 +187,23 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
         static::assertSame('r-14-14-34-test-P', URLify::filter('¿ ® ¼ ¼ ¾ test ¶'));
 
         URLify::add_array_to_separator(
-        [
-            '/®/',
-            '/tester/',
-        ]
-    );
+            [
+                '/®/',
+                '/tester/',
+            ]
+        );
         static::assertSame('14-14-34-P-abc', URLify::filter('? ¿ >-< &amp; ® ¼ ¼ ¾ ¶ <br> ; ! abc'));
         URLify::reset_array_to_separator();
 
         // merge
 
         URLify::add_array_to_separator(
-        [
-            '/®/',
-            '/tester/',
-        ],
-        false
-    );
+            [
+                '/®/',
+                '/tester/',
+            ],
+            false
+        );
         static::assertSame('und-amp-14-14-34-P-abc', URLify::filter('? ¿ >-< &amp; ® ¼ ¼ ¾ ¶ <br> ; ! abc'));
         URLify::reset_array_to_separator();
     }
@@ -213,14 +213,14 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
         static::assertSame('? (r) 1/4 1/4 3/4 P', URLify::downcode('¿ ® ¼ ¼ ¾ ¶', 'latin', false, '?'));
 
         URLify::add_chars(
-        [
-            '¿' => '?',
-            '®' => '(r)',
-            '¼' => '1/4',
-            '¾' => '3/4',
-            '¶' => 'p',
-        ]
-    );
+            [
+                '¿' => '?',
+                '®' => '(r)',
+                '¼' => '1/4',
+                '¾' => '3/4',
+                '¶' => 'p',
+            ]
+        );
         static::assertSame('? (r) 1/4 1/4 3/4 p', URLify::downcode('¿ ® ¼ ¼ ¾ ¶'));
     }
 
@@ -230,24 +230,24 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
 
         // append (array) v1
         URLify::remove_words(
-        [
-            'foo',
-            'bar',
-        ],
-        'de',
-        true
-    );
+            [
+                'foo',
+                'bar',
+            ],
+            'de',
+            true
+        );
         static::assertSame('', URLify::filter('foo bar', 60, 'de', false, true));
 
         // append (array) v2
         URLify::remove_words(
-        [
-            'foo/bar',
-            '\n',
-        ],
-        'de',
-        true
-    );
+            [
+                'foo/bar',
+                '\n',
+            ],
+            'de',
+            true
+        );
         static::assertSame('lall-n', URLify::filter('foo / bar lall \n', 60, 'de', false, true));
 
         // append (string)
@@ -260,13 +260,13 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
         // replace
         static::assertSame('foo-bar', URLify::filter('foo bar', 60, 'de', false, true));
         URLify::remove_words(
-        [
-            'foo',
-            'bar',
-        ],
-        'de',
-        false
-    );
+            [
+                'foo',
+                'bar',
+            ],
+            'de',
+            false
+        );
         static::assertSame('', URLify::filter('foo bar', 60, 'de', false, true));
 
         // reset
@@ -409,6 +409,14 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
         $removeArray = $this->invokeMethod($test, 'get_remove_list', ['']);
         static::assertInternalType('array', $removeArray);
         static::assertFalse(\in_array('ein', $removeArray, true));
+    }
+
+    public function testUnknownLanguageCode()
+    {
+        for ($i = 0; $i < 1000; ++$i) {
+            static::assertSame('Lo siento, no hablo espanol.', URLify::downcode('Lo siento, no hablo español.', -1));
+            URLify::downcode('Lo siento, no hablo español.', -1);
+        }
     }
 
     /**
