@@ -1,3 +1,9 @@
+v5.0.0 (2019-09-03)
+
+- use "en" as default language
+- use "Portable ASCII" for much better performance
+
+
 v4.1.1 (2019-09-03)
 
 - optimize regex

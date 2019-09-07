@@ -13,10 +13,11 @@
 
 Convert any string into an valid and readable string for usage in the url.
 
-This is a PHP port of "URLify.js" from the Django project + fallback via "Portable UTF-8".
-We handles symbols from many languages via an matching-array and others via "UTF8::to_ascii()".
+This is a PHP port of "URLify.js" from the Django project + fallback via "Portable ASCII".
+We handles symbols from many languages via an matching-array and others via "ASCII::to_transliterate()".
 
 - https://github.com/django/django/blob/master/django/contrib/admin/static/admin/js/urlify.js
+- https://github.com/voku/portable-ascii
 - https://github.com/voku/portable-utf8
 
 ## Install via "composer require"
@@ -66,11 +67,11 @@ echo URLify::transliterate('Lo siento, no hablo español.');
 ```php
 URLify::add_chars(array(
   '¿' => '?', '®' => '(r)', '¼' => '1/4',
-  '¼' => '1/2', '¾' => '3/4', '¶' => 'P'
+  '½' => '1/2', '¾' => '3/4', '¶' => 'P'
 ));
 
-echo URLify::downcode('¿ ® ¼ ¼ ¾ ¶');
-// "? (r) 1/2 1/2 3/4 P"
+echo URLify::downcode('¿ ® ½ ¼ ¾ ¶');
+// "? (r) 1/2 1/4 3/4 P"
 ```
 
 #### To extend or replace the default replacing list:
@@ -80,8 +81,8 @@ URLify::add_array_to_seperator(array(
   "/®/"
 ));
 
-echo URLify::filter('¿ ® ¼ ¼ ¾ ¶');
-// "14-14-34-P"
+echo URLify::filter('¿ ® ½ ¼ ¾ ¶');
+// "12-14-34-P"
 ```
 
 #### To extend the list of words to remove for one language:

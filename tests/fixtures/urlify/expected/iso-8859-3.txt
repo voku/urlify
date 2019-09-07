@@ -6,7 +6,7 @@ abcdefghijklmno
 pqrstuvwxyz
 hv-pound-currency-hss-isgjz
 degh23-uhisgj12z
-aaaaeccceeeeiiii
-nooogoexguuuueusss
-aaaaeccceeeeeiiii
-nooogoeguuuueus
+aaaaccceeeeiiii
+nooogoxguuuuusss
+aaaaccceeeeeiiii
+nooogoguuuuus
