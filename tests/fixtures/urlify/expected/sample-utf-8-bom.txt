@@ -1,6 +1,6 @@
 sanskrit-kaaacan-shakanaomayatatauma-naopahainasatai-maaama
 sanskrit-standard-transcription-kacam-saknomyattum-nopahinasti-mam
-classical-greek-ualon-phagein-dunamai-touto-ou-me-blaptei
+classical-greek-ualon-phagein-dunamai-touto-ou-me-blapti
 greek-monotonic-mporw-na-faw-spasmena-gyalia-xwris-na-pa8w-tipota
 greek-polytonic-mporo-na-faw-spasmena-gyalia-xwris-na-pa8w-tipota
 etruscan-needed

@@ -60,7 +60,7 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
         );
 
         // DEBUG
-        \print_r($slugs);
+        //\var_export($slugs);
 
         foreach ($expectedSlugs as $key => $expectedSlugValue) {
             static::assertSame($expectedSlugs[$key], $slugs[$key], 'tested-file: ' . $fileName . ' | ' . $slugs[$key]);
