@@ -28,7 +28,7 @@ final class Utf8UrlSlugTest extends \PHPUnit\Framework\TestCase
         $str = "川 đņ ōķ ôõ ö+ ÷ø ųú ûü ũū˙ ^ foo \0 \x1 \\";
 
         static::assertSame('Chuan-dn-ok-oo-o-plus-o-uu-uu-uu-foo', URLify::filter($str));
-        static::assertSame('Chuan-dn-ok-oo-o-apeangat-o-uu-uu-uu-foo', URLify::filter($str, 0, 'by'));
+        static::assertSame('Chuan-dn-ok-oo-o-o-uu-uu-uu-foo', URLify::filter($str, 0, 'by'));
 
         static::assertSame('Chuan-dn-ok-oo-oe-plus-o-uu-uue-uu-foo', URLify::filter($str, 0, 'de'));
         static::assertSame('Chuan-dn-ok-oo-oe-plus-o-uu-uue-uu-foo', URLify::filter($str, 0, 'de'));

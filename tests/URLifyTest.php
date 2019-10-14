@@ -32,7 +32,7 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
         $testArray = [
             '  J\'étudie le français  '                             => '  J\'etudie le francais  ',
             'Lo siento, no hablo español.'                          => 'Lo siento, no hablo espanol.',
-            '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                => ' 1 Dollar -> Prozent 1 -> oeaeue -> F3PWS -> Zhong Wen Kong Bai  ->  ',
+            '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                => ' 1 Dollar -> Prozent 1 -> oeaeue -> FKsPWS -> Zhong Wen Kong Bai  ->  ',
             ' 22.99 € oder $ 19 | 1 $ | $ 1 = foobar'               => ' 22 Euro 99 Cent oder 19 Dollar | 1  Dollar  | 1 Dollar gleich foobar',
             'זאת השפה העברית.‏'                                     => 'zt hshph h`bryt.',
             '𐭠 𐭡 𐭢 𐭣 𐭤 𐭥 𐭦 𐭧 𐭨 𐭩 𐭪 𐭫 𐭬 𐭭 𐭮 𐭯 𐭰 𐭱 𐭲 𐭸 𐭹 𐭺 𐭻 𐭼 𐭽 𐭾 𐭿' => '                          ',
@@ -44,8 +44,8 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
             static::assertSame($after, URLify::transliterate($before, 'de'), $before);
         }
 
-        static::assertSame('F3PWS, 中文空白', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', true));
-        static::assertSame('F3PWS, Zhong Wen Kong Bai ', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', false));
+        static::assertSame('FKsPWS, 中文空白', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', true));
+        static::assertSame('FKsPWS, Zhong Wen Kong Bai ', URLify::downcode('ΦΞΠΏΣ, 中文空白', 'de', false));
     }
 
     public function testRemoveWordsDisable()
@@ -79,16 +79,16 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
         $testArray = [
             '  J\'étudie le français  '                                                    => 'Jetudie-le-francais',
             'Lo siento, no hablo español.'                                                 => 'Lo-siento-no-hablo-espanol',
-            '—ΦΞΠΏΣ—Test—'                                                                 => 'F3PWS-Test',
+            '—ΦΞΠΏΣ—Test—'                                                                 => 'FKsPWS-Test',
             '大般若經'                                                                         => 'Da-Ban-Ruo-Jing',
             'ياكرهي لتويتر'                                                                => 'yakrhy-ltoytr',
             'ساعت ۲۵'                                                                      => 'saaat-25',
             "test\xe2\x80\x99öäü"                                                          => 'testoeaeue',
             'Ɓtest'                                                                        => 'Btest',
-            '-ABC-中文空白'                                                                    => 'ABC-Zhong-Wen-Kong-Bai',
+            '-ABC-中文空白'                                                                    => 'ABC-Zhong-Kong-Bai',
             ' '                                                                            => '',
             ''                                                                             => '',
-            '1 ₣ || ä#ü'                                                                   => '1-french-franc-aeue',
+            '1 ₣ || ä#ü'                                                                   => '1-French-franc-aeue',
             '∆ € $ Þ λ  I am A web Develópêr'                                              => 'Unterschied-Euro-Dollar-TH-l-I-am-A-web-Developer',
             '<strong>Subject<BR class="test">from a<br style="clear:both;" />CMS</strong>' => 'Subject-from-a-CMS',
             'that it\'s \'eleven\' \'o\'clock\''                                           => 'that-its-eleven-oclock',
@@ -171,23 +171,23 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
 
     public function testFilterAllLanguages()
     {
-        static::assertSame('D-sh-l-c-r-aaaaaeaaeOOOOOe141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'de'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'latin'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'latin_symbols'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'el'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'tr'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ru'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'uk'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'cs'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'pl'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ro'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'lv'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'lt'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'vn'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ar'));
-        static::assertSame('Dj-sh-l-c-r-aaaaaaaeOOOOO141234SSucdjthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'sr'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'az'));
-        static::assertSame('D-sh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'other'));
+        static::assertSame('D-shh-l-c-r-aaaaaeaaeOOOOOe141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'de'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'latin'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'latin_symbols'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'el'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'tr'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ru'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'uk'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'cs'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'pl'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ro'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'lv'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'lt'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'vn'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'ar'));
+        static::assertSame('Dj-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'sr'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'az'));
+        static::assertSame('D-shh-l-c-r-aaaaaaaeOOOOO141234SSucdthu', URLify::filter('Đ-щ-λ—©®±àáâãäåæÒÓÔÕÖ¼½¾§µçðþú–', -1, 'other'));
     }
 
     public function testAddArrayToSeparator()
@@ -340,10 +340,10 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
 
         $tests = [
             'Facebook bekämpft erstmals Durchsuchungsbefehle'       => 'facebook-bekaempft-erstmals-durchsuchungsbefehle',
-            '  -ABC-中文空白-  '                                        => 'abc-zhong-wen-kong-bai',
+            '  -ABC-中文空白-  '                                        => 'abc-zhong-kong-bai',
             '      - ÖÄÜ- '                                         => 'oeaeue',
             'öäü'                                                   => 'oeaeue',
-            '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                => '1-dollar-prozent-1-oeaeue-f3pws-zhong-wen-kong-bai',
+            '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                => '1-dollar-prozent-1-oeaeue-fkspws-zhong-kong-bai',
             'זאת השפה העברית.‏'                                     => 'zt-hshph-h-bryt',
             '𐭠 𐭡 𐭢 𐭣 𐭤 𐭥 𐭦 𐭧 𐭨 𐭩 𐭪 𐭫 𐭬 𐭭 𐭮 𐭯 𐭰 𐭱 𐭲 𐭸 𐭹 𐭺 𐭻 𐭼 𐭽 𐭾 𐭿' => '',
             'أحبك'                                                  => 'ahbk',
@@ -383,7 +383,7 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
 
         $tests = [
             'Facebook bekämpft erstmals / Durchsuchungsbefehle' => 'facebook/bekaempft/erstmals/durchsuchungsbefehle',
-            '  -ABC-中文空白-  '                                    => 'abc/zhong/wen/kong/bai',
+            '  -ABC-中文空白-  '                                    => 'abc/zhong/kong/bai',
             '    #  - ÖÄÜ- '                                    => 'oeaeue',
             'öä \nü'                                            => 'oeae/nue',
         ];

@@ -1,8 +1,8 @@
 sanskrit-kaaacan-shakanaomayatatauma-naopahainasatai-maaama
 sanskrit-standard-transcription-kacam-saknomyattum-nopahinasti-mam
-classical-greek-ualon-phagein-dunamai-touto-ou-me-blapti
-greek-monotonic-mporw-na-faw-spasmena-gyalia-xwris-na-pa8w-tipota
-greek-polytonic-mporo-na-faw-spasmena-gyalia-xwris-na-pa8w-tipota
+classical-greek-ualon-phaghein-dunamai-touto-ou-me-vlaptei
+greek-monotonic-mporw-na-fao-spasmena-ghialia-khoris-na-patho-tipota
+greek-polytonic-mporo-na-fao-spasmena-ghialia-khoris-na-patho-tipota
 etruscan-needed
 latin-vitrum-edere-possum-mihi-non-nocet
 old-french-je-puis-mangier-del-voirre-ne-me-nuit
@@ -91,7 +91,7 @@ plautdietsch-needed
 hungarian-meg-tudom-enni-az-uveget-nem-lesz-tole-bajom
 suomi-finnish-voin-syoda-lasia-se-ei-vahingoita-minua
 sami-northern-sahtan-borrat-lasa-dat-ii-leat-bavccas
-erzian-mon-yarsan-sulikado-dy-zyyan-eistenze-a-uli
+erzian-mon-yarsan-sulikado-dy-zy-yan-e-iste-nze-a-uli
 northern-karelian-mie-voin-syvva-lasie-ta-minla-ei-ole-kipie
 southern-karelian-mina-voin-syvva-stoklua-dai-minule-ei-ole-kibie
 vepsian-needed
@@ -126,7 +126,7 @@ kannada-nnge-haani-aagde-naanu-gjnnu-tinbhudu
 hindi-maain-kaaanca-khaaa-sakataaa-hauun-oura-maujhae-usasae-kaoii-caota-nahaiin-pahauncataii
 tamil-naannn-knnnnaatti-caappittuveennn-atnnnaal-ennnkku-oru-keettum-vraatu
 telugu-neenu-gaaju-tinglnu-mriyu-alaa-ceesinaa-naaku-eemi-ibbndi-leedu
-sinhalese-mtt-viiduru-kaaemtt-haekiyi-eyin-mtt-kisi-haaniyk-sidu-novee
+sinhalese-mtt-viidu-rupee-kaaemtt-haekiyi-eyin-mtt-kisi-haaniyk-sidu-novee
 urdu3-myn-kanch-kha-skta-hon-aor-mghy-tklyf-nhyn-hoty
 pashto3-zh-shyshh-khorl-shm-hghh-ma-nh-khoroy
 farsi-persian3-mn-my-toanm-bdoni-ahsas-drd-shyshh-bkhorm
@@ -156,7 +156,7 @@ vietnamese-nom-4-xie-shi-e-shui-jing-kong-hai-yi
 khmer-khnyumqaacnyumknyckpaan-tooygmaanpnyhaar
 lao-kh-nykineikwaidodnythiimnbmaidedayhkh-nyechb
 thai-chankinkracchkaid-aetmanaimthamaihchanecchb
-mongolian-cyrillic-bi-sil-idei-cadna-nadad-hortoi-bis
+mongolian-cyrillic-bi-sil-ide-i-cadna-nadad-xortoi-bis
 mongolian-classic-5-bi-sili-ideyu-chidana-nadur-qouradai-bisi
 dzongkha-needed
 nepali-ma-kaaanca-khaaana-sakachhauu-ra-malaaii-kaehai-naii-haunana
@@ -164,7 +164,7 @@ tibetan-shel-sgo-z-ns-ng-n-gi-m-red
 chinese-wo-neng-tun-xia-bo-li-er-bu-shang-shen-ti
 chinese-traditional-wo-neng-tun-xia-bo-li-er-bu-shang-shen-ti
 taiwanese6-goa-e-tang-chiah-po-le-ma-be-tioh-siong
-japanese-si-hagarasuwoshi-beraremasu-sorehasi-woshang-tukemasen
+japanese-si-hagarasuwoshi-beraremasusorehasi-woshang-tukemasen
 korean-naneun-yurireul-meogeul-su-isseoyo-geuraedo-apeuji-anhayo
 bislama-mi-save-kakae-glas-hemi-no-save-katem-mi
 hawaiian-hiki-ia-u-ke-ai-i-ke-aniani-a-ole-no-la-au-e-eha

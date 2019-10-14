@@ -43,6 +43,8 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
      * @dataProvider provideSlugFileNames
      *
      * @param $fileName
+     *
+     * @noinspection PhpUnitTestsInspection - FP: from parent class
      */
     public function testDefaultSlugify($fileName)
     {
@@ -52,7 +54,6 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
         $slugger = $this->slugger;
         $slugs = \array_map(
             static function ($string) use ($slugger) {
-                /** @noinspection StaticInvocationViaThisInspection */
                 /** @noinspection PhpStaticAsDynamicMethodCallInspection */
                 return $slugger->slug($string, 'en', '-', true);
             },
