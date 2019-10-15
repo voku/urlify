@@ -280,7 +280,7 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
         static::assertSame('', URLify::filter('foo bar', 60, 'de', false, true));
 
         // reset
-        URLify::reset_remove_list();
+        URLify::reset_remove_list('de');
     }
 
     public function testManyRoundsWithUnknownLanguageCode()
@@ -340,10 +340,10 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
 
         $tests = [
             'Facebook bekämpft erstmals Durchsuchungsbefehle'       => 'facebook-bekaempft-erstmals-durchsuchungsbefehle',
-            '  -ABC-中文空白-  '                                        => 'abc-zhong-wen-kong-bai',
+            '123  -ABC-中文空白-  '                                     => '123-abc-zhong-kong-bai',
             '      - ÖÄÜ- '                                         => 'oeaeue',
             'öäü'                                                   => 'oeaeue',
-            '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                => '1-dollar-prozent-1-oeaeue-fkspws-zhong-wen-kong-bai',
+            '$1 -> %1 -> öäü -> ΦΞΠΏΣ -> 中文空白 -> 💩 '                => '1-dollar-prozent-1-oeaeue-fkspws-zhong-kong-bai',
             'זאת השפה העברית.‏'                                     => 'zt-hshph-h-bryt',
             '𐭠 𐭡 𐭢 𐭣 𐭤 𐭥 𐭦 𐭧 𐭨 𐭩 𐭪 𐭫 𐭬 𐭭 𐭮 𐭯 𐭰 𐭱 𐭲 𐭸 𐭹 𐭺 𐭻 𐭼 𐭽 𐭾 𐭿' => '',
             'أحبك'                                                  => 'ahbk',
@@ -383,13 +383,13 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
 
         $tests = [
             'Facebook bekämpft erstmals / Durchsuchungsbefehle' => 'facebook/bekaempft/erstmals/durchsuchungsbefehle',
-            '  -ABC-中文空白-  '                                    => 'abc/zhong/wen/kong/bai',
+            '  -ABC-中文空白-  '                                    => 'abc/zhong/kong/bai',
             '    #  - ÖÄÜ- '                                    => 'oeaeue',
             'öä \nü'                                            => 'oeae/nue',
         ];
 
         foreach ($tests as $before => $after) {
-            static::assertSame($after, URLify::filter($before, 100, 'de', false, true, true, '/'), $before);
+            static::assertSame($after, URLify::filter($before, 100, 'de_ch', false, true, true, '/'), $before);
         }
 
         // ---

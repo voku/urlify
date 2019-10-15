@@ -209,12 +209,12 @@ class URLify
         bool $convertToAsciiOnlyViaLanguageMaps = false,
         bool $convertUtf8Specials = false
     ): string {
-        if (!$language || !$string) {
+        if ($language === '' || $string === '') {
             return '';
         }
 
         // separator-fallback
-        if (!$separator) {
+        if ($separator === '') {
             $separator = '-';
         }
 
@@ -222,7 +222,7 @@ class URLify
         $separatorEscaped = \preg_quote($separator, '/');
 
         // use defaults, if there are no values
-        if (\count(self::$arrayToSeparator) === 0) {
+        if (self::$arrayToSeparator === []) {
             self::reset_array_to_separator();
         }
 
@@ -274,7 +274,7 @@ class URLify
         $removeWordsSearch = '//';
         if ($removeWords === true) {
             $removeList = self::get_remove_list($language);
-            if (\count($removeList) > 0) {
+            if ($removeList !== []) {
                 $removeWordsSearch = '/\b(?:' . \implode('|', $removeList) . ')\b/ui';
             }
         }
@@ -354,12 +354,34 @@ class URLify
         ];
     }
 
-    /**
-     * @return void
-     */
     public static function reset_chars()
     {
         self::$maps = [];
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return string
+     */
+    private static function get_language_for_reset_remove_list(string $language): string
+    {
+        if ($language === '') {
+            return '';
+        }
+
+        if (
+            \strpos($language, '_') === false
+            &&
+            \strpos($language, '-') === false
+        ) {
+            $language = \strtolower($language);
+        } else {
+            $regex = '/(?<first>[a-z]{2}).*/i';
+            $language = \strtolower((string) \preg_replace($regex, '$1', $language));
+        }
+
+        return $language;
     }
 
     /**
@@ -369,28 +391,22 @@ class URLify
      */
     public static function reset_remove_list(string $language = 'en')
     {
-        if (
-            $language === 'de_ch' // Switzerland (German)
-            ||
-            $language === 'de_at' // Austrian (German)
-        ) {
-            $language = 'de';
+        if ($language === '') {
+            return;
         }
 
-        if (
-            $language === 'fr_ch' // Switzerland (French)
-            ||
-            $language === 'fr_at' // Austrian (French)
-        ) {
-            $language = 'fr';
+        $language_orig = $language;
+        $language = self::get_language_for_reset_remove_list($language);
+        if ($language === '') {
+            return;
         }
 
         $stopWords = new StopWords();
 
         try {
-            self::$remove_list[$language] = $stopWords->getStopWordsFromLanguage($language);
+            self::$remove_list[$language_orig] = $stopWords->getStopWordsFromLanguage($language);
         } catch (StopWordsLanguageNotExists $e) {
-            self::$remove_list[$language] = [];
+            self::$remove_list[$language_orig] = [];
         }
     }
 
@@ -569,7 +585,7 @@ class URLify
     private static function get_remove_list(string $language = 'en'): array
     {
         // check for language
-        if (!$language) {
+        if ($language === '') {
             return [];
         }
 
@@ -581,8 +597,6 @@ class URLify
         // check for array
         if (
             !isset(self::$remove_list[$language])
-            ||
-            !\is_array(self::$remove_list[$language])
             ||
             empty(self::$remove_list[$language])
         ) {
