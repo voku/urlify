@@ -1,5 +1,9 @@
-v5.0.1 (2019-09-03)
--  update "Portable ASCII" from v1.2 -> v1.3
+v5.0.2 (2019-10-15)
+- fix for stop-words for e.g. "de_CH"
+
+
+v5.0.1 (2019-10-14)
+- update "Portable ASCII" from v1.2 -> v1.3
 
 
 v5.0.0 (2019-09-03)
