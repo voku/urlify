@@ -121,11 +121,12 @@ class URLify
      *                                                  language-maps.
      *                                                  (better performance, but less complete ASCII converting)
      *                                                  </p>
+     * @param string $unknown                           <p>Character use if character unknown. (default is ?).</p>
      * @param bool   $convertUtf8Specials               <p>
      *                                                  Convert (html) special chars with portable-utf8 (e.g. \0,
      *                                                  \xE9, %F6, ...).
      *                                                  </p>
-     * @param string $unknown                           <p>Character use if character unknown. (default is ?).</p>
+     * @param bool   $expandString                      <p>Expand strings like 1$ into 1 Dollar.</p>
      *
      * @return string
      */
@@ -134,13 +135,16 @@ class URLify
         string $language = 'en',
         bool $convertToAsciiOnlyViaLanguageMaps = false,
         string $unknown = '',
-        bool $convertUtf8Specials = true
+        bool $convertUtf8Specials = true,
+        bool $expandString = true
     ): string {
         if ($convertUtf8Specials === true) {
             $string = UTF8::rawurldecode($string);
         }
 
-        $string = self::expandString($string, $language);
+        if ($expandString === true) {
+            $string = self::expandString($string, $language);
+        }
 
         foreach (self::$maps as $mapsInner) {
             foreach ($mapsInner as $orig => $replace) {
@@ -150,30 +154,37 @@ class URLify
 
         static $REPLACE_HELPER_CACHE = [];
         if (!isset($REPLACE_HELPER_CACHE[$language])) {
-            $REPLACE_HELPER_CACHE[$language]['orig'] = [];
-            $REPLACE_HELPER_CACHE[$language]['replace'] = [];
+            $helperTmp[$language]['orig'] = [];
+            $helperTmp[$language]['replace'] = [];
 
             $langSpecific = ASCII::charsArrayWithOneLanguage($language, true);
             if (!empty($langSpecific)) {
-                $REPLACE_HELPER_CACHE[$language]['orig'][] = $langSpecific['orig'];
-                $REPLACE_HELPER_CACHE[$language]['replace'][] = $langSpecific['replace'];
+                $helperTmp[$language]['orig'][] = $langSpecific['orig'];
+                $helperTmp[$language]['replace'][] = $langSpecific['replace'];
             }
 
             $langAll = ASCII::charsArrayWithSingleLanguageValues(true);
             if (!empty($langAll)) {
-                $REPLACE_HELPER_CACHE[$language]['orig'][] = $langAll['orig'];
-                $REPLACE_HELPER_CACHE[$language]['replace'][] = $langAll['replace'];
+                $helperTmp[$language]['orig'][] = $langAll['orig'];
+                $helperTmp[$language]['replace'][] = $langAll['replace'];
             }
 
-            $REPLACE_HELPER_CACHE[$language]['orig'] = \array_merge(...$REPLACE_HELPER_CACHE[$language]['orig']);
-            $REPLACE_HELPER_CACHE[$language]['replace'] = \array_merge(...$REPLACE_HELPER_CACHE[$language]['replace']);
+            $helperTmp[$language]['orig'] = \array_merge(...$helperTmp[$language]['orig']);
+            $helperTmp[$language]['replace'] = \array_merge(...$helperTmp[$language]['replace']);
+
+            $REPLACE_HELPER_CACHE[$language] = \array_combine(
+                $helperTmp[$language]['orig'],
+                $helperTmp[$language]['replace']
+            );
         }
 
-        $string = \str_replace(
-            $REPLACE_HELPER_CACHE[$language]['orig'],
-            $REPLACE_HELPER_CACHE[$language]['replace'],
-            $string
-        );
+        if (\preg_match_all('/[^=&%$\x09\x10\x13\x0A\x0D\x20-\x7E]/u', $string, $matches)) {
+            foreach ($matches[0] as $char) {
+                if (isset($REPLACE_HELPER_CACHE[$language][$char])) {
+                    $string = \str_replace($char, $REPLACE_HELPER_CACHE[$language][$char], $string);
+                }
+            }
+        }
 
         if ($convertToAsciiOnlyViaLanguageMaps === true) {
             return (string) $string;
@@ -210,6 +221,7 @@ class URLify
      *                                                  Convert (html) special chars with portable-utf8 (e.g. \0,
      *                                                  \xE9, %F6, ...).
      *                                                  </p>
+     * @param bool   $expandString                      <p>Expand strings like 1$ into 1 Dollar.</p>
      *
      * @return string
      */
@@ -222,7 +234,8 @@ class URLify
         bool $strToLower = false,
         string $separator = '-',
         bool $convertToAsciiOnlyViaLanguageMaps = false,
-        bool $convertUtf8Specials = false
+        bool $convertUtf8Specials = false,
+        bool $expandString = false
     ): string {
         if ($language === '' || $string === '') {
             return '';
@@ -279,7 +292,8 @@ class URLify
             $language,
             $convertToAsciiOnlyViaLanguageMaps,
             '',
-            $convertUtf8Specials
+            $convertUtf8Specials,
+            $expandString
         );
 
         // 6) replace with $separator, again
