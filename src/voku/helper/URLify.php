@@ -188,9 +188,15 @@ class URLify
             );
         }
 
+        $charDone = [];
         if (\preg_match_all('/[^\x09\x10\x13\x0A\x0D\x20-\x7E]|[=+&%$]/u', $string, $matches)) {
             foreach ($matches[0] as $char) {
-                if (isset($REPLACE_HELPER_CACHE[$language][$char])) {
+                if (
+                    !isset($charDone[$char])
+                    &&
+                    isset($REPLACE_HELPER_CACHE[$language][$char])
+                ) {
+                    $charDone[$char] = $char;
                     $string = \str_replace($char, $REPLACE_HELPER_CACHE[$language][$char], $string);
                 }
             }
