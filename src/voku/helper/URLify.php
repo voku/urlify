@@ -162,48 +162,15 @@ class URLify
             }
         }
 
-        static $REPLACE_HELPER_CACHE = [];
-        if (!isset($REPLACE_HELPER_CACHE[$language])) {
-            $helperTmp[$language]['orig'] = [];
-            $helperTmp[$language]['replace'] = [];
-
-            $langAll = ASCII::charsArrayWithSingleLanguageValues(true);
-            if (!empty($langAll)) {
-                $helperTmp[$language]['orig'][] = $langAll['orig'];
-                $helperTmp[$language]['replace'][] = $langAll['replace'];
-            }
-
-            $langSpecific = ASCII::charsArrayWithOneLanguage($language, true);
-            if (!empty($langSpecific)) {
-                $helperTmp[$language]['orig'][] = $langSpecific['orig'];
-                $helperTmp[$language]['replace'][] = $langSpecific['replace'];
-            }
-
-            $helperTmp[$language]['orig'] = \array_merge(...$helperTmp[$language]['orig']);
-            $helperTmp[$language]['replace'] = \array_merge(...$helperTmp[$language]['replace']);
-
-            $REPLACE_HELPER_CACHE[$language] = \array_combine(
-                $helperTmp[$language]['orig'],
-                $helperTmp[$language]['replace']
-            );
-        }
-
-        $charDone = [];
-        if (\preg_match_all('/[^\x09\x10\x13\x0A\x0D\x20-\x7E]|[=+&%$]/u', $string, $matches)) {
-            foreach ($matches[0] as $char) {
-                if (
-                    !isset($charDone[$char])
-                    &&
-                    isset($REPLACE_HELPER_CACHE[$language][$char])
-                ) {
-                    $charDone[$char] = $char;
-                    $string = \str_replace($char, $REPLACE_HELPER_CACHE[$language][$char], $string);
-                }
-            }
-        }
+        $string = ASCII::to_ascii(
+            $string,
+            $language,
+            false,
+            true
+        );
 
         if ($convertToAsciiOnlyViaLanguageMaps === true) {
-            return (string) $string;
+            return $string;
         }
 
         return ASCII::to_transliterate($string, $unknown, false);
