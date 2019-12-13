@@ -350,7 +350,7 @@ final class URLifyTest extends \PHPUnit\Framework\TestCase
         ];
 
         foreach ($tests as $before => $after) {
-            static::assertSame($after, URLify::filter($before, 100, 'de', false, true, true, '-'), $before);
+            static::assertSame($after, URLify::filter($before, 100, 'de', false, true, true, '-', false, false, true), $before);
         }
 
         $invalidTest = [

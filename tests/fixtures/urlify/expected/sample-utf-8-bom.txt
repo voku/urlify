@@ -126,7 +126,7 @@ kannada-nnge-haani-aagde-naanu-gjnnu-tinbhudu
 hindi-maain-kaaanca-khaaa-sakataaa-hauun-oura-maujhae-usasae-kaoii-caota-nahaiin-pahauncataii
 tamil-naannn-knnnnaatti-caappittuveennn-atnnnaal-ennnkku-oru-keettum-vraatu
 telugu-neenu-gaaju-tinglnu-mriyu-alaa-ceesinaa-naaku-eemi-ibbndi-leedu
-sinhalese-mtt-viidu-rupee-kaaemtt-haekiyi-eyin-mtt-kisi-haaniyk-sidu-novee
+sinhalese-mtt-viiduru-kaaemtt-haekiyi-eyin-mtt-kisi-haaniyk-sidu-novee
 urdu3-myn-kanch-kha-skta-hon-aor-mghy-tklyf-nhyn-hoty
 pashto3-zh-shyshh-khorl-shm-hghh-ma-nh-khoroy
 farsi-persian3-mn-my-toanm-bdoni-ahsas-drd-shyshh-bkhorm
@@ -150,7 +150,7 @@ tagalog-kaya-kong-kumain-nang-bubog-at-hindi-ako-masaktan
 chamorro-sina-yo-chumocho-krestat-ti-ha-nalalamen-yo
 fijian-au-rawa-ni-kana-iloilo-ia-au-sega-ni-vakacacani-kina
 javanese-aku-isa-mangan-beling-tanpa-lara
-burmese-kywntaw-kywnm-myksanuingthny-lkyaawng-taikhuikmhu-myahipa-9
+burmese-kywntea-kywnm-myksanuingthny-lkyaeang-taikhuikmhu-myahipa-9
 vietnamese-quoc-ngu-toi-co-the-an-thuy-tinh-ma-khong-hai-gi
 vietnamese-nom-4-xie-shi-e-shui-jing-kong-hai-yi
 khmer-khnyumqaacnyumknyckpaan-tooygmaanpnyhaar

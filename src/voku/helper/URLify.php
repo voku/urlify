@@ -25,21 +25,21 @@ class URLify
      *
      * ISO 639-1 codes: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
      *
-     * @var array
+     * @var array[]
      */
     public static $maps = [];
 
     /**
      * List of words to remove from URLs.
      *
-     * @var array
+     * @var array[]
      */
     public static $remove_list = [];
 
     /**
      * An array of strings that will convert into the separator-char - used by "URLify::filter()".
      *
-     * @var array
+     * @var string[]
      */
     private static $arrayToSeparator = [];
 
@@ -48,6 +48,10 @@ class URLify
      *
      * @param array $array <p>An array of things that should replaced by the separator.</p>
      * @param bool  $merge <p>Keep the previous (default) array-to-separator array.</p>
+     *
+     * @return void
+     *
+     * @psalm-param string[] $array
      */
     public static function add_array_to_separator(array $array, bool $merge = true)
     {
@@ -68,6 +72,10 @@ class URLify
      *
      * @param array       $map
      * @param string|null $language
+     *
+     * @return void
+     *
+     * @psalm-param array<string, string> $map
      */
     public static function add_chars(array $map, string $language = null)
     {
@@ -86,6 +94,8 @@ class URLify
      * @param string|string[] $words
      * @param string          $language
      * @param bool            $merge    <p>Keep the previous (default) remove-words array.</p>
+     *
+     * @return void
      */
     public static function add_remove_list($words, string $language = 'en', bool $merge = true)
     {
@@ -157,16 +167,16 @@ class URLify
             $helperTmp[$language]['orig'] = [];
             $helperTmp[$language]['replace'] = [];
 
-            $langSpecific = ASCII::charsArrayWithOneLanguage($language, true);
-            if (!empty($langSpecific)) {
-                $helperTmp[$language]['orig'][] = $langSpecific['orig'];
-                $helperTmp[$language]['replace'][] = $langSpecific['replace'];
-            }
-
             $langAll = ASCII::charsArrayWithSingleLanguageValues(true);
             if (!empty($langAll)) {
                 $helperTmp[$language]['orig'][] = $langAll['orig'];
                 $helperTmp[$language]['replace'][] = $langAll['replace'];
+            }
+
+            $langSpecific = ASCII::charsArrayWithOneLanguage($language, true);
+            if (!empty($langSpecific)) {
+                $helperTmp[$language]['orig'][] = $langSpecific['orig'];
+                $helperTmp[$language]['replace'][] = $langSpecific['replace'];
             }
 
             $helperTmp[$language]['orig'] = \array_merge(...$helperTmp[$language]['orig']);
@@ -178,7 +188,7 @@ class URLify
             );
         }
 
-        if (\preg_match_all('/[^=&%$\x09\x10\x13\x0A\x0D\x20-\x7E]/u', $string, $matches)) {
+        if (\preg_match_all('/[^\x09\x10\x13\x0A\x0D\x20-\x7E]|[=+&%$]/u', $string, $matches)) {
             foreach ($matches[0] as $char) {
                 if (isset($REPLACE_HELPER_CACHE[$language][$char])) {
                     $string = \str_replace($char, $REPLACE_HELPER_CACHE[$language][$char], $string);
@@ -271,7 +281,7 @@ class URLify
         }
 
         // 3) replace with $separator
-        $string = \preg_replace(
+        $string = (string) \preg_replace(
             self::$arrayToSeparator,
             $separator,
             $string
@@ -297,7 +307,7 @@ class URLify
         );
 
         // 6) replace with $separator, again
-        $string = \preg_replace(
+        $string = (string) \preg_replace(
             self::$arrayToSeparator,
             $separator,
             $string
@@ -372,6 +382,8 @@ class URLify
      *
      * @see        self::add_remove_list
      * @deprecated <p>Please use URLify::add_remove_list().</p>
+     *
+     * @return void
      */
     public static function remove_words($words, string $language = 'en', bool $merge = true)
     {
@@ -380,6 +392,8 @@ class URLify
 
     /**
      * Reset the internal "self::$arrayToSeparator" to the default values.
+     *
+     * @return void
      */
     public static function reset_array_to_separator()
     {
@@ -390,6 +404,9 @@ class URLify
         ];
     }
 
+    /**
+     * @return void
+     */
     public static function reset_chars()
     {
         self::$maps = [];
@@ -399,6 +416,8 @@ class URLify
      * reset the word-remove-array
      *
      * @param string $language
+     *
+     * @return void
      */
     public static function reset_remove_list(string $language = 'en')
     {
@@ -446,6 +465,7 @@ class URLify
             $strToLower,
             $separator,
             false,
+            true,
             true
         );
     }
@@ -644,7 +664,7 @@ class URLify
      *
      * @param string $language
      *
-     * @return array
+     * @return array<mixed>
      */
     private static function get_remove_list(string $language = 'en')
     {
