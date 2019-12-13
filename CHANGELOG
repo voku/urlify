@@ -1,3 +1,8 @@
+v5.0.3 (2019-10-15)
+
+- fix performance issue & make string expanding optional
+
+
 v5.0.2 (2019-10-15)
 
 - fix for stop-words for e.g. "de_CH"
