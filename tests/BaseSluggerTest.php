@@ -29,16 +29,6 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
      */
     protected $expectedFixturesDir;
 
-    protected function setUp()
-    {
-        $sluggerClassNamespace = '\\voku\\helper\\' . $this->sluggerClassName;
-        $this->slugger = new $sluggerClassNamespace();
-
-        $fixturesBaseDir = __DIR__ . \DIRECTORY_SEPARATOR . 'fixtures' . \DIRECTORY_SEPARATOR . \strtolower($this->sluggerClassName);
-        $this->inputFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'input';
-        $this->expectedFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'expected';
-    }
-
     /**
      * @dataProvider provideSlugFileNames
      *
@@ -48,6 +38,13 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
      */
     public function testDefaultSlugify($fileName)
     {
+        $sluggerClassNamespace = '\\voku\\helper\\' . $this->sluggerClassName;
+        $this->slugger = new $sluggerClassNamespace();
+
+        $fixturesBaseDir = __DIR__ . \DIRECTORY_SEPARATOR . 'fixtures' . \DIRECTORY_SEPARATOR . \strtolower($this->sluggerClassName);
+        $this->inputFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'input';
+        $this->expectedFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'expected';
+
         $inputStrings = \file($this->inputFixturesDir . \DIRECTORY_SEPARATOR . $fileName, \FILE_IGNORE_NEW_LINES);
         $expectedSlugs = \file($this->expectedFixturesDir . \DIRECTORY_SEPARATOR . $fileName, \FILE_IGNORE_NEW_LINES);
 
@@ -61,7 +58,7 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
         );
 
         // DEBUG
-        //\var_export($slugs);
+        \var_export($slugs);
 
         foreach ($expectedSlugs as $key => $expectedSlugValue) {
             static::assertSame($expectedSlugs[$key], $slugs[$key], 'tested-file: ' . $fileName . ' | ' . $slugs[$key]);
@@ -78,6 +75,13 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
      */
     public function testSlugifyEdgeCases($string, $expectedSlug)
     {
+        $sluggerClassNamespace = '\\voku\\helper\\' . $this->sluggerClassName;
+        $this->slugger = new $sluggerClassNamespace();
+
+        $fixturesBaseDir = __DIR__ . \DIRECTORY_SEPARATOR . 'fixtures' . \DIRECTORY_SEPARATOR . \strtolower($this->sluggerClassName);
+        $this->inputFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'input';
+        $this->expectedFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'expected';
+
         $slug = URLify::slug($string, 'de', '-', true);
 
         static::assertSame($expectedSlug, $slug);

@@ -11,6 +11,9 @@ composer.lock
 ### PhpStorm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
 
+## PHPUnit
+.phpunit.result.cache
+
 ## Directory-based project format
 .idea/
 # if you remove the above rule, at least ignore user-specific stuff:
