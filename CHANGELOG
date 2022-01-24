@@ -1,3 +1,7 @@
+v5.0.7 (2022-01-23)
+
+- update "Portable ASCII" from v1.x -> v2.0
+
 v5.0.6 (2021-12-08)
 
 - update "Portable UTF8" from v5 -> v6
