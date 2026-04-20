@@ -30,6 +30,9 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
      */
     protected $expectedFixturesDir;
 
+    /**
+     * @dataProvider provideSlugFileNames
+     */
     #[DataProvider('provideSlugFileNames')]
     public function testDefaultSlugify($fileName)
     {
@@ -62,6 +65,9 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
         static::assertSame($expectedSlugs, $slugs, 'tested-file: ' . $fileName);
     }
 
+    /**
+     * @dataProvider provideSlugEdgeCases
+     */
     #[DataProvider('provideSlugEdgeCases')]
     public function testSlugifyEdgeCases($string, $expectedSlug)
     {
