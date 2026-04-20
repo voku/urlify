@@ -2,6 +2,7 @@
 
 namespace voku\tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use voku\helper\URLify;
 
 /**
@@ -31,11 +32,8 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider provideSlugFileNames
-     *
-     * @param $fileName
-     *
-     * @noinspection PhpUnitTestsInspection - FP: from parent class
      */
+    #[DataProvider('provideSlugFileNames')]
     public function testDefaultSlugify($fileName)
     {
         $sluggerClassNamespace = '\\voku\\helper\\' . $this->sluggerClassName;
@@ -69,10 +67,8 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider provideSlugEdgeCases
-     *
-     * @param $string
-     * @param $expectedSlug
      */
+    #[DataProvider('provideSlugEdgeCases')]
     public function testSlugifyEdgeCases($string, $expectedSlug)
     {
         $sluggerClassNamespace = '\\voku\\helper\\' . $this->sluggerClassName;
@@ -90,7 +86,7 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function provideSlugEdgeCases(): array
+    public static function provideSlugEdgeCases(): array
     {
         return [
             ['', ''],

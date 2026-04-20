@@ -12,7 +12,7 @@ final class Utf8SluggerTest extends BaseSluggerTest
     /**
      * @return array
      */
-    public function provideSlugFileNames(): array
+    public static function provideSlugFileNames(): array
     {
         return [
             ['iso-8859-1.txt'],

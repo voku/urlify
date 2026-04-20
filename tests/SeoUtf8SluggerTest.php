@@ -12,7 +12,7 @@ final class SeoUtf8SluggerTest extends BaseSluggerTest
     /**
      * @return array
      */
-    public function provideSlugFileNames(): array
+    public static function provideSlugFileNames(): array
     {
         return [
             ['strings-2.txt'],
