@@ -25,14 +25,14 @@ class URLify
      *
      * ISO 639-1 codes: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
      *
-     * @var array[]
+     * @var array<string, array<string, string>>
      */
     public static $maps = [];
 
     /**
      * List of words to remove from URLs.
      *
-     * @var array[]
+     * @var array<string, array<int, string>>
      */
     public static $remove_list = [];
 
@@ -46,22 +46,20 @@ class URLify
     /**
      * Add new strings the will be replaced with the separator.
      *
-     * @param array $array <p>An array of things that should replaced by the separator.</p>
+     * @param string[] $array <p>An array of things that should replaced by the separator.</p>
      * @param bool  $merge <p>Keep the previous (default) array-to-separator array.</p>
      *
      * @return void
-     *
-     * @psalm-param string[] $array
      */
     public static function add_array_to_separator(array $array, bool $merge = true)
     {
         if ($merge === true) {
-            self::$arrayToSeparator = \array_unique(
+            self::$arrayToSeparator = \array_values(\array_unique(
                 \array_merge(
                     self::$arrayToSeparator,
                     $array
                 )
-            );
+            ));
         } else {
             self::$arrayToSeparator = $array;
         }
@@ -70,12 +68,10 @@ class URLify
     /**
      * Add new characters to the list. `$map` should be a hash.
      *
-     * @param array       $map
+     * @param array<string, string> $map
      * @param string|null $language
      *
      * @return void
-     *
-     * @psalm-param array<string, string> $map
      */
     public static function add_chars(array $map, string $language = null)
     {
@@ -100,7 +96,7 @@ class URLify
     public static function add_remove_list($words, string $language = 'en', bool $merge = true)
     {
         if (\is_array($words) === false) {
-            $words = [$words];
+            $words = [(string) $words];
         }
 
         foreach ($words as $removeWordKey => $removeWord) {
@@ -108,12 +104,12 @@ class URLify
         }
 
         if ($merge === true) {
-            self::$remove_list[$language] = \array_unique(
+            self::$remove_list[$language] = \array_values(\array_unique(
                 \array_merge(
                     self::get_remove_list($language),
                     $words
                 )
-            );
+            ));
         } else {
             self::$remove_list[$language] = $words;
         }
@@ -407,7 +403,10 @@ class URLify
         $stopWords = new StopWords();
 
         try {
-            self::$remove_list[$language_orig] = $stopWords->getStopWordsFromLanguage($language);
+            /** @var array<int, string> $stopWordsForLanguage */
+            $stopWordsForLanguage = \array_values($stopWords->getStopWordsFromLanguage($language));
+
+            self::$remove_list[$language_orig] = $stopWordsForLanguage;
         } catch (StopWordsLanguageNotExists $e) {
             self::$remove_list[$language_orig] = [];
         }
@@ -637,7 +636,7 @@ class URLify
      *
      * @param string $language
      *
-     * @return array<mixed>
+     * @return array<int, string>
      */
     private static function get_remove_list(string $language = 'en')
     {
