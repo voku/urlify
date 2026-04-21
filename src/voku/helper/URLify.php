@@ -44,7 +44,7 @@ class URLify
     private static $arrayToSeparator = [];
 
     /**
-     * Add new strings the will be replaced with the separator.
+     * Add new strings that will be replaced with the separator.
      *
      * @param string[] $array <p>An array of things that should replaced by the separator.</p>
      * @param bool  $merge <p>Keep the previous (default) array-to-separator array.</p>
@@ -73,7 +73,7 @@ class URLify
      *
      * @return void
      */
-    public static function add_chars(array $map, string $language = null)
+    public static function add_chars(array $map, ?string $language = null)
     {
         $language_key = $language ?? \uniqid('urlify', true);
 
@@ -111,7 +111,7 @@ class URLify
                 )
             ));
         } else {
-            self::$remove_list[$language] = $words;
+            self::$remove_list[$language] = \array_values($words);
         }
     }
 
@@ -135,6 +135,8 @@ class URLify
      * @param bool   $expandString                      <p>Expand strings like 1$ into 1 Dollar.</p>
      *
      * @return string
+     *
+     * @phpstan-param ASCII::*_LANGUAGE_CODE $language
      */
     public static function downcode(
         string $string,
@@ -203,6 +205,8 @@ class URLify
      * @param bool   $expandString                      <p>Expand strings like 1$ into 1 Dollar.</p>
      *
      * @return string
+     *
+     * @phpstan-param ASCII::*_LANGUAGE_CODE $language
      */
     public static function filter(
         string $string,
@@ -216,6 +220,7 @@ class URLify
         bool $convertUtf8Specials = false,
         bool $expandString = false
     ): string {
+        /* @phpstan-ignore identical.alwaysFalse (ok here) */
         if ($language === '' || $string === '') {
             return '';
         }
@@ -421,6 +426,8 @@ class URLify
      * @param bool   $strToLower
      *
      * @return string
+     *
+     * @phpstan-param ASCII::*_LANGUAGE_CODE $language
      */
     public static function slug(
         string $string,
@@ -449,6 +456,8 @@ class URLify
      * @param string $language
      *
      * @return string
+     *
+     * @phpstan-param ASCII::*_LANGUAGE_CODE $language
      */
     public static function transliterate(string $string, string $language = 'en'): string
     {

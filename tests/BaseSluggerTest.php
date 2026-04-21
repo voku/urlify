@@ -32,52 +32,53 @@ abstract class BaseSluggerTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider provideSlugFileNames
      */
-    public function testDefaultSlugify($fileName)
+    public function testDefaultSlugify(): void
     {
-        $sluggerClassNamespace = '\\voku\\helper\\' . $this->sluggerClassName;
-        $this->slugger = new $sluggerClassNamespace();
+        foreach (static::provideSlugFileNames() as [$fileName]) {
+            $sluggerClassNamespace = '\\voku\\helper\\' . $this->sluggerClassName;
+            $this->slugger = new $sluggerClassNamespace();
 
-        $fixturesBaseDir = __DIR__ . \DIRECTORY_SEPARATOR . 'fixtures' . \DIRECTORY_SEPARATOR . \strtolower($this->sluggerClassName);
-        $this->inputFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'input';
-        $this->expectedFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'expected';
+            $fixturesBaseDir = __DIR__ . \DIRECTORY_SEPARATOR . 'fixtures' . \DIRECTORY_SEPARATOR . \strtolower($this->sluggerClassName);
+            $this->inputFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'input';
+            $this->expectedFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'expected';
 
-        $inputStrings = \file($this->inputFixturesDir . \DIRECTORY_SEPARATOR . $fileName, \FILE_IGNORE_NEW_LINES);
-        $expectedSlugs = \file($this->expectedFixturesDir . \DIRECTORY_SEPARATOR . $fileName, \FILE_IGNORE_NEW_LINES);
+            $inputStrings = \file($this->inputFixturesDir . \DIRECTORY_SEPARATOR . $fileName, \FILE_IGNORE_NEW_LINES);
+            $expectedSlugs = \file($this->expectedFixturesDir . \DIRECTORY_SEPARATOR . $fileName, \FILE_IGNORE_NEW_LINES);
 
-        $slugger = $this->slugger;
-        $slugs = \array_map(
-            static function ($string) use ($slugger) {
-                /** @noinspection PhpStaticAsDynamicMethodCallInspection */
-                return $slugger->slug($string, 'en', '-', true);
-            },
-            $inputStrings
-        );
+            $slugger = $this->slugger;
+            $slugs = \array_map(
+                static function ($string) use ($slugger) {
+                    /** @noinspection PhpStaticAsDynamicMethodCallInspection */
+                    return $slugger->slug($string, 'en', '-', true);
+                },
+                $inputStrings
+            );
 
-        // DEBUG
-        \var_export($slugs);
+            foreach ($expectedSlugs as $key => $expectedSlugValue) {
+                static::assertSame($expectedSlugs[$key], $slugs[$key], 'tested-file: ' . $fileName . ' | ' . $slugs[$key]);
+            }
 
-        foreach ($expectedSlugs as $key => $expectedSlugValue) {
-            static::assertSame($expectedSlugs[$key], $slugs[$key], 'tested-file: ' . $fileName . ' | ' . $slugs[$key]);
+            static::assertSame($expectedSlugs, $slugs, 'tested-file: ' . $fileName);
         }
-
-        static::assertSame($expectedSlugs, $slugs, 'tested-file: ' . $fileName);
     }
 
     /**
      * @dataProvider provideSlugEdgeCases
      */
-    public function testSlugifyEdgeCases($string, $expectedSlug)
+    public function testSlugifyEdgeCases(): void
     {
-        $sluggerClassNamespace = '\\voku\\helper\\' . $this->sluggerClassName;
-        $this->slugger = new $sluggerClassNamespace();
+        foreach (self::provideSlugEdgeCases() as [$string, $expectedSlug]) {
+            $sluggerClassNamespace = '\\voku\\helper\\' . $this->sluggerClassName;
+            $this->slugger = new $sluggerClassNamespace();
 
-        $fixturesBaseDir = __DIR__ . \DIRECTORY_SEPARATOR . 'fixtures' . \DIRECTORY_SEPARATOR . \strtolower($this->sluggerClassName);
-        $this->inputFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'input';
-        $this->expectedFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'expected';
+            $fixturesBaseDir = __DIR__ . \DIRECTORY_SEPARATOR . 'fixtures' . \DIRECTORY_SEPARATOR . \strtolower($this->sluggerClassName);
+            $this->inputFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'input';
+            $this->expectedFixturesDir = $fixturesBaseDir . \DIRECTORY_SEPARATOR . 'expected';
 
-        $slug = URLify::slug($string, 'de', '-', true);
+            $slug = URLify::slug($string, 'de', '-', true);
 
-        static::assertSame($expectedSlug, $slug);
+            static::assertSame($expectedSlug, $slug);
+        }
     }
 
     /**
