@@ -153,4 +153,4 @@ For professional support please contact [me](https://about.me/voku).
 - Thanks to [IntelliJ](https://www.jetbrains.com) as they make the best IDEs for PHP and they gave me an open source license for PhpStorm!
 - Thanks to [GitHub Actions](https://github.com/features/actions) for providing the CI pipeline for this project!
 - Thanks to [StyleCI](https://styleci.io/) for the simple but powerful code style check.
-- Thanks to [PHPStan](https://github.com/phpstan/phpstan) && [Psalm](https://github.com/vimeo/psalm) for really great Static analysis tools and for discover bugs in the code!
+- Thanks to [PHPStan](https://github.com/phpstan/phpstan) && [Psalm](https://github.com/vimeo/psalm) for really great Static analysis tools and for discovering bugs in the code!
