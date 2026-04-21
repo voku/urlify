@@ -1,4 +1,4 @@
-v5.0.8 (2026-04-21)
+v5.0.8 (2026-04-22)
 
 - drop support for PHP 7.0
 - add GitHub Actions CI for matrix testing, static analysis, and dependency auditing
