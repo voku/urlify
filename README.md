@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/voku/urlify.png?branch=master)](https://travis-ci.org/voku/urlify)
+[![CI](https://github.com/voku/urlify/actions/workflows/ci.yml/badge.svg)](https://github.com/voku/urlify/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/voku/urlify/badge.svg?branch=master)](https://coveralls.io/github/voku/urlify?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9904d596b8514891a38cb3b569cd4d95)](https://www.codacy.com/app/voku/urlify)
 [![Latest Stable Version](https://poser.pugx.org/voku/urlify/v/stable)](https://packagist.org/packages/voku/urlify) 
@@ -151,6 +151,6 @@ For professional support please contact [me](https://about.me/voku).
 
 - Thanks to [GitHub](https://github.com) (Microsoft) for hosting the code and a good infrastructure including Issues-Managment, etc.
 - Thanks to [IntelliJ](https://www.jetbrains.com) as they make the best IDEs for PHP and they gave me an open source license for PhpStorm!
-- Thanks to [Travis CI](https://travis-ci.com/) for being the most awesome, easiest continous integration tool out there!
-- Thanks to [StyleCI](https://styleci.io/) for the simple but powerfull code style check.
-- Thanks to [PHPStan](https://github.com/phpstan/phpstan) && [Psalm](https://github.com/vimeo/psalm) for relly great Static analysis tools and for discover bugs in the code!
+- Thanks to [GitHub Actions](https://github.com/features/actions) for providing the CI pipeline for this project!
+- Thanks to [StyleCI](https://styleci.io/) for the simple but powerful code style check.
+- Thanks to [PHPStan](https://github.com/phpstan/phpstan) && [Psalm](https://github.com/vimeo/psalm) for really great Static analysis tools and for discovering bugs in the code!

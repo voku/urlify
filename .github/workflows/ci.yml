@@ -1,0 +1,109 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php }} / ${{ matrix.dependencies }} dependencies
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php: '7.1'
+            composer: 'v2.2'
+            dependencies: lowest
+            composer-flags: '--prefer-lowest --prefer-stable'
+          - php: '7.1'
+            composer: 'v2.2'
+            dependencies: highest
+            composer-flags: ''
+          - php: '7.4'
+            composer: 'v2'
+            dependencies: highest
+            composer-flags: ''
+          - php: '8.1'
+            composer: 'v2'
+            dependencies: highest
+            composer-flags: ''
+          - php: '8.3'
+            composer: 'v2'
+            dependencies: highest
+            composer-flags: ''
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:${{ matrix.composer }}
+
+      - name: Validate composer.json
+        run: composer validate --strict --no-check-publish
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependencies }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependencies }}-
+            ${{ runner.os }}-php-${{ matrix.php }}-
+
+      - name: Install dependencies
+        run: composer update --no-interaction --prefer-dist --optimize-autoloader ${{ matrix.composer-flags }}
+
+      - name: Run test suite
+        run: php vendor/bin/phpunit -c phpunit.xml
+
+  analysis:
+    name: Static analysis and dependency audit
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2, phpstan
+
+      - name: Validate composer.json
+        run: composer validate --strict --no-check-publish
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: ${{ runner.os }}-analysis-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-analysis-
+
+      - name: Install dependencies
+        run: composer update --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Audit dependencies
+        run: composer audit
+
+      - name: Run PHPStan
+        run: phpstan analyse --no-progress --configuration=phpstan.neon
