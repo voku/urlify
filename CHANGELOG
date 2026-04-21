@@ -2,7 +2,8 @@ v5.0.8 (2026-04-21)
 
 - add GitHub Actions CI for matrix testing, static analysis, and dependency auditing
 - widen PHPUnit support (`^9.6 || ^10.5 || ^11.5 || ^12.5.22`)
-- update dependencies with security fixes
+- update "Portable ASCII" from v2.0 -> v2.1
+- update "Portable UTF8" from v6.0 -> v6.1
 
 v5.0.7 (2022-01-23)
 
