@@ -18,7 +18,7 @@ concurrency:
 jobs:
   test:
     name: PHP ${{ matrix.php }} / ${{ matrix.dependencies }} dependencies
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix:
@@ -91,7 +91,7 @@ jobs:
 
   analysis:
     name: Static analysis and dependency audit
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout
